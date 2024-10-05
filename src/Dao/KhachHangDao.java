@@ -14,6 +14,7 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.bson.Document;
 
@@ -50,7 +51,9 @@ public class KhachHangDao {
         } finally {
             cursor.close();
         }
-        
+         // Sắp xếp danh sách khách hàng theo mã (theo _id)
+        customers.sort(Comparator.comparing(KhachHang::getId));
+
         return customers;
     }
 

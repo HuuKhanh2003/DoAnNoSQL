@@ -30,7 +30,7 @@ public class FormTrangChu extends javax.swing.JPanel {
         });
     }
     public void image() {
-        String imagePath = "C:\\AppKhieuNai\\src\\Anh\\DaiDien.png";
+        String imagePath = "src\\Anh\\DaiDien.png";
 
         // Tạo ImageIcon từ hình ảnh
         ImageIcon originalIcon = new ImageIcon(imagePath);

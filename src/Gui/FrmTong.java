@@ -19,8 +19,6 @@ import javax.swing.JPanel;
  */
 public class FrmTong extends javax.swing.JFrame {
 
-    DangNhap saveTenDangNhap = new DangNhap();
-
     public FrmTong() {
     }
     
@@ -29,7 +27,6 @@ public class FrmTong extends javax.swing.JFrame {
      */
     public FrmTong(DangNhap dn) {
         initComponents();
-        saveTenDangNhap=dn;
         //String tenDN=saveTenDangNhap.txt_TaiKhoan.getText();
         //String mkDN=saveTenDangNhap.txt_MatKhau.getText();
         //txt_TenDangNhap.setText(tenDN);
@@ -297,7 +294,7 @@ public class FrmTong extends javax.swing.JFrame {
 
     private void lb_DangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DangXuatMouseClicked
         // TODO add your handling code here:
-        DangNhap temp=new DangNhap();
+        DangNhap temp=new DangNhap(new FrmTong());
         temp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lb_DangXuatMouseClicked
@@ -461,7 +458,7 @@ public class FrmTong extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmTong(new DangNhap()).setVisible(true);
+                new FrmTong().setVisible(true);
             }
         });
     }

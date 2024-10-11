@@ -53,10 +53,13 @@ public class DangKy extends javax.swing.JFrame {
         btn_DangKy = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setMinimumSize(new java.awt.Dimension(860, 450));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 204));
-        jPanel1.setPreferredSize(new java.awt.Dimension(432, 432));
+        jPanel1.setMinimumSize(new java.awt.Dimension(436, 450));
+        jPanel1.setPreferredSize(new java.awt.Dimension(436, 450));
+        jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -89,79 +92,64 @@ public class DangKy extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Vivaldi", 3, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Kính chào quý khách !");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 320, -1));
+        jLabel4.setAlignmentX(0.5F);
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 390, 45));
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 436, 450);
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(867, 48, 30, 30);
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(867, 84, 30, 30);
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(867, 12, 30, 30);
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(867, 48, 30, 30));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(867, 84, 30, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(867, 12, 30, 30));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 204));
         jLabel12.setText("Nhập lại mật khẩu");
-        getContentPane().add(jLabel12);
-        jLabel12.setBounds(450, 250, 170, 22);
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 170, -1));
 
         jLabel2.setBackground(new java.awt.Color(153, 0, 0));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 204));
         jLabel2.setText("Mật Khẩu :");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(448, 150, 100, 22);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 150, 100, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/key1.png"))); // NOI18N
-        getContentPane().add(jLabel13);
-        jLabel13.setBounds(448, 197, 30, 30);
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 197, -1, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/nhaplai.png"))); // NOI18N
-        getContentPane().add(jLabel14);
-        jLabel14.setBounds(450, 290, 30, 30);
-        getContentPane().add(jLabel15);
-        jLabel15.setBounds(831, 110, 30, 30);
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, -1, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(831, 110, 30, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 204));
         jLabel1.setText("Tài Khoản :");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(448, 82, 110, 22);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 82, 110, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 204));
         jLabel6.setText("SIGN UP");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(618, 12, 157, 44);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(618, 12, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText("Do you already have an account ?");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(460, 420, 214, 17);
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 214, -1));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/user_1.png"))); // NOI18N
-        getContentPane().add(jLabel16);
-        jLabel16.setBounds(448, 110, 30, 30);
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 110, -1, -1));
 
         txt_TaiKhoanDangKy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_TaiKhoanDangKyActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_TaiKhoanDangKy);
-        txt_TaiKhoanDangKy.setBounds(484, 110, 341, 30);
-        getContentPane().add(txt_MatKhauDangKy);
-        txt_MatKhauDangKy.setBounds(484, 197, 341, 30);
+        getContentPane().add(txt_TaiKhoanDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 110, 341, 30));
+        getContentPane().add(txt_MatKhauDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 197, 341, 30));
 
         txt_NhapLaiTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_NhapLaiTaiKhoanActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_NhapLaiTaiKhoan);
-        txt_NhapLaiTaiKhoan.setBounds(490, 290, 340, 30);
+        getContentPane().add(txt_NhapLaiTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 340, 30));
 
         btn_FormDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_FormDangNhap.setForeground(new java.awt.Color(0, 51, 204));
@@ -172,8 +160,7 @@ public class DangKy extends javax.swing.JFrame {
                 btn_FormDangNhapActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_FormDangNhap);
-        btn_FormDangNhap.setBounds(680, 420, 70, 23);
+        getContentPane().add(btn_FormDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 420, 70, -1));
 
         btn_DangKy.setBackground(new java.awt.Color(0, 0, 204));
         btn_DangKy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -184,10 +171,10 @@ public class DangKy extends javax.swing.JFrame {
                 btn_DangKyActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_DangKy);
-        btn_DangKy.setBounds(730, 360, 100, 40);
+        getContentPane().add(btn_DangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 360, 100, 40));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_TaiKhoanDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TaiKhoanDangKyActionPerformed
@@ -200,7 +187,7 @@ public class DangKy extends javax.swing.JFrame {
 
     private void btn_FormDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FormDangNhapActionPerformed
         // TODO add your handling code here:
-        DangNhap temp= new DangNhap();
+        DangNhap temp= new DangNhap(new FrmTong());
         temp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_FormDangNhapActionPerformed

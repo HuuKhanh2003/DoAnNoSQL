@@ -144,10 +144,11 @@ public class DangNhap extends javax.swing.JFrame {
     }
     private void btn_DangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangNhapActionPerformed
 
-       DangNhapDao dangNhapDao = new DangNhapDao();
-    
+        DangNhapDao dangNhapDao = new DangNhapDao();
+        username=txt_TaiKhoan.getText().toString();
+        password=txt_MatKhau.getText().toString();
         // Gọi phương thức đăng nhập
-         boolean success = dangNhapDao.login(dangNhapDao.collection,txt_TaiKhoan.getText().toString(), txt_MatKhau.getText().toString());
+        boolean success = dangNhapDao.login(dangNhapDao.collection,username,password);
 
         if (success==true) {
             if (kiemTraNhapDuLieu()) {

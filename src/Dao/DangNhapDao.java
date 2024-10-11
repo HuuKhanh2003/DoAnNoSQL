@@ -54,7 +54,8 @@ public class DangNhapDao {
     
     public String getRoleByUsernameAndPassword(String username, String password) {
         // Tạo query để tìm tài khoản với username và password
-        Document query = new Document("username", username).append("password", password);
+        String hashPass=hashPassword(password);
+        Document query = new Document("username", username).append("password", hashPass);
         
         // Tìm tài khoản trong collection
         Document account = collection.find(query).first();

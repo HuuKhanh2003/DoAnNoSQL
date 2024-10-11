@@ -28,7 +28,7 @@ public class NhanVien extends javax.swing.JPanel {
         hienThi();
     }
     
-    private void hienThi() {
+    private void hienThi(){
     List<String> listPosition = handleEmployee.getEmployeePosition();
     for (String position : listPosition) {
         cbx_position.addItem(position);
@@ -39,7 +39,7 @@ public class NhanVien extends javax.swing.JPanel {
         cbx_gender.addItem(gender);
     }
 
-    List<Pojo.Employee> ds = handleEmployee.getAllEmployees();
+    List<Pojo.NhanVien> ds = handleEmployee.getAllEmployees();
     DefaultTableModel dtm = new DefaultTableModel();
     dtm.addColumn("Mã nhân viên");
     dtm.addColumn("Tên nhân viên");
@@ -53,15 +53,14 @@ public class NhanVien extends javax.swing.JPanel {
 
     for(int i=0;i<ds.size();i++)
         {
-            Pojo.Employee ls = ds.get(i);
+            Pojo.NhanVien ls = ds.get(i);
             dtm.setValueAt(ls.getId(), i, 0);
             dtm.setValueAt(ls.getNameEmployee(),i, 1);
             dtm.setValueAt(ls.getPosition(), i, 2);
             dtm.setValueAt(ls.getPhone(), i, 3);
             dtm.setValueAt(ls.getGender(), i, 4);
-            //dtm.setValueAt((ls.getBod() != null) ? dateFormat.format(ls.getBod()) : "", i, 5);
+            dtm.setValueAt((ls.getBod() != null) ? dateFormat.format(ls.getBod()) : "", i, 5);
         }
-    
     tbl_Employee.setModel(dtm);
 }
 
@@ -100,7 +99,7 @@ public class NhanVien extends javax.swing.JPanel {
 
         jLabel3.setText("Tên nhân viên");
 
-        jLabel4.setText("Phone");
+        jLabel4.setText("Số điện thoại");
 
         jLabel5.setText("Giới tính");
 
@@ -154,7 +153,7 @@ public class NhanVien extends javax.swing.JPanel {
             }
         });
 
-        txt_bod.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat(""))));
+        txt_bod.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -262,8 +261,8 @@ public class NhanVien extends javax.swing.JPanel {
         return;
     }
 
-    // Khởi tạo đối tượng Employee và thiết lập các giá trị cho nó
-    Pojo.Employee employee = new Pojo.Employee();
+    // Khởi tạo đối tượng NhanVien và thiết lập các giá trị cho nó
+    Pojo.NhanVien employee = new Pojo.NhanVien();
     employee.setId(id);
     employee.setNameEmployee(name);
     employee.setPosition(position);
@@ -315,6 +314,7 @@ public class NhanVien extends javax.swing.JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date bod = dateFormat.parse(bodString); // Chuyển đổi chuỗi thành Date
+                System.out.println("BOD: " + bod); // Kiểm tra giá trị bod
                 txt_bod.setValue(bod); // Đặt giá trị cho JFormattedTextField
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ!");
@@ -373,10 +373,10 @@ public class NhanVien extends javax.swing.JPanel {
         } catch (ClassCastException e) {
             JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ!");
             return;
-            
         }
-        // Tạo đối tượng Employee
-        Pojo.Employee employee = new Pojo.Employee(id, name, position, phone, gender, bod);
+
+        // Tạo đối tượng NhanVien
+        Pojo.NhanVien employee = new Pojo.NhanVien(id, name, position, phone, gender, bod);
 
         // Gọi hàm updateEmployee để cập nhật vào cơ sở dữ liệu
         boolean success = handleEmployee.updateEmployee(employee);

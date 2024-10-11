@@ -8,15 +8,18 @@ import static Dao.KhachHangDao.collection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import Pojo.Employee;
+import Pojo.NhanVien;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  *
@@ -26,45 +29,59 @@ public class NhanVienDao {
     public static MongoCollection<Document> collection;
     
     public NhanVienDao() {
-        collection = Connect.database.getCollection("Customer");
+        collection = Connect.database.getCollection("Employee");
     }
     
-    public List<Employee> getAllEmployees() {
-        List<Employee> employees = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection.find().iterator()) {
-            while (cursor.hasNext()) {
-                Document doc = cursor.next();
-                Employee employee = new Employee(
-                        doc.getString("_id"),
-                        doc.getString("nameEmployee"),
-                        doc.getString("position"),
-                        doc.getString("phone"),
-                        doc.getString("gender"),
-                        doc.getDate("bod")
-                );
-                employees.add(employee);
+    public List<NhanVien> getAllEmployees() {
+    List<NhanVien> employees = new ArrayList<>();
+    try (MongoCursor<Document> cursor = collection.find().iterator()) {
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            String bodString = doc.getString("bod"); // Lấy ngày sinh dưới dạng chuỗi
+            Date bod = null;
+            if (bodString != null) {
+                // Chuyển đổi chuỗi sang Date
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                bod = dateFormat.parse(bodString);
             }
+            NhanVien employee = new NhanVien(
+                    doc.getString("_id"),
+                    doc.getString("nameEmployee"),
+                    doc.getString("position"),
+                    doc.getString("phone"),
+                    doc.getString("gender"),
+                    bod
+            );
+            employees.add(employee);
         }
-        employees.sort(Comparator.comparing(Employee::getId));
-        return employees;
+    } catch (ParseException e) {
+        e.printStackTrace(); // Xử lý lỗi nếu có
     }
+    employees.sort(Comparator.comparing(NhanVien::getId));
+    return employees;
+}
 
-    public boolean addEmployee(Employee employee) {
-        try {
-            Document doc = new Document("_id", employee.getId())
-                    .append("nameEmployee", employee.getNameEmployee())
-                    .append("position", employee.getPosition())
-                    .append("phone", employee.getPhone())
-                    .append("gender", employee.getGender())
-                    .append("bod", employee.getBod()); // bod phải là Date
-            collection.insertOne(doc);
-            System.out.println("Thêm nhân viên thành công!");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Lỗi khi thêm nhân viên: " + e.getMessage());
-            return false;
-        }
+
+    public boolean addEmployee(NhanVien employee) {
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String bodString = (employee.getBod() != null) ? dateFormat.format(employee.getBod()) : null;
+
+        Document doc = new Document("_id", employee.getId())
+                .append("nameEmployee", employee.getNameEmployee())
+                .append("position", employee.getPosition())
+                .append("phone", employee.getPhone())
+                .append("gender", employee.getGender())
+                .append("bod", bodString); // bod là chuỗi
+        collection.insertOne(doc);
+        System.out.println("Thêm nhân viên thành công!");
+        return true;
+    } catch (Exception e) {
+        System.out.println("Lỗi khi thêm nhân viên: " + e.getMessage());
+        return false;
     }
+}
+
 
     public boolean deleteEmployee(String employeeId) {
         // Sử dụng câu lệnh xóa
@@ -80,7 +97,11 @@ public class NhanVienDao {
         }
     }
 
-    public boolean updateEmployee(Employee employee) {
+    public boolean updateEmployee(NhanVien employee) {
+    try {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String bodString = (employee.getBod() != null) ? dateFormat.format(employee.getBod()) : null;
+
         // Sử dụng câu lệnh cập nhật
         UpdateResult result = collection.updateOne(
                 Filters.eq("_id", employee.getId()),
@@ -89,7 +110,7 @@ public class NhanVienDao {
                         Updates.set("position", employee.getPosition()),
                         Updates.set("phone", employee.getPhone()),
                         Updates.set("gender", employee.getGender()),
-                        Updates.set("bod", employee.getBod()) // bod phải là Date
+                        Updates.set("bod", bodString) // bod là chuỗi
                 )
         );
 
@@ -101,7 +122,12 @@ public class NhanVienDao {
             System.out.println("Không tìm thấy nhân viên để cập nhật!");
             return false; // Trả về false nếu không tìm thấy nhân viên
         }
+    } catch (Exception e) {
+        System.out.println("Lỗi khi cập nhật nhân viên: " + e.getMessage());
+        return false; // Trả về false nếu có lỗi
     }
+}
+
 
     public List<String> getEmployeePosition() {
         List<String> positions = new ArrayList<>();

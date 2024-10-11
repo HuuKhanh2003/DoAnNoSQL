@@ -5,7 +5,6 @@
 package Dao;
 
 import Pojo.KhachHang;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -26,11 +25,9 @@ public class KhachHangDao {
 
     public KhachHangDao() {
         // Kết nối tới MongoDB
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        MongoDatabase database = mongoClient.getDatabase("QuanLyKhuyenMai");
-        collection = database.getCollection("Customer");
+        collection = Connect.database.getCollection("Customer");
     }
-     public List<KhachHang> getAllCustomers() {
+    public List<KhachHang> getAllCustomers() {
         List<KhachHang> customers = new ArrayList<>();
         MongoCursor<Document> cursor = collection.find().iterator();
 
@@ -50,30 +47,30 @@ public class KhachHangDao {
         } finally {
             cursor.close();
         }
-        
+
         return customers;
     }
 
     // Hàm thêm khách hàng
     public boolean addCustomer(KhachHang customer) {
-    try {
-        // Tạo tài liệu từ thông tin khách hàng
-        Document doc = new Document("_id", customer.getId())
-                .append("customerName", customer.getCustomerName())
-                .append("email", customer.getEmail())
-                .append("tier", customer.getTier())
-                .append("promotionIDs", customer.getPromotionIDs())
-                .append("voucherQuantity", customer.getVoucherQuantity());
+        try {
+            // Tạo tài liệu từ thông tin khách hàng
+            Document doc = new Document("_id", customer.getId())
+                    .append("customerName", customer.getCustomerName())
+                    .append("email", customer.getEmail())
+                    .append("tier", customer.getTier())
+                    .append("promotionIDs", customer.getPromotionIDs())
+                    .append("voucherQuantity", customer.getVoucherQuantity());
 
-        // Thêm tài liệu vào collection
-        collection.insertOne(doc);
-        System.out.println("Khách hàng đã được thêm thành công!");
-        return true;  // Thêm thành công
-    } catch (Exception e) {
-        System.out.println("Lỗi khi thêm khách hàng: " + e.getMessage());
-        return false;  // Thêm thất bại
+            // Thêm tài liệu vào collection
+            collection.insertOne(doc);
+            System.out.println("Khách hàng đã được thêm thành công!");
+            return true;  // Thêm thành công
+        } catch (Exception e) {
+            System.out.println("Lỗi khi thêm khách hàng: " + e.getMessage());
+            return false;  // Thêm thất bại
+        }
     }
-}
 
 
     // Hàm xóa khách hàng theo ID

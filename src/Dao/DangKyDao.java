@@ -6,7 +6,6 @@ package Dao;
 import static Dao.Connect.database;
 import static Dao.Connect.mongoClient;
 import static Dao.DangNhapDao.collection;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 /**
@@ -18,8 +17,6 @@ public class DangKyDao {
     
     public DangKyDao() {
         // Kết nối tới MongoDB
-        mongoClient = new MongoClient("localhost", 27017);
-        database = mongoClient.getDatabase("QuanLyKhuyenMai");
         collection = database.getCollection("Account");
     }
     public boolean isUsernameTaken(MongoCollection<Document> collection, String username) {
@@ -36,7 +33,8 @@ public class DangKyDao {
     String hashedPassword = hashPassword(password);
 
     Document newAccount = new Document("username", username)
-                          .append("password", hashedPassword);
+                          .append("password", hashedPassword)
+                          .append("role","employee");
     collection.insertOne(newAccount);
     
     return true;

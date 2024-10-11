@@ -141,12 +141,12 @@ public class DangNhap extends javax.swing.JFrame {
     {
         if(txt_MatKhau.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         if(txt_TaiKhoan.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tài Khoản.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tài Khoản.", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         return true;

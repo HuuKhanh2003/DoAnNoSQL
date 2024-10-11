@@ -4,6 +4,7 @@
  */
 package Pojo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,23 +14,19 @@ import java.util.List;
 public class KhuyenMai {
     private String id;
     private String promotionName;
-    private String promotionType;
     private int discountPercent;
-    private String startDate;
-    private String endDate;
-
-    // Embedded classes for nested objects
+    private Date startDate;
+    private Date endDate;
     private AppliedTo appliedTo;
     private Conditions conditions;
 
     // Constructors
     public KhuyenMai() {}
 
-    public KhuyenMai(String id, String promotionName, String promotionType, int discountPercent, String startDate,
-                     String endDate, AppliedTo appliedTo, Conditions conditions) {
+    public KhuyenMai(String id, String promotionName, int discountPercent, Date startDate,
+                     Date endDate, AppliedTo appliedTo, Conditions conditions) {
         this.id = id;
         this.promotionName = promotionName;
-        this.promotionType = promotionType;
         this.discountPercent = discountPercent;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -54,14 +51,6 @@ public class KhuyenMai {
         this.promotionName = promotionName;
     }
 
-    public String getPromotionType() {
-        return promotionType;
-    }
-
-    public void setPromotionType(String promotionType) {
-        this.promotionType = promotionType;
-    }
-
     public int getDiscountPercent() {
         return discountPercent;
     }
@@ -70,19 +59,19 @@ public class KhuyenMai {
         this.discountPercent = discountPercent;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -143,12 +132,12 @@ public class KhuyenMai {
     // Inner class for conditions object
     public static class Conditions {
         private int minOrderValue;
-        private int minQuantity;
+        //private int minQuantity;
         private String customerTier;
 
-        public Conditions(int minOrderValue, int minQuantity, String customerTier) {
+        public Conditions(int minOrderValue,  String customerTier) {
             this.minOrderValue = minOrderValue;
-            this.minQuantity = minQuantity;
+            //this.minQuantity = minQuantity;
             this.customerTier = customerTier;
         }
 
@@ -161,13 +150,13 @@ public class KhuyenMai {
             this.minOrderValue = minOrderValue;
         }
 
-        public int getMinQuantity() {
-            return minQuantity;
-        }
-
-        public void setMinQuantity(int minQuantity) {
-            this.minQuantity = minQuantity;
-        }
+//        public int getMinQuantity() {
+//            return minQuantity;
+//        }
+//
+//        public void setMinQuantity(int minQuantity) {
+//            this.minQuantity = minQuantity;
+//        }
 
         public String getCustomerTier() {
             return customerTier;

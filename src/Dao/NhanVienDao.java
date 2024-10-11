@@ -38,7 +38,7 @@ public class NhanVienDao {
     try (MongoCursor<Document> cursor = collection.find().iterator()) {
         while (cursor.hasNext()) {
             Document doc = cursor.next();
-            String bodString = doc.getString("bod"); // Lấy ngày sinh dưới dạng chuỗi
+            String bodString = doc.getString("bod"); 
             Date bod = null;
             if (bodString != null) {
                 // Chuyển đổi chuỗi sang Date

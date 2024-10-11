@@ -117,29 +117,51 @@ public class KhachHangDao {
     }
 
     public List<String> getAllCustomerTiers() {
-    List<String> tiers = new ArrayList<>();
-    
-    // Thực hiện truy vấn để lấy tất cả khách hàng
-    MongoCursor<Document> cursor = collection.find().iterator();
+        List<String> tiers = new ArrayList<>();
 
-    try {
-        while (cursor.hasNext()) {
-            Document doc = cursor.next();
-            // Lấy giá trị tier từ tài liệu (document)
-            String tier = doc.getString("tier");
-            
-            // Kiểm tra nếu giá trị tier không null và chưa có trong danh sách tiers
-            if (tier != null && !tiers.contains(tier)) {
-                tiers.add(tier); // Thêm vào danh sách
+        // Thực hiện truy vấn để lấy tất cả khách hàng
+        MongoCursor<Document> cursor = collection.find().iterator();
+
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Lấy giá trị tier từ tài liệu (document)
+                String tier = doc.getString("tier");
+
+                // Kiểm tra nếu giá trị tier không null và chưa có trong danh sách tiers
+                if (tier != null && !tiers.contains(tier)) {
+                    tiers.add(tier); // Thêm vào danh sách
+                }
             }
+        } finally {
+            cursor.close();
         }
-    } finally {
-        cursor.close();
+
+        return tiers; // Trả về danh sách loại khách hàng
     }
+    public List<String> getAllCustomerByName() {
+        List<String> names = new ArrayList<>();
 
-    return tiers; // Trả về danh sách loại khách hàng
-}
+        // Thực hiện truy vấn để lấy tất cả khách hàng
+        MongoCursor<Document> cursor = collection.find().iterator();
 
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Lấy giá trị tier từ tài liệu (document)
+                String name = doc.getString("customerName");
+
+                // Kiểm tra nếu giá trị tier không null và chưa có trong danh sách tiers
+                if (name != null && !names.contains(name)) {
+                    names.add(name); // Thêm vào danh sách
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return names; // Trả về danh sách loại khách hàng
+    }
     // Đóng kết nối
     public void close() {
         // Đóng kết nối nếu cần thiết

@@ -5,14 +5,14 @@
 package Dao;
 
 
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import com.mongodb.MongoClient;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
-import com.mongodb.client.MongoCollection;
+import com.mongodb.ServerApi;
+import com.mongodb.ServerApiVersion;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
 
 
@@ -22,24 +22,29 @@ import org.bson.Document;
  * @author 84862
  */
 public class Connect{
-    public static MongoClient mongoClient=new MongoClient("localhost",27017);
-    public static MongoDatabase database = mongoClient.getDatabase("QuanLyKhuyenMai");
-    
-    MongoCollection<Document> collection =database.getCollection("Customer");
-    public void checkConnection() {
-        try {
-            // Kiểm tra kết nối bằng cách lấy số lượng document trong collection
-            long count = collection.countDocuments();
-            System.out.println("Kết nối thành công tới MongoDB! Số lượng document trong collection 'Customer': " + count);
-        } catch (MongoException ex) {
-            // Nếu có lỗi xảy ra khi kết nối
-            System.out.println("Kết nối không thành công. Lỗi: " + ex.getMessage());
-        }
-    }
+    public static MongoClient mongoClient;
+    public static MongoDatabase database;
 
-    public static void main(String[] args) {
-        // Tạo đối tượng Connect và gọi phương thức checkConnection để kiểm tra
-        Connect connect = new Connect();
-        connect.checkConnection();
+    static {
+        // Connection settings
+        String connectionString = "mongodb+srv://admin:admin@cluster0.hqw7vto.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(connectionString))
+                .serverApi(serverApi)
+                .build();
+
+        // Initialize mongoClient and database
+        try {
+            mongoClient = MongoClients.create(settings);
+            database = mongoClient.getDatabase("QuanLyKhuyenMai");
+            // Send a ping to confirm a successful connection
+            database.runCommand(new Document("ping", 1));
+            System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
+        } catch (MongoException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -141,12 +141,12 @@ public class DangNhap extends javax.swing.JFrame {
     {
         if(txt_MatKhau.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         if(txt_TaiKhoan.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tài Khoản.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tài Khoản.", "Login Failed", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         return true;
@@ -156,9 +156,9 @@ public class DangNhap extends javax.swing.JFrame {
        DangNhapDao dangNhapDao = new DangNhapDao();
     
         // Gọi phương thức đăng nhập
-        String role = dangNhapDao.dangNhap(txt_TaiKhoan.getText(), txt_MatKhau.getText());
+         boolean success = dangNhapDao.login(dangNhapDao.collection,txt_TaiKhoan.getText().toString(), txt_MatKhau.getText().toString());
 
-        if (role != null) {
+        if (success==true) {
             if (kiemTraNhapDuLieu()) {
                 this.setVisible(false);
                 FrmTong temp = new FrmTong(this);

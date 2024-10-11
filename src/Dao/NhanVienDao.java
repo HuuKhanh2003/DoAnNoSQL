@@ -5,6 +5,7 @@
 package Dao;
 
 import static Dao.KhachHangDao.collection;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;

@@ -78,5 +78,4 @@ public class NhanVien {
     public void setBod(Date bod) {
         this.bod = bod;
     }
-    
 }

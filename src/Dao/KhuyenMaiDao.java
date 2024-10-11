@@ -4,6 +4,7 @@
  */
 package Dao;
 
+
 import Pojo.KhuyenMai;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -17,11 +18,12 @@ import org.bson.Document;
  * @author HUU KHANH
  */
 public class KhuyenMaiDao {
-    private final MongoCollection<Document> collection;
+    public static MongoCollection<Document> collection;
 
     public KhuyenMaiDao(MongoCollection<Document> collection) {
-        this.collection = collection;
+        collection = Connect.database.getCollection("Promotions");
     }
+    
 
     // Lấy danh sách tất cả các khuyến mãi
     public List<KhuyenMai> getAllPromotions() {
@@ -33,8 +35,6 @@ public class KhuyenMaiDao {
                 promotions.add(promotion);
             }
         }
-
-        // Sắp xếp danh sách khuyến mãi theo mã (_id)
         promotions.sort(Comparator.comparing(KhuyenMai::getId));
         return promotions;
     }

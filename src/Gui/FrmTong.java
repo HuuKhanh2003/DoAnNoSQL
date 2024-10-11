@@ -323,14 +323,14 @@ public class FrmTong extends javax.swing.JFrame {
 
     private void lb_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_KhuyenMaiMouseClicked
 //        // TODO add your handling code here:
-//        //JPanel newPanel = new HoSo();
+        JPanel newPanel = new KhuyenMai();
 //
 //        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
         panel_GiaoDien.removeAll();
 
         // Thêm formPhong vào panel_GiaoDien
         panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
-        //panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
+        panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
 
         // Cập nhật giao diện người dùng
         panel_GiaoDien.revalidate();

@@ -5,7 +5,6 @@
 package Dao;
 
 import static Dao.KhachHangDao.collection;
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
@@ -27,9 +26,7 @@ public class NhanVienDao {
     public static MongoCollection<Document> collection;
     
     public NhanVienDao() {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        MongoDatabase database = mongoClient.getDatabase("QuanLyKhuyenMai");
-        collection = database.getCollection("Employee");
+        collection = Connect.database.getCollection("Customer");
     }
     
     public List<Employee> getAllEmployees() {

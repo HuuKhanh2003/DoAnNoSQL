@@ -10,19 +10,7 @@ import java.util.Date;
  *
  * @author HUU KHANH
  */
-public class Employee {
-
-    public Employee(String id, String nameEmployee, String position, String phone, String gender, Date bod) {
-        this.id = id;
-        this.nameEmployee = nameEmployee;
-        this.position = position;
-        this.phone = phone;
-        this.gender = gender;
-        this.bod = bod;
-    }
-
-    public Employee() {
-    }
+public class NhanVien {
 
     private String id;
     private String nameEmployee;
@@ -31,6 +19,17 @@ public class Employee {
     private String gender;
     private Date bod;
     
+    public NhanVien(String id, String nameEmployee, String position, String phone, String gender, Date bod) {
+        this.id = id;
+        this.nameEmployee = nameEmployee;
+        this.position = position;
+        this.phone = phone;
+        this.gender = gender;
+        this.bod = bod;
+    }
+
+    public NhanVien() {
+    }
     
     public String getId() {
         return id;

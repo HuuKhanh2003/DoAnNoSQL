@@ -156,9 +156,9 @@ public class DangNhap extends javax.swing.JFrame {
        DangNhapDao dangNhapDao = new DangNhapDao();
     
         // Gọi phương thức đăng nhập
-        String role = dangNhapDao.dangNhap(txt_TaiKhoan.getText(), txt_MatKhau.getText());
+         boolean success = dangNhapDao.login(dangNhapDao.collection,txt_TaiKhoan.getText().toString(), txt_MatKhau.getText().toString());
 
-        if (role != null) {
+        if (success==true) {
             if (kiemTraNhapDuLieu()) {
                 this.setVisible(false);
                 FrmTong temp = new FrmTong(this);

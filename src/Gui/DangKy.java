@@ -4,12 +4,16 @@
  */
 package Gui;
 
+import Dao.DangKyDao;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author HUU KHANH
  */
 public class DangKy extends javax.swing.JFrame {
 
+    DangKyDao dangkyDao= new DangKyDao();
     /**
      * Creates new form DangKy
      */
@@ -40,13 +44,11 @@ public class DangKy extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         txt_TaiKhoanDangKy = new javax.swing.JTextField();
         txt_MatKhauDangKy = new javax.swing.JTextField();
         txt_NhapLaiTaiKhoan = new javax.swing.JTextField();
-        txt_PassCode = new javax.swing.JTextField();
         btn_FormDangNhap = new javax.swing.JButton();
         btn_DangKy = new javax.swing.JButton();
 
@@ -102,7 +104,7 @@ public class DangKy extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 0, 204));
         jLabel12.setText("Nhập lại mật khẩu");
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(450, 260, 170, 22);
+        jLabel12.setBounds(450, 250, 170, 22);
 
         jLabel2.setBackground(new java.awt.Color(153, 0, 0));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -117,7 +119,7 @@ public class DangKy extends javax.swing.JFrame {
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/nhaplai.png"))); // NOI18N
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(450, 310, 30, 30);
+        jLabel14.setBounds(450, 290, 30, 30);
         getContentPane().add(jLabel15);
         jLabel15.setBounds(831, 110, 30, 30);
 
@@ -133,17 +135,11 @@ public class DangKy extends javax.swing.JFrame {
         getContentPane().add(jLabel6);
         jLabel6.setBounds(618, 12, 157, 44);
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 204));
-        jLabel11.setText("Nhập passcode");
-        getContentPane().add(jLabel11);
-        jLabel11.setBounds(448, 383, 140, 22);
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText("Do you already have an account ?");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(458, 433, 214, 17);
+        jLabel10.setBounds(460, 420, 214, 17);
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/user_1.png"))); // NOI18N
         getContentPane().add(jLabel16);
@@ -165,9 +161,7 @@ public class DangKy extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txt_NhapLaiTaiKhoan);
-        txt_NhapLaiTaiKhoan.setBounds(490, 310, 340, 30);
-        getContentPane().add(txt_PassCode);
-        txt_PassCode.setBounds(590, 382, 130, 30);
+        txt_NhapLaiTaiKhoan.setBounds(490, 290, 340, 30);
 
         btn_FormDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_FormDangNhap.setForeground(new java.awt.Color(0, 51, 204));
@@ -179,7 +173,7 @@ public class DangKy extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_FormDangNhap);
-        btn_FormDangNhap.setBounds(680, 430, 70, 23);
+        btn_FormDangNhap.setBounds(680, 420, 70, 23);
 
         btn_DangKy.setBackground(new java.awt.Color(0, 0, 204));
         btn_DangKy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -191,7 +185,7 @@ public class DangKy extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_DangKy);
-        btn_DangKy.setBounds(730, 380, 100, 40);
+        btn_DangKy.setBounds(730, 360, 100, 40);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,9 +206,20 @@ public class DangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_FormDangNhapActionPerformed
 
     private void btn_DangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangKyActionPerformed
-       
-        
+        String username = txt_TaiKhoanDangKy.getText().toString();
+        String pass = txt_MatKhauDangKy.getText().toString();
+        String repeatPass = txt_NhapLaiTaiKhoan.getText().toString();
 
+        if (pass.equals(repeatPass)) {
+            boolean success = dangkyDao.registerAccount(dangkyDao.collection, username, pass);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công.", "New Account Success", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Tạo tài khoản thất bại.", "New Account Failed", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+           JOptionPane.showMessageDialog(this, "Nhập lại mật khẩu không trùng khớp", "New Account Failed", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btn_DangKyActionPerformed
 
     /**
@@ -257,7 +262,6 @@ public class DangKy extends javax.swing.JFrame {
     private javax.swing.JButton btn_FormDangNhap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -274,7 +278,6 @@ public class DangKy extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txt_MatKhauDangKy;
     private javax.swing.JTextField txt_NhapLaiTaiKhoan;
-    private javax.swing.JTextField txt_PassCode;
     private javax.swing.JTextField txt_TaiKhoanDangKy;
     // End of variables declaration//GEN-END:variables
 }

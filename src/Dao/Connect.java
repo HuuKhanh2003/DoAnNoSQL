@@ -25,7 +25,7 @@ public class Connect{
     public static MongoClient mongoClient=new MongoClient("localhost",27017);
     public static MongoDatabase database = mongoClient.getDatabase("QuanLyKhuyenMai");
     
-    MongoCollection<Document> collection =database.getCollection("Customer");
+    MongoCollection<Document> collection =database.getCollection("Account");
     public void checkConnection() {
         try {
             // Kiểm tra kết nối bằng cách lấy số lượng document trong collection

@@ -3,53 +3,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Dao;
-
 import static Dao.Connect.database;
 import static Dao.Connect.mongoClient;
+import static Dao.DangNhapDao.collection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-
 /**
  *
- * @author HUU KHANH
+ * @author 84862
  */
-public class DangNhapDao {
-
+public class DangKyDao {
     public static MongoCollection<Document> collection;
-    public DangNhapDao() {
+    
+    public DangKyDao() {
         // Kết nối tới MongoDB
         mongoClient = new MongoClient("localhost", 27017);
         database = mongoClient.getDatabase("QuanLyKhuyenMai");
         collection = database.getCollection("Account");
     }
-    
-    public boolean login(MongoCollection<Document> collection, String username, String password) 
-    {
-        // Tạo tài liệu truy vấn với username
+    public boolean isUsernameTaken(MongoCollection<Document> collection, String username) {
         Document query = new Document("username", username);
-
-        // Tìm tài liệu tương ứng
         Document account = collection.find(query).first();
-
-        if (account == null) {
-            System.out.println("Account not found.");
-            return false;
-        }
-
-        String storedHashedPassword = account.getString("password");
-
-        String hashedPassword = hashPassword(password);
-
-        if (storedHashedPassword.equals(hashedPassword)) {
-            System.out.println("Login successful!");
-            return true;
-        } else {
-            System.out.println("Invalid password.");
-            return false;
-        }
+        return account != null;
     }
+
+   public boolean registerAccount(MongoCollection<Document> collection, String username, String password) {
+    if (isUsernameTaken(collection, username)) {
+        return false;
+    }
+
+    String hashedPassword = hashPassword(password);
+
+    Document newAccount = new Document("username", username)
+                          .append("password", hashedPassword);
+    collection.insertOne(newAccount);
+    
+    return true;
+}
     public String hashPassword(String password) {
         return Integer.toHexString(password.hashCode());
     }
+
 }

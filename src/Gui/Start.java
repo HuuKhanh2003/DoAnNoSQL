@@ -71,7 +71,7 @@ public class Start extends javax.swing.JFrame {
                     if(i==100)
                     {
                        
-                        DangNhap temp= new DangNhap(new FrmTong());
+                        DangNhap temp= new DangNhap();
                         temp.setVisible(true);
                         Start.this.setVisible(false);
                     }

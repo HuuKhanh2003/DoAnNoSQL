@@ -6,11 +6,13 @@ package Gui;
 import Dao.DangNhapDao;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -18,19 +20,15 @@ import javax.swing.JPanel;
  * @author 84862
  */
 public class FrmTong extends javax.swing.JFrame {
-
-    public FrmTong() {
-    }
-    
     /**
      * Creates new form FrmTong
      */
+    DangNhap dangNhap= new DangNhap();
+
     public FrmTong(DangNhap dn) {
         initComponents();
-        //String tenDN=saveTenDangNhap.txt_TaiKhoan.getText();
-        //String mkDN=saveTenDangNhap.txt_MatKhau.getText();
-        //txt_TenDangNhap.setText(tenDN);
-        //txt_ChucVu.setText(NhanVienDao.chucVuNhanVien(tenDN, mkDN));
+        dangNhap=dn;
+        txt_ChucVu.setText(dangNhap.role);
         Date ngayGioHienTai = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGioFormatted = sdf.format(ngayGioHienTai);
@@ -48,7 +46,7 @@ public class FrmTong extends javax.swing.JFrame {
         // Cập nhật giao diện người dùng
         panel_GiaoDien.revalidate();
         panel_GiaoDien.repaint();
-        phanQuyen();
+//        phanQuyen();
     }
 
     /**
@@ -294,7 +292,7 @@ public class FrmTong extends javax.swing.JFrame {
 
     private void lb_DangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DangXuatMouseClicked
         // TODO add your handling code here:
-        DangNhap temp=new DangNhap(new FrmTong());
+        DangNhap temp=new DangNhap();
         temp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lb_DangXuatMouseClicked
@@ -458,7 +456,7 @@ public class FrmTong extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmTong().setVisible(true);
+                new FrmTong(new DangNhap()).setVisible(true);
             }
         });
     }

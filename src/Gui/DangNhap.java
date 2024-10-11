@@ -13,13 +13,14 @@ import javax.swing.JOptionPane;
  */
 public class DangNhap extends javax.swing.JFrame {
 
-    FrmTong frmTong;
+    String username="";
+    String password="";
+    String role="";
     /**
      * Creates new form DangNhap
      */
-    public DangNhap(FrmTong temp) {
+    public DangNhap() {
         initComponents();
-        frmTong=temp;
     }
 
     /**
@@ -150,6 +151,7 @@ public class DangNhap extends javax.swing.JFrame {
 
         if (success==true) {
             if (kiemTraNhapDuLieu()) {
+                role=dangNhapDao.getRoleByUsernameAndPassword(username, password);
                 this.setVisible(false);
                 FrmTong temp = new FrmTong(this);
                 temp.setVisible(true);
@@ -196,7 +198,7 @@ public class DangNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DangNhap(new FrmTong()).setVisible(true);
+                new DangNhap().setVisible(true);
             }
         });
     }

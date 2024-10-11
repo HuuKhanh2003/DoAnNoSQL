@@ -18,7 +18,7 @@ public class KhachHang {
     private String tier;
     private List<String> promotionIDs;
     private int voucherQuantity;
-
+    
     // Constructor
     public KhachHang(String id, String customerName, String email, String tier, List<String> promotionIDs, int voucherQuantity) {
         this.id = id;
@@ -29,7 +29,7 @@ public class KhachHang {
         this.voucherQuantity = voucherQuantity;
     }
     public KhachHang() {
-        this.promotionIDs = new ArrayList<>(); // Khởi tạo mặc định là một danh sách rỗng
+        this.promotionIDs = new ArrayList<>();
     }
 
     // Getters and Setters

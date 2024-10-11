@@ -51,4 +51,20 @@ public class DangNhapDao {
     public String hashPassword(String password) {
         return Integer.toHexString(password.hashCode());
     }
+    
+    public String getRoleByUsernameAndPassword(String username, String password) {
+        // Tạo query để tìm tài khoản với username và password
+        String hashPass=hashPassword(password);
+        Document query = new Document("username", username).append("password", hashPass);
+        
+        // Tìm tài khoản trong collection
+        Document account = collection.find(query).first();
+        
+        // Nếu tìm thấy tài khoản, lấy thông tin role
+        if (account != null) {
+            return account.getString("role"); // Giả sử "role" là trường lưu quyền của tài khoản
+        }
+        
+        return null;
+    }
 }

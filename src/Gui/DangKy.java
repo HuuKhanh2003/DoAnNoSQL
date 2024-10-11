@@ -187,7 +187,7 @@ public class DangKy extends javax.swing.JFrame {
 
     private void btn_FormDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FormDangNhapActionPerformed
         // TODO add your handling code here:
-        DangNhap temp= new DangNhap(new FrmTong());
+        DangNhap temp= new DangNhap();
         temp.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btn_FormDangNhapActionPerformed

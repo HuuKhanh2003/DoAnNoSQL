@@ -74,7 +74,8 @@ public class FrmTong extends javax.swing.JFrame {
         lb_XuLiHoSo = new javax.swing.JLabel();
         lb_QuanLiHoSo = new javax.swing.JLabel();
         lb_KhachHang = new javax.swing.JLabel();
-        lb_NhanVien = new javax.swing.JLabel();
+        lb_SanPham = new javax.swing.JLabel();
+        lb_NhanVien1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         Menu_Thongtin = new javax.swing.JLabel();
         Menu = new javax.swing.JLabel();
@@ -181,20 +182,30 @@ public class FrmTong extends javax.swing.JFrame {
             }
         });
         pnMenu.add(lb_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 310, 80));
-        lb_KhachHang.getAccessibleContext().setAccessibleName("Khách hàng");
 
-        lb_NhanVien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_NhanVien.setForeground(new java.awt.Color(255, 255, 255));
-        lb_NhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/employee.png"))); // NOI18N
-        lb_NhanVien.setText("  Nhân viên");
-        lb_NhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+        lb_SanPham.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_SanPham.setForeground(new java.awt.Color(255, 255, 255));
+        lb_SanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/product.png"))); // NOI18N
+        lb_SanPham.setText("  Sản phẩm");
+        lb_SanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_NhanVienMouseClicked(evt);
+                lb_SanPhamMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_NhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 360, 70));
+        pnMenu.add(lb_SanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 360, 70));
 
-        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 770));
+        lb_NhanVien1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lb_NhanVien1.setForeground(new java.awt.Color(255, 255, 255));
+        lb_NhanVien1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/employee.png"))); // NOI18N
+        lb_NhanVien1.setText("  Nhân viên");
+        lb_NhanVien1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lb_NhanVien1MouseClicked(evt);
+            }
+        });
+        pnMenu.add(lb_NhanVien1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 360, 70));
+
+        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 770));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -278,7 +289,7 @@ public class FrmTong extends javax.swing.JFrame {
         {
             lb_QuanLiHoSo.setEnabled(true);
             lb_KhachHang.setEnabled(true);
-            lb_NhanVien.setEnabled(true);
+            lb_NhanVien1.setEnabled(true);
             lb_XuLiHoSo.setEnabled(true);
             
         }
@@ -322,21 +333,6 @@ public class FrmTong extends javax.swing.JFrame {
     private void Menu_ThongtinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Menu_ThongtinMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_Menu_ThongtinMouseClicked
-
-    private void lb_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_NhanVienMouseClicked
-        // TODO add your handling code here:
-        //JPanel newPanel = new NhanVien();
-
-        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
-        panel_GiaoDien.removeAll();
-
-        // Thêm formPhong vào panel_GiaoDien
-        panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
-        //panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
-        // Cập nhật giao diện người dùng
-        panel_GiaoDien.revalidate();
-        panel_GiaoDien.repaint();
-    }//GEN-LAST:event_lb_NhanVienMouseClicked
 
     private void lb_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_KhachHangMouseClicked
         // TODO add your handling code here:
@@ -386,6 +382,25 @@ public class FrmTong extends javax.swing.JFrame {
         panel_GiaoDien.revalidate();
         panel_GiaoDien.repaint();
     }//GEN-LAST:event_lb_TrangChuMouseClicked
+
+    private void lb_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_SanPhamMouseClicked
+        // TODO add your handling code here:
+        JPanel newPanel = new SanPham();
+
+        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
+        panel_GiaoDien.removeAll();
+
+        // Thêm formPhong vào panel_GiaoDien
+        panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
+        panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
+        // Cập nhật giao diện người dùng
+        panel_GiaoDien.revalidate();
+        panel_GiaoDien.repaint();
+    }//GEN-LAST:event_lb_SanPhamMouseClicked
+
+    private void lb_NhanVien1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_NhanVien1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lb_NhanVien1MouseClicked
     int width =303;
     int height=770;
 
@@ -480,8 +495,9 @@ public class FrmTong extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lb_DangXuat;
     private javax.swing.JLabel lb_KhachHang;
-    public javax.swing.JLabel lb_NhanVien;
+    public javax.swing.JLabel lb_NhanVien1;
     private javax.swing.JLabel lb_QuanLiHoSo;
+    private javax.swing.JLabel lb_SanPham;
     private javax.swing.JLabel lb_TrangChu;
     private javax.swing.JLabel lb_XuLiHoSo;
     public javax.swing.JPanel panel_GiaoDien;

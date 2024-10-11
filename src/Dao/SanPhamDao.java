@@ -35,7 +35,9 @@ public class SanPhamDao {
         try {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                BigDecimal price = new BigDecimal(doc.getString("price").trim());
+                BigDecimal price;
+                Object priceObject = doc.get("price");
+                price = BigDecimal.valueOf((Integer) priceObject);
                 SanPham product = new SanPham(
                         doc.getString("_id"),
                         doc.getString("productName"),
@@ -137,7 +139,36 @@ public class SanPhamDao {
     }
 
     return categoryIDs; // Trả về danh sách loại sản phẩm
-}
+    }
+    
+    public List<SanPham> getProductsByCategory(String categoryID) {
+        List<SanPham> allProducts = getAllProducts();
+        List<SanPham> result = new ArrayList<>();
+
+        for (SanPham sp : allProducts) {
+            if (sp.getCategoryID().equals(categoryID)) {
+                result.add(sp); // Nếu categoryID khớp, thêm vào kết quả
+            }
+        }
+
+        return result;
+    }
+    
+    public List<SanPham> searchProducts(String keyword) {
+    List<SanPham> allProducts = getAllProducts(); // Lấy tất cả sản phẩm
+    List<SanPham> result = new ArrayList<>();
+
+    // Lọc sản phẩm theo mã, tên hoặc loại sản phẩm
+    for (SanPham sp : allProducts) {
+        if (sp.getId().toLowerCase().contains(keyword.toLowerCase()) || 
+            sp.getProductName().toLowerCase().contains(keyword.toLowerCase()) || 
+            sp.getCategoryID().toLowerCase().contains(keyword.toLowerCase())) {
+            result.add(sp); // Thêm vào kết quả nếu khớp từ khóa
+        }
+    }
+
+    return result;
+    }
 
     // Đóng kết nối
     public void close() {

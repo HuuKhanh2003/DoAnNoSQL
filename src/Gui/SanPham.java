@@ -13,6 +13,10 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -24,13 +28,86 @@ public class SanPham extends javax.swing.JPanel {
      * Creates new form NguoiKhieuNai
      */
     SanPhamDao handleSanPham = new SanPhamDao();
+    private boolean isUpdatingFromTable = false;
     
     //SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     public SanPham() {
         initComponents();
         hienThi();
+        addComboBoxListener();
+        addSearchButtonListener();
     }
 
+    private void addComboBoxListener() {
+    CB_LoaiSP.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Chỉ gọi hàm nếu không phải từ việc nhấp vào bảng
+            if (!isUpdatingFromTable) {
+                String selectedCategory = (String) CB_LoaiSP.getSelectedItem();
+                if (selectedCategory != null) {
+                    hienThiSanPhamTheoLoai(selectedCategory); // Gọi hàm để hiển thị sản phẩm
+                }
+            }
+        }
+    });
+    }
+
+    private void hienThiSanPhamTheoLoai(String categoryID) {
+        List<Pojo.SanPham> ds = handleSanPham.getProductsByCategory(categoryID);
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Mã sản phẩm");
+        dtm.addColumn("Tên sản phẩm");
+        dtm.addColumn("Giá");
+        dtm.addColumn("Loại sản phẩm");
+        dtm.addColumn("Chương trình spuyến mãi");
+        dtm.addColumn("Có chương trình spuyến mãi");
+        dtm.setNumRows(ds.size());
+        
+        for (int i = 0; i < ds.size(); i++) {
+            Pojo.SanPham ls = ds.get(i);
+            dtm.setValueAt(ls.getId(), i, 0);
+            dtm.setValueAt(ls.getProductName(), i, 1);
+            dtm.setValueAt(ls.getPrice(), i, 2);
+            dtm.setValueAt(ls.getCategoryID(), i, 3);
+            dtm.setValueAt(ls.getPromotionIDs(), i, 4);
+            dtm.setValueAt(ls.getIsPromotionProgram() == true, i, 5); // Check cho boolean
+        }
+
+        tbl_SanPham.setModel(dtm); // Hiển thị bảng mới với dữ liệu đã lọc
+    }
+    
+    private void addSearchButtonListener() {
+    btn_Tim.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String keyword = txt_Tim.getText(); // Lấy từ khóa từ ô tìm kiếm
+            List<Pojo.SanPham> searchResults = handleSanPham.searchProducts(keyword); // Gọi hàm tìm kiếm
+            
+            // Hiển thị kết quả tìm kiếm trên bảng
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Mã sản phẩm");
+            dtm.addColumn("Tên sản phẩm");
+            dtm.addColumn("Giá");
+            dtm.addColumn("Loại sản phẩm");
+            dtm.addColumn("Chương trình spuyến mãi");
+            dtm.addColumn("Có chương trình spuyến mãi");
+            dtm.setNumRows(searchResults.size());
+            
+            for (int i = 0; i < searchResults.size(); i++) {
+                Pojo.SanPham sp = searchResults.get(i);
+                dtm.setValueAt(sp.getId(), i, 0);
+                dtm.setValueAt(sp.getProductName(), i, 1);
+                dtm.setValueAt(sp.getPrice(), i, 2);
+                dtm.setValueAt(sp.getCategoryID(), i, 3);
+                dtm.setValueAt(sp.getPromotionIDs(), i, 4);
+                dtm.setValueAt(sp.getIsPromotionProgram() == true, i, 5);
+            }
+            tbl_SanPham.setModel(dtm); // Cập nhật bảng với kết quả tìm kiếm
+        }
+    });
+    }
+    
     private void hienThi()
     {
         List<String> dsSanPham = handleSanPham.getAllProductCategories();
@@ -39,7 +116,22 @@ public class SanPham extends javax.swing.JPanel {
             CB_LoaiSP.addItem(loaiSP);
         }
         List<Pojo.SanPham> ds = handleSanPham.getAllProducts();
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                // Make the last column Boolean (for checkbox rendering)
+                if (columnIndex == 5) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Allow editing for all columns except the checkbox column (index 5)
+                return column != 5;
+            }
+        };
         dtm.addColumn("Mã sản phẩm");
         dtm.addColumn("Tên sản phẩm");
         dtm.addColumn("Giá");
@@ -55,7 +147,7 @@ public class SanPham extends javax.swing.JPanel {
             dtm.setValueAt(ls.getPrice(), i, 2);
             dtm.setValueAt(ls.getCategoryID(), i, 3);
             dtm.setValueAt(ls.getPromotionIDs(), i, 4);
-            dtm.setValueAt(ls.getIsPromotionProgram(), i, 5);
+            dtm.setValueAt(ls.getIsPromotionProgram() == true, i, 5);
         }
         tbl_SanPham.setModel(dtm);
     }
@@ -70,6 +162,7 @@ public class SanPham extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -90,6 +183,8 @@ public class SanPham extends javax.swing.JPanel {
         btn_Tim = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txt_Tim = new javax.swing.JTextField();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel1.setText("Mã sản phẩm:");
 
@@ -223,10 +318,11 @@ public class SanPham extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(jLabel5))
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_Gia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel4)))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -273,19 +369,19 @@ public class SanPham extends javax.swing.JPanel {
     private void tbl_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SanPhamMouseClicked
         // TODO add your handling code here:
         int selectedRow = tbl_SanPham.getSelectedRow();
-        if(selectedRow != -1)
-        {
+        if (selectedRow != -1) {
+            isUpdatingFromTable = true; // Đặt cờ trước khi cập nhật
             String ma = tbl_SanPham.getValueAt(selectedRow, 0).toString();
             String ten = tbl_SanPham.getValueAt(selectedRow, 1).toString();
             String price = tbl_SanPham.getValueAt(selectedRow, 2).toString();
             String loaiSP = tbl_SanPham.getValueAt(selectedRow, 3).toString();
-            
-            
+
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
             txt_Gia.setText(price);
             CB_LoaiSP.setSelectedItem(loaiSP);
         }
+        isUpdatingFromTable = false;
     }//GEN-LAST:event_tbl_SanPhamMouseClicked
 
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
@@ -393,6 +489,8 @@ public class SanPham extends javax.swing.JPanel {
         txt_Ten.setText("");
         txt_Gia.setText("");
         
+        hienThi();
+        
         buttonGroup1.clearSelection();
 
     }//GEN-LAST:event_btn_LamMoiActionPerformed
@@ -405,6 +503,7 @@ public class SanPham extends javax.swing.JPanel {
     private javax.swing.JButton btn_Upadte;
     private javax.swing.JButton btn_Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

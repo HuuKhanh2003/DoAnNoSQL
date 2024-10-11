@@ -13,13 +13,14 @@ import javax.swing.JOptionPane;
  */
 public class DangNhap extends javax.swing.JFrame {
 
-    FrmTong frmTong;
+    String username="";
+    String password="";
+    String role="";
     /**
      * Creates new form DangNhap
      */
-    public DangNhap(FrmTong temp) {
+    public DangNhap() {
         initComponents();
-        frmTong=temp;
     }
 
     /**
@@ -143,13 +144,15 @@ public class DangNhap extends javax.swing.JFrame {
     }
     private void btn_DangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangNhapActionPerformed
 
-       DangNhapDao dangNhapDao = new DangNhapDao();
-    
+        DangNhapDao dangNhapDao = new DangNhapDao();
+        username=txt_TaiKhoan.getText().toString();
+        password=txt_MatKhau.getText().toString();
         // Gọi phương thức đăng nhập
-         boolean success = dangNhapDao.login(dangNhapDao.collection,txt_TaiKhoan.getText().toString(), txt_MatKhau.getText().toString());
+        boolean success = dangNhapDao.login(dangNhapDao.collection,username,password);
 
         if (success==true) {
             if (kiemTraNhapDuLieu()) {
+                role=dangNhapDao.getRoleByUsernameAndPassword(username, password);
                 this.setVisible(false);
                 FrmTong temp = new FrmTong(this);
                 temp.setVisible(true);
@@ -196,7 +199,7 @@ public class DangNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DangNhap(new FrmTong()).setVisible(true);
+                new DangNhap().setVisible(true);
             }
         });
     }

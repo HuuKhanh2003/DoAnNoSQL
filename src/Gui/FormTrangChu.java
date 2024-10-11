@@ -81,7 +81,7 @@ public class FormTrangChu extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         image_TrangChu.setPreferredSize(new java.awt.Dimension(1370, 700));
-        add(image_TrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 1370, 700));
+        add(image_TrangChu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 700));
     }// </editor-fold>//GEN-END:initComponents
 
 

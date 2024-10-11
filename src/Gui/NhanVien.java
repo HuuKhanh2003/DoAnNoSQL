@@ -47,24 +47,20 @@ public class NhanVien extends javax.swing.JPanel {
     dtm.addColumn("SĐT");
     dtm.addColumn("Giới tính");
     dtm.addColumn("Ngày sinh");
-
+    dtm.setNumRows(ds.size());
     // Định dạng ngày
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    // Thêm dữ liệu vào bảng
-    for (Pojo.Employee ls : ds) {
-        if (ls != null) { // Kiểm tra null
-            Object[] rowData = new Object[]{
-                ls.getId(),
-                ls.getNameEmployee(),
-                ls.getPosition(),
-                ls.getPhone(),
-                ls.getGender(),
-                (ls.getBod() != null) ? dateFormat.format(ls.getBod()) : ""
-            };
-            dtm.addRow(rowData);
+    for(int i=0;i<ds.size();i++)
+        {
+            Pojo.Employee ls = ds.get(i);
+            dtm.setValueAt(ls.getId(), i, 0);
+            dtm.setValueAt(ls.getNameEmployee(),i, 1);
+            dtm.setValueAt(ls.getPosition(), i, 2);
+            dtm.setValueAt(ls.getPhone(), i, 3);
+            dtm.setValueAt(ls.getGender(), i, 4);
+            //dtm.setValueAt((ls.getBod() != null) ? dateFormat.format(ls.getBod()) : "", i, 5);
         }
-    }
     
     tbl_Employee.setModel(dtm);
 }

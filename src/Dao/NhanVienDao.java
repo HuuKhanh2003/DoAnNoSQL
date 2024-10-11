@@ -26,7 +26,7 @@ public class NhanVienDao {
     public static MongoCollection<Document> collection;
     
     public NhanVienDao() {
-        collection = Connect.database.getCollection("Employee");
+        collection = Connect.database.getCollection("Customer");
     }
     
     public List<Employee> getAllEmployees() {

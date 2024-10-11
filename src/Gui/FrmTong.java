@@ -213,7 +213,7 @@ public class FrmTong extends javax.swing.JFrame {
         });
         pnMenu.add(lb_DonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 360, 70));
 
-        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 770));
+        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 770));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -410,20 +410,6 @@ public class FrmTong extends javax.swing.JFrame {
     private void MenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuMouseEntered
-    private void lb_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_SanPhamMouseClicked
-        // TODO add your handling code here:
-        JPanel newPanel = new SanPham();
-
-        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
-        panel_GiaoDien.removeAll();
-
-        // Thêm formPhong vào panel_GiaoDien
-        panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
-        panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
-        // Cập nhật giao diện người dùng
-        panel_GiaoDien.revalidate();
-        panel_GiaoDien.repaint();
-    }//GEN-LAST:event_lb_SanPhamMouseClicked
 
     private void lb_DonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DonHangMouseClicked
         // TODO add your handling code here:

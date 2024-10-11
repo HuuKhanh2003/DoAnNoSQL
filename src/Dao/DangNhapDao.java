@@ -22,26 +22,33 @@ public class DangNhapDao {
         // Kết nối tới MongoDB
         collection = database.getCollection("Account");
     }
+    
+    public boolean login(MongoCollection<Document> collection, String username, String password) 
+    {
+        // Tạo tài liệu truy vấn với username
+        Document query = new Document("username", username);
 
-    // Hàm đăng nhập
-    public static String dangNhap(String username, String password) {
-        // Tìm tài khoản với username và password khớp
-        Document query = new Document("username", username).append("password", password);
+        // Tìm tài liệu tương ứng
         Document account = collection.find(query).first();
 
-        // Kiểm tra nếu tài khoản tồn tại
-        if (account != null) {
-            String role = account.getString("role");
-            System.out.println("Đăng nhập thành công! Vai trò của bạn là: " + role);
-            return role;
+        if (account == null) {
+            System.out.println("Account not found.");
+            return false;
+        }
+
+        String storedHashedPassword = account.getString("password");
+
+        String hashedPassword = hashPassword(password);
+
+        if (storedHashedPassword.equals(hashedPassword)) {
+            System.out.println("Login successful!");
+            return true;
         } else {
-            System.out.println("Thông tin đăng nhập không đúng.");
-            return null;
+            System.out.println("Invalid password.");
+            return false;
         }
     }
-
-    // Đóng kết nối
-    public void close() {
-        mongoClient.close();
+    public String hashPassword(String password) {
+        return Integer.toHexString(password.hashCode());
     }
 }

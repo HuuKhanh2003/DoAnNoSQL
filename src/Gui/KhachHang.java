@@ -346,7 +346,7 @@ public class KhachHang extends javax.swing.JPanel {
         int selectedRow = tbl_KhachHang.getSelectedRow();
 
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn người khiếu nại cần sửa.");
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng cần sửa.");
             return;
         }
 

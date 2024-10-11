@@ -181,7 +181,6 @@ public class FrmTong extends javax.swing.JFrame {
             }
         });
         pnMenu.add(lb_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 310, 80));
-        lb_KhachHang.getAccessibleContext().setAccessibleName("Khách hàng");
 
         lb_NhanVien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_NhanVien.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,6 +210,9 @@ public class FrmTong extends javax.swing.JFrame {
         Menu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 MenuMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                MenuMouseEntered(evt);
             }
         });
         jPanel1.add(Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -325,14 +327,14 @@ public class FrmTong extends javax.swing.JFrame {
 
     private void lb_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_NhanVienMouseClicked
         // TODO add your handling code here:
-        //JPanel newPanel = new NhanVien();
+        JPanel newPanel = new NhanVien();
 
         // Loại bỏ tất cả các thành phần con của panel_GiaoDien
         panel_GiaoDien.removeAll();
 
         // Thêm formPhong vào panel_GiaoDien
         panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
-        //panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
+        panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
         // Cập nhật giao diện người dùng
         panel_GiaoDien.revalidate();
         panel_GiaoDien.repaint();
@@ -386,6 +388,11 @@ public class FrmTong extends javax.swing.JFrame {
         panel_GiaoDien.revalidate();
         panel_GiaoDien.repaint();
     }//GEN-LAST:event_lb_TrangChuMouseClicked
+
+    
+    private void MenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuMouseEntered
     int width =303;
     int height=770;
 

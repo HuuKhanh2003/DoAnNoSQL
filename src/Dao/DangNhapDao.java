@@ -4,10 +4,11 @@
  */
 package Dao;
 
-import static Dao.Connect.database;
-import static Dao.Connect.mongoClient;
-import com.mongodb.MongoClient;
+import Dao.Connect;
 import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+import static Dao.Connect.mongoClient; // Import mongoClient from Connect class
+import static Dao.Connect.database; 
 import org.bson.Document;
 
 /**
@@ -19,8 +20,6 @@ public class DangNhapDao {
     public static MongoCollection<Document> collection;
     public DangNhapDao() {
         // Kết nối tới MongoDB
-        mongoClient = new MongoClient("localhost", 27017);
-        database = mongoClient.getDatabase("QuanLyKhuyenMai");
         collection = database.getCollection("Account");
     }
     

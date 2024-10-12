@@ -40,12 +40,13 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        quenmatkhau = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txt_TaiKhoan = new javax.swing.JTextField();
         txt_MatKhau = new javax.swing.JTextField();
         btn_DangNhap = new javax.swing.JButton();
         btn_formdangky = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(865, 448));
@@ -91,10 +92,15 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/nhaplai.png"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 260, -1, -1));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel10.setText("I don't have an account ?");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 164, -1));
+        quenmatkhau.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        quenmatkhau.setForeground(new java.awt.Color(0, 51, 204));
+        quenmatkhau.setText("forgot password ?");
+        quenmatkhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quenmatkhauMouseClicked(evt);
+            }
+        });
+        getContentPane().add(quenmatkhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, 164, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 204));
@@ -124,6 +130,11 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btn_formdangky, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 353, -1, 30));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel12.setText("I don't have an account ?");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 164, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -169,6 +180,13 @@ public class DangNhap extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btn_formdangkyActionPerformed
 
+    private void quenmatkhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quenmatkhauMouseClicked
+        // TODO add your handling code here:
+        QuenMatKhau temp= new QuenMatKhau();
+        temp.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_quenmatkhauMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -208,8 +226,8 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JButton btn_DangNhap;
     private javax.swing.JButton btn_formdangky;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -217,6 +235,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel quenmatkhau;
     private javax.swing.JTextField txt_MatKhau;
     private javax.swing.JTextField txt_TaiKhoan;
     // End of variables declaration//GEN-END:variables

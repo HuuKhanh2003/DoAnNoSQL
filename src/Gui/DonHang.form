@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -17,17 +17,56 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="109" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" min="-2" pref="624" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="656" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="301" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane2" min="-2" pref="624" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="624" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btn_Them" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btn_Xoa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btn_Sua" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="btn_LamMoi" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <Component id="btn_TimKiem" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txt_Ma" max="32767" attributes="0"/>
+                          <Component id="txt_NgayLap" pref="165" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="txt_TongTien" min="-2" pref="160" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="CB_KH" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="432" max="-2" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -36,11 +75,33 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_Ma" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CB_KH" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_TongTien" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txt_NgayLap" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="162" max="-2" attributes="0"/>
-              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btn_Them" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_Xoa" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_Sua" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_LamMoi" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_TimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="170" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -69,6 +130,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_DonHangMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -132,5 +196,69 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="M&#xe3; &#x111;&#x1a1;n h&#xe0;ng:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ng&#xe0;y l&#x1ead;p:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kh&#xe1;ch h&#xe0;ng:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="T&#x1ed5;ng ti&#x1ec1;n:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_Ma">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txt_TongTien">
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="txt_NgayLap">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="CB_KH">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_Them">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_Xoa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_Sua">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_LamMoi">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_LamMoiActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_TimKiem">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

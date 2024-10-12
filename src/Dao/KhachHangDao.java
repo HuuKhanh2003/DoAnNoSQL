@@ -151,6 +151,29 @@ public class KhachHangDao {
 
         return tiers; // Trả về danh sách loại khách hàng
     }
+    public List<String> getCustomerID() {
+        List<String> ids = new ArrayList<>();
+
+        // Thực hiện truy vấn để lấy tất cả khách hàng
+        MongoCursor<Document> cursor = collection.find().iterator();
+
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Lấy giá trị tier từ tài liệu (document)
+                String id = doc.getString("_id");
+
+                // Kiểm tra nếu giá trị tier không null và chưa có trong danh sách tiers
+                if (id != null && !ids.contains(id)) {
+                    ids.add(id); // Thêm vào danh sách
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return ids; // Trả về danh sách loại khách hàng
+    }
     public List<String> getAllCustomerByName() {
         List<String> names = new ArrayList<>();
 

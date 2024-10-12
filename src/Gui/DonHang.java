@@ -25,7 +25,7 @@ public class DonHang extends javax.swing.JPanel {
         initComponents();
         hienThiDonHang();
         
-        tbl_DonHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+    tbl_DonHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             if (!e.getValueIsAdjusting()) {

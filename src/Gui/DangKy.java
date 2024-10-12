@@ -46,11 +46,13 @@ public class DangKy extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        txt_TaiKhoanDangKy = new javax.swing.JTextField();
+        txt_Email = new javax.swing.JTextField();
         txt_MatKhauDangKy = new javax.swing.JTextField();
         txt_NhapLaiTaiKhoan = new javax.swing.JTextField();
         btn_FormDangNhap = new javax.swing.JButton();
         btn_DangKy = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txt_TaiKhoanDangKy = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(860, 450));
@@ -103,25 +105,25 @@ public class DangKy extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 204));
         jLabel12.setText("Nhập lại mật khẩu");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 170, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 170, -1));
 
         jLabel2.setBackground(new java.awt.Color(153, 0, 0));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 204));
         jLabel2.setText("Mật Khẩu :");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 150, 100, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 100, -1));
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/key1.png"))); // NOI18N
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 197, -1, -1));
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, -1, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/nhaplai.png"))); // NOI18N
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, -1, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, -1, -1));
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(831, 110, 30, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel1.setText("Tài Khoản :");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 82, 110, -1));
+        jLabel1.setText("Email :");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 110, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 204));
@@ -134,22 +136,22 @@ public class DangKy extends javax.swing.JFrame {
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 214, -1));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/user_1.png"))); // NOI18N
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(448, 110, -1, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 180, -1, -1));
 
-        txt_TaiKhoanDangKy.addActionListener(new java.awt.event.ActionListener() {
+        txt_Email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_TaiKhoanDangKyActionPerformed(evt);
+                txt_EmailActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_TaiKhoanDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 110, 341, 30));
-        getContentPane().add(txt_MatKhauDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(484, 197, 341, 30));
+        getContentPane().add(txt_Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 341, 30));
+        getContentPane().add(txt_MatKhauDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 341, 30));
 
         txt_NhapLaiTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_NhapLaiTaiKhoanActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_NhapLaiTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 340, 30));
+        getContentPane().add(txt_NhapLaiTaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 340, 30));
 
         btn_FormDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_FormDangNhap.setForeground(new java.awt.Color(0, 51, 204));
@@ -173,13 +175,25 @@ public class DangKy extends javax.swing.JFrame {
         });
         getContentPane().add(btn_DangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 360, 100, 40));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel5.setText("Tài Khoản :");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 110, -1));
+
+        txt_TaiKhoanDangKy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_TaiKhoanDangKyActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_TaiKhoanDangKy, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 341, 30));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_TaiKhoanDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TaiKhoanDangKyActionPerformed
+    private void txt_EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_TaiKhoanDangKyActionPerformed
+    }//GEN-LAST:event_txt_EmailActionPerformed
 
     private void txt_NhapLaiTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NhapLaiTaiKhoanActionPerformed
         // TODO add your handling code here:
@@ -193,12 +207,12 @@ public class DangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_FormDangNhapActionPerformed
 
     private void btn_DangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangKyActionPerformed
-        String username = txt_TaiKhoanDangKy.getText().toString();
+        String username = txt_Email.getText().toString();
         String pass = txt_MatKhauDangKy.getText().toString();
         String repeatPass = txt_NhapLaiTaiKhoan.getText().toString();
-
+        String email=txt_Email.getText().toString();
         if (pass.equals(repeatPass)) {
-            boolean success = dangkyDao.registerAccount(dangkyDao.collection, username, pass);
+            boolean success = dangkyDao.registerAccount(dangkyDao.collection,email, username, pass);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công.", "New Account Success", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -208,6 +222,10 @@ public class DangKy extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(this, "Nhập lại mật khẩu không trùng khớp", "New Account Failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_DangKyActionPerformed
+
+    private void txt_TaiKhoanDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TaiKhoanDangKyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_TaiKhoanDangKyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,12 +275,14 @@ public class DangKy extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField txt_Email;
     private javax.swing.JTextField txt_MatKhauDangKy;
     private javax.swing.JTextField txt_NhapLaiTaiKhoan;
     private javax.swing.JTextField txt_TaiKhoanDangKy;

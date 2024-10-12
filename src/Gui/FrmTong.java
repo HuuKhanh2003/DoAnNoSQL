@@ -410,7 +410,8 @@ public class FrmTong extends javax.swing.JFrame {
     private void MenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuMouseEntered
-    private void lb_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_SanPhamMouseClicked
+
+      private void lb_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {                                        
         // TODO add your handling code here:
         JPanel newPanel = new SanPham();
 
@@ -423,7 +424,7 @@ public class FrmTong extends javax.swing.JFrame {
         // Cập nhật giao diện người dùng
         panel_GiaoDien.revalidate();
         panel_GiaoDien.repaint();
-    }//GEN-LAST:event_lb_SanPhamMouseClicked
+    }                                       
 
     private void lb_DonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DonHangMouseClicked
         // TODO add your handling code here:

@@ -28,15 +28,16 @@ public class KhachHang extends javax.swing.JPanel {
     public KhachHang() {
         initComponents();
         hienThi();
-    }
-
-    private void hienThi()
-    {
         List<String> dsKhachHang = handleKhachHang.getAllCustomerTiers();
         for(String loaiKH:dsKhachHang)
         {
             CB_LoaiKH.addItem(loaiKH);
         }
+    }
+
+    private void hienThi()
+    {
+        
         List<Pojo.KhachHang> ds = handleKhachHang.getAllCustomers();
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Mã khách hàng");
@@ -88,6 +89,9 @@ public class KhachHang extends javax.swing.JPanel {
         btn_LamMoi = new javax.swing.JButton();
         CB_LoaiKH = new javax.swing.JComboBox<>();
         txt_SoVour = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txt_TimKiem = new javax.swing.JTextField();
+        btn_TimKiem = new javax.swing.JButton();
 
         jLabel1.setText("Mã khách hàng:");
 
@@ -147,19 +151,30 @@ public class KhachHang extends javax.swing.JPanel {
             }
         });
 
+        jLabel7.setText("Tìm kiếm:");
+
+        btn_TimKiem.setText("Tìm kiếm");
+        btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_TimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addGap(57, 57, 57)
                 .addComponent(btn_Them)
-                .addGap(34, 34, 34)
+                .addGap(26, 26, 26)
                 .addComponent(btn_Xoa)
                 .addGap(31, 31, 31)
                 .addComponent(btn_Upadte)
-                .addGap(51, 51, 51)
+                .addGap(31, 31, 31)
                 .addComponent(btn_LamMoi)
+                .addGap(35, 35, 35)
+                .addComponent(btn_TimKiem)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
@@ -169,11 +184,15 @@ public class KhachHang extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(CB_LoaiKH, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
                                 .addGap(34, 34, 34)
-                                .addComponent(txt_SoVour, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(CB_LoaiKH, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_SoVour, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(txt_TimKiem))))
                         .addGap(58, 58, 58))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -206,14 +225,19 @@ public class KhachHang extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_SoVour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Them)
                     .addComponent(btn_Xoa)
                     .addComponent(btn_Upadte)
-                    .addComponent(btn_LamMoi))
+                    .addComponent(btn_LamMoi)
+                    .addComponent(btn_TimKiem))
                 .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -263,12 +287,9 @@ public class KhachHang extends javax.swing.JPanel {
             String email = tbl_KhachHang.getValueAt(selectedRow, 2).toString();
             String loaiKH = tbl_KhachHang.getValueAt(selectedRow, 3).toString();
             String soVoucher = tbl_KhachHang.getValueAt(selectedRow, 5).toString();
-            
-            
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
             txt_Email.setText(email);
-            
             txt_SoVour.setText(soVoucher);
             CB_LoaiKH.setSelectedItem(loaiKH);
         }
@@ -308,7 +329,7 @@ public class KhachHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công!");
             hienThi();
         } else {
-            JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại!");
+            JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại do trùng Mã khách hàng!");
         }
     }//GEN-LAST:event_btn_ThemActionPerformed
 
@@ -400,10 +421,45 @@ public class KhachHang extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btn_LamMoiActionPerformed
 
+    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
+        // TODO add your handling code here:
+        String searchText = txt_TimKiem.getText();
+
+        // Gọi phương thức getCustomersByName với tên cần tìm
+        List<Pojo.KhachHang> ds = handleKhachHang.getCustomersByName(searchText);
+
+        // Tạo mô hình bảng mới để hiển thị kết quả
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Mã khách hàng");
+        dtm.addColumn("Tên khách hàng");
+        dtm.addColumn("Email");
+        dtm.addColumn("Loại khách hàng");
+        dtm.addColumn("Chương trình khuyến mãi");
+        dtm.addColumn("Số vourcher");
+
+        // Cập nhật số lượng dòng trong mô hình bảng
+        dtm.setNumRows(ds.size());
+
+        // Duyệt qua danh sách khách hàng và thêm vào bảng
+        for (int i = 0; i < ds.size(); i++) {
+            Pojo.KhachHang kh = ds.get(i);
+            dtm.setValueAt(kh.getId(), i, 0);
+            dtm.setValueAt(kh.getCustomerName(), i, 1);
+            dtm.setValueAt(kh.getEmail(), i, 2);
+            dtm.setValueAt(kh.getTier(), i, 3);
+            dtm.setValueAt(kh.getPromotionIDs().toString(), i, 4); // Chuyển danh sách thành chuỗi
+            dtm.setValueAt(kh.getVoucherQuantity(), i, 5);
+        }
+
+        // Gán mô hình bảng mới vào bảng tbl_KhachHang
+        tbl_KhachHang.setModel(dtm);
+    }//GEN-LAST:event_btn_TimKiemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CB_LoaiKH;
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Them;
+    private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_Upadte;
     private javax.swing.JButton btn_Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -413,6 +469,7 @@ public class KhachHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_KhachHang;
@@ -420,5 +477,6 @@ public class KhachHang extends javax.swing.JPanel {
     private javax.swing.JTextField txt_Ma;
     private javax.swing.JTextField txt_SoVour;
     private javax.swing.JTextField txt_Ten;
+    private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables
 }

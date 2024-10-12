@@ -30,17 +30,18 @@ public class DonHangDao {
     
     public List<DonHang> getAllOrders() {
     List<DonHang> orders = new ArrayList<>();
-    try (MongoCursor<Document> cursor = collection.find().iterator()) {
+    MongoCursor<Document> cursor = collection.find().iterator();
+    
+    try {
         while (cursor.hasNext()) {
             Document doc = cursor.next();
 
-            // Không cần chuyển đổi từ String sang Date nữa
             Date orderDate = doc.getDate("orderDate");
 
             // Lấy danh sách sản phẩm từ MongoDB
             List<Document> productDocs = (List<Document>) doc.get("products");
             List<DonHang.Product> products = new ArrayList<>();
-            double totalAmount = 0.0; // Khởi tạo tổng số tiền
+            double totalAmount = 0.0;
 
             if (productDocs != null) {
                 for (Document productDoc : productDocs) {
@@ -54,8 +55,8 @@ public class DonHangDao {
                         discountedPrice = 0.0;
                     }
 
-                    int quantity = productDoc.getInteger("quantity", 0); 
-                    totalAmount += price * quantity; 
+                    int quantity = productDoc.getInteger("quantity", 0);
+                    totalAmount += price * quantity;
 
                     DonHang.Product product = new DonHang.Product(
                         productDoc.getString("productID"),
@@ -71,12 +72,14 @@ public class DonHangDao {
             DonHang order = new DonHang(
                 doc.getString("_id"),
                 doc.getString("customerID"),
-                orderDate, // Sử dụng trực tiếp Date từ MongoDB
+                orderDate,
                 products,
                 totalAmount
             );
             orders.add(order);
         }
+    } finally {
+        cursor.close();
     }
 
     orders.sort(Comparator.comparing(DonHang::getId));
@@ -90,11 +93,8 @@ public Pojo.DonHang getOrderById(String orderId) {
     
     if (doc != null) {
         String customerID = doc.getString("customerID");
-        
-        // Không cần chuyển đổi từ String sang Date nữa
         Date orderDate = doc.getDate("orderDate");
 
-        // Lấy danh sách sản phẩm
         List<Document> productDocs = (List<Document>) doc.get("products");
         List<Pojo.DonHang.Product> products = new ArrayList<>();
         if (productDocs != null) {
@@ -116,7 +116,7 @@ public Pojo.DonHang getOrderById(String orderId) {
         return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"));
     }
 
-    return null; // Nếu không tìm thấy đơn hàng
+    return null;
 }
 
 

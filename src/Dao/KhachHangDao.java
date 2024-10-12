@@ -53,6 +53,18 @@ public class KhachHangDao {
 
         return customers;
     }
+    public List<KhachHang> getCustomersByName(String name) {
+    // Truy vấn trực tiếp và chuyển đổi kết quả
+    return collection.find(new Document("customerName", new Document("$regex", name).append("$options", "i")))
+            .map(doc -> new KhachHang(
+                    doc.getString("_id"),
+                    doc.getString("customerName"),
+                    doc.getString("email"),
+                    doc.getString("tier"),
+                    (List<String>) doc.get("promotionIDs"),
+                    doc.getInteger("voucherQuantity")))
+            .into(new ArrayList<>());
+}
 
     // Hàm thêm khách hàng
     public boolean addCustomer(KhachHang customer) {
@@ -138,6 +150,29 @@ public class KhachHangDao {
         }
 
         return tiers; // Trả về danh sách loại khách hàng
+    }
+    public List<String> getCustomerID() {
+        List<String> ids = new ArrayList<>();
+
+        // Thực hiện truy vấn để lấy tất cả khách hàng
+        MongoCursor<Document> cursor = collection.find().iterator();
+
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                // Lấy giá trị tier từ tài liệu (document)
+                String id = doc.getString("_id");
+
+                // Kiểm tra nếu giá trị tier không null và chưa có trong danh sách tiers
+                if (id != null && !ids.contains(id)) {
+                    ids.add(id); // Thêm vào danh sách
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return ids; // Trả về danh sách loại khách hàng
     }
     public List<String> getAllCustomerByName() {
         List<String> names = new ArrayList<>();

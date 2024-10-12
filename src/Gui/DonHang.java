@@ -7,6 +7,8 @@ package Gui;
 import Dao.DonHangDao;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,10 +24,22 @@ public class DonHang extends javax.swing.JPanel {
     public DonHang() {
         initComponents();
         hienThiDonHang();
+        
+        tbl_DonHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbl_DonHang.getSelectedRow();
+                if (selectedRow >= 0) {
+                    String selectedOrderId = tbl_DonHang.getValueAt(selectedRow, 0).toString();
+                    hienThiChiTietDonHang(selectedOrderId);
+                }
+            }
+        }
+    });
     }
 
     private void hienThiDonHang() {
-    // Lấy danh sách tất cả đơn hàng
     List<Pojo.DonHang> dsDonHang = handleDonHang.getAllOrders();
     DefaultTableModel dtm = new DefaultTableModel();
     
@@ -33,39 +47,51 @@ public class DonHang extends javax.swing.JPanel {
     dtm.addColumn("Mã đơn hàng");
     dtm.addColumn("Mã khách hàng");
     dtm.addColumn("Ngày đặt hàng");
-    dtm.addColumn("Sản phẩm");
     dtm.addColumn("Tổng tiền");
     
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    dtm.setNumRows(dsDonHang.size());
     
-    for (int i = 0; i < dsDonHang.size(); i++) {
-        Pojo.DonHang ls = dsDonHang.get(i);
-        dtm.setValueAt(ls.getId(), i, 0);
-        dtm.setValueAt(ls.getCustomerID(), i, 1);
-        dtm.setValueAt(dateFormat.format(ls.getOrderDate()), i, 2);
-        
-        // Hiển thị danh sách sản phẩm
-        StringBuilder productsList = new StringBuilder();
-        double totalAmount = 0; // Khởi tạo biến tổng tiền
-        for (Pojo.DonHang.Product product : ls.getProducts()) {
-            productsList.append(product.getProductID()).append(" (").append(product.getQuantity()).append("), ");
-            totalAmount += product.getTotalAmount(); // Cộng dồn tổng tiền từ các sản phẩm
-        }
-        if (productsList.length() > 0) {
-            productsList.setLength(productsList.length() - 2); // Xóa dấu phẩy cuối
-        }
-        dtm.setValueAt(productsList.toString(), i, 3);
-        
-        // Hiển thị tổng tiền
-        dtm.setValueAt(totalAmount, i, 4);
+    for (Pojo.DonHang donHang : dsDonHang) {
+        dtm.addRow(new Object[]{
+            donHang.getId(),
+            donHang.getCustomerID(),
+            dateFormat.format(donHang.getOrderDate()),
+            donHang.getTotalAmount()
+        });
     }
     
     // Thiết lập model cho bảng đơn hàng
     tbl_DonHang.setModel(dtm);
 }
 
+private void hienThiChiTietDonHang(String orderId) {
+    Pojo.DonHang donHang = handleDonHang.getOrderById(orderId); // Lấy thông tin chi tiết đơn hàng
 
+    DefaultTableModel dtmChiTiet = new DefaultTableModel();
+    dtmChiTiet.addColumn("Mã sản phẩm");
+    dtmChiTiet.addColumn("Số lượng");
+    dtmChiTiet.addColumn("Giá");
+    dtmChiTiet.addColumn("Mã khuyến mãi");
+    dtmChiTiet.addColumn("Giá khuyến mãi");
+    dtmChiTiet.addColumn("Thành tiền"); // Thêm cột Thành tiền
+    
+    if (donHang != null && donHang.getProducts() != null) {
+        for (Pojo.DonHang.Product product : donHang.getProducts()) {
+            double thanhTien = product.getQuantity() * product.getPrice(); // Tính Thành tiền
+            dtmChiTiet.addRow(new Object[]{
+                product.getProductID(),
+                product.getQuantity(),
+                product.getPrice(),
+                product.getPromotionID(),
+                product.getDiscountedPrice(),
+                thanhTien // Thêm Thành tiền vào bảng
+            });
+        }
+    }
+    
+    // Thiết lập model cho bảng chi tiết đơn hàng
+    tbl_ChiTietDonHang.setModel(dtmChiTiet);
+}
 
 
     /**
@@ -80,6 +106,8 @@ public class DonHang extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_DonHang = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_ChiTietDonHang = new javax.swing.JTable();
 
         jLabel1.setText("Đơn hàng");
 
@@ -96,28 +124,44 @@ public class DonHang extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbl_DonHang);
 
+        tbl_ChiTietDonHang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã sản phẩm", "Số lượng", "Giá", "Mã khuyến mãi", "Giá khuyến mãi", "Thành tiền"
+            }
+        ));
+        jScrollPane2.setViewportView(tbl_ChiTietDonHang);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(301, 301, 301)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 109, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 656, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(432, 432, 432))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -125,6 +169,8 @@ public class DonHang extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tbl_ChiTietDonHang;
     private javax.swing.JTable tbl_DonHang;
     // End of variables declaration//GEN-END:variables
 }

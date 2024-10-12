@@ -428,7 +428,7 @@ public class FrmTong extends javax.swing.JFrame {
     private void lb_DonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DonHangMouseClicked
         // TODO add your handling code here:
         JPanel newPanel = new DonHang();
-
+        //JPanel newPanel = new NhanVien();
         // Loại bỏ tất cả các thành phần con của panel_GiaoDien
         panel_GiaoDien.removeAll();
 

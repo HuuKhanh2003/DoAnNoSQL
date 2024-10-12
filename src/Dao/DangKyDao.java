@@ -25,7 +25,7 @@ public class DangKyDao {
         return account != null;
     }
 
-   public boolean registerAccount(MongoCollection<Document> collection, String username, String password) {
+   public boolean registerAccount(MongoCollection<Document> collection,String email, String username, String password) {
     if (isUsernameTaken(collection, username)) {
         return false;
     }
@@ -34,7 +34,8 @@ public class DangKyDao {
 
     Document newAccount = new Document("username", username)
                           .append("password", hashedPassword)
-                          .append("role","employee");
+                          .append("role","employee")
+                          .append("email", email);
     collection.insertOne(newAccount);
     
     return true;

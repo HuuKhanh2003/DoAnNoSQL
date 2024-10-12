@@ -141,6 +141,28 @@ public class SanPhamDao {
     return categoryIDs; // Trả về danh sách loại sản phẩm
     }
     
+    public List<String> getAllProductIDs() {
+    List<String> productIDs = new ArrayList<>();
+    
+    // Thực hiện truy vấn để lấy tất cả sản phẩm
+    MongoCursor<Document> cursor = collection.find().iterator();
+
+    try {
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            String productID = doc.getString("_id");
+            
+            if (productID != null && !productIDs.contains(productID)) {
+                productIDs.add(productID);
+            }
+        }
+    } finally {
+        cursor.close();
+    }
+
+    return productIDs;
+    }
+    
     public List<SanPham> getProductsByCategory(String categoryID) {
         List<SanPham> allProducts = getAllProducts();
         List<SanPham> result = new ArrayList<>();

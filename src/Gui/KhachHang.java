@@ -45,6 +45,7 @@ public class KhachHang extends javax.swing.JPanel {
         dtm.addColumn("Loại khách hàng");
         dtm.addColumn("Chương trình khuyến mãi");
         dtm.addColumn("Số vourcher");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dtm.setNumRows(ds.size());
         for(int i=0;i<ds.size();i++)
         {

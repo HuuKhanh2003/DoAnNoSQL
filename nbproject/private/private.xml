@@ -17,11 +17,14 @@
             <file>file:/D:/DoAnNoSQL/src/Gui/DangNhap.java</file>
             <file>file:/D:/DoAnNoSQL/src/Gui/DonHang.java</file>
             <file>file:/D:/DoAnNoSQL/src/Dao/DangNhapDao.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Pojo/KhuyenMai.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/KhuyenMai.java</file>
             <file>file:/D:/DoAnNoSQL/src/Dao/SanPhamDao.java</file>
             <file>file:/D:/DoAnNoSQL/src/Gui/NhanVien.java</file>
             <file>file:/D:/DoAnNoSQL/src/Pojo/TaiKhoan.java</file>
             <file>file:/D:/DoAnNoSQL/src/Dao/Connect.java</file>
             <file>file:/D:/DoAnNoSQL/src/Pojo/KhachHang.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Dao/KhuyenMaiDao.java</file>
         </group>
     </open-files>
 </project-private>

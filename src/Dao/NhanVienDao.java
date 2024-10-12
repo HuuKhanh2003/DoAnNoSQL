@@ -38,7 +38,7 @@ public class NhanVienDao {
     try (MongoCursor<Document> cursor = collection.find().iterator()) {
         while (cursor.hasNext()) {
             Document doc = cursor.next();
-            String bodString = doc.getString("bod");
+            String bodString = doc.getString("bod"); 
             Date bod = null;
             if (bodString != null) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -42,11 +42,10 @@ public class SanPham extends javax.swing.JPanel {
     CB_LoaiSP.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Chỉ gọi hàm nếu không phải từ việc nhấp vào bảng
             if (!isUpdatingFromTable) {
                 String selectedCategory = (String) CB_LoaiSP.getSelectedItem();
                 if (selectedCategory != null) {
-                    hienThiSanPhamTheoLoai(selectedCategory); // Gọi hàm để hiển thị sản phẩm
+                    hienThiSanPhamTheoLoai(selectedCategory);
                 }
             }
         }
@@ -119,7 +118,6 @@ public class SanPham extends javax.swing.JPanel {
         DefaultTableModel dtm = new DefaultTableModel() {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                // Make the last column Boolean (for checkbox rendering)
                 if (columnIndex == 5) {
                     return Boolean.class;
                 }
@@ -128,7 +126,6 @@ public class SanPham extends javax.swing.JPanel {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Allow editing for all columns except the checkbox column (index 5)
                 return column != 5;
             }
         };

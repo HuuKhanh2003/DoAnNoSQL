@@ -30,6 +30,8 @@ public class NhanVien extends javax.swing.JPanel {
     
     private void hienThi(){
     List<String> listPosition = handleEmployee.getEmployeePosition();
+    cbx_position.removeAllItems();
+    cbx_gender.removeAllItems();
     for (String position : listPosition) {
         cbx_position.addItem(position);
     }
@@ -48,7 +50,6 @@ public class NhanVien extends javax.swing.JPanel {
     dtm.addColumn("Giới tính");
     dtm.addColumn("Ngày sinh");
     dtm.setNumRows(ds.size());
-    // Định dạng ngày
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     for(int i=0;i<ds.size();i++)
@@ -249,47 +250,42 @@ public class NhanVien extends javax.swing.JPanel {
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         // TODO add your handling code here:
         String id = txt_idEmployee.getText().trim();
-    String name = txt_nameEmployee.getText().trim();
-    String position = (String) cbx_position.getSelectedItem();
-    String phone = txt_phone.getText().trim();
-    String gender = (String) cbx_gender.getSelectedItem();
-    String bod = txt_bod.getText().trim();
+        String name = txt_nameEmployee.getText().trim();
+        String position = (String) cbx_position.getSelectedItem();
+        String phone = txt_phone.getText().trim();
+        String gender = (String) cbx_gender.getSelectedItem();
+        String bod = txt_bod.getText().trim();
 
-    // Kiểm tra các trường đầu vào không được để trống
-    if (id.isEmpty() || name.isEmpty() || phone.isEmpty() || bod.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin.");
-        return;
-    }
+        if (id.isEmpty() || name.isEmpty() || phone.isEmpty() || bod.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin.");
+            return;
+        }
 
-    // Khởi tạo đối tượng NhanVien và thiết lập các giá trị cho nó
-    Pojo.NhanVien employee = new Pojo.NhanVien();
-    employee.setId(id);
-    employee.setNameEmployee(name);
-    employee.setPosition(position);
-    employee.setPhone(phone);
-    employee.setGender(gender);
+        Pojo.NhanVien employee = new Pojo.NhanVien();
+        employee.setId(id);
+        employee.setNameEmployee(name);
+        employee.setPosition(position);
+        employee.setPhone(phone);
+        employee.setGender(gender);
 
-    // Chuyển đổi chuỗi ngày tháng thành Date trước khi gán vào employee
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Định dạng phù hợp với dữ liệu
-    dateFormat.setLenient(false); // Đặt chế độ kiểm tra nghiêm ngặt
-    try {
-        Date birthDate = dateFormat.parse(bod);
-        employee.setBod(birthDate);
-    } catch (ParseException e) {
-        JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd.");
-        return;
-    }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false); // Đặt chế độ kiểm tra nghiêm ngặt
+        try {
+            Date birthDate = dateFormat.parse(bod);
+            employee.setBod(birthDate);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ. Vui lòng nhập lại theo định dạng yyyy-MM-dd.");
+            return;
+        }
 
-    // Gọi hàm addEmployee để thêm nhân viên vào cơ sở dữ liệu
-    boolean success = handleEmployee.addEmployee(employee);
+        boolean success = handleEmployee.addEmployee(employee);
 
-    // Thông báo kết quả
-    if (success) {
-        JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
-        hienThi(); // Cập nhật lại bảng hoặc giao diện
-    } else {
-        JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại!");
-    }
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công!");
+            hienThi(); // Cập nhật lại bảng hoặc giao diện
+        } else {
+            JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại!");
+        }
     }//GEN-LAST:event_btn_AddActionPerformed
 
     private void tbl_EmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_EmployeeMouseClicked
@@ -303,22 +299,20 @@ public class NhanVien extends javax.swing.JPanel {
             String gender = tbl_Employee.getValueAt(selectedRow, 4).toString();
             String bodString = tbl_Employee.getValueAt(selectedRow, 5).toString();
 
-            // Cập nhật thông tin vào các trường nhập liệu
             txt_idEmployee.setText(id);
             txt_nameEmployee.setText(name);
             cbx_position.setSelectedItem(position);
             txt_phone.setText(phone);
             cbx_gender.setSelectedItem(gender);
 
-            // Chuyển đổi và đặt giá trị cho JFormattedTextField
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                Date bod = dateFormat.parse(bodString); // Chuyển đổi chuỗi thành Date
-                System.out.println("BOD: " + bod); // Kiểm tra giá trị bod
-                txt_bod.setValue(bod); // Đặt giá trị cho JFormattedTextField
+                Date bod = dateFormat.parse(bodString);
+                System.out.println("BOD: " + bod);
+                txt_bod.setValue(bod); 
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ!");
-                e.printStackTrace(); // Ghi lại thông tin lỗi
+                e.printStackTrace(); 
             }
         }
     }//GEN-LAST:event_tbl_EmployeeMouseClicked
@@ -331,18 +325,14 @@ public class NhanVien extends javax.swing.JPanel {
             return;
         }
 
-        // Lấy mã nhân viên từ hàng được chọn
         String id = tbl_Employee.getValueAt(selectedRow, 0).toString();
 
-        // Hiển thị hộp thoại xác nhận
         int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
-            // Gọi hàm xóa để xóa khỏi cơ sở dữ liệu
             boolean success = handleEmployee.deleteEmployee(id);
-            // Thông báo kết quả
             JOptionPane.showMessageDialog(null, success ? "Xóa nhân viên thành công!" : "Xóa nhân viên thất bại!");
             if (success) {
-                hienThi(); // Cập nhật bảng
+                hienThi();
             }
         }
     }//GEN-LAST:event_btn_DeleteActionPerformed
@@ -355,17 +345,15 @@ public class NhanVien extends javax.swing.JPanel {
             return;
         }
 
-        // Lấy dữ liệu từ các trường nhập liệu
         String id = txt_idEmployee.getText().trim();
         String name = txt_nameEmployee.getText().trim();
         String position = (String) cbx_position.getSelectedItem();
         String phone = txt_phone.getText().trim();
         String gender = (String) cbx_gender.getSelectedItem();
 
-        // Kiểm tra ngày sinh
         Date bod;
         try {
-            bod = (Date) txt_bod.getValue(); // Giá trị trong JFormattedTextField
+            bod = (Date) txt_bod.getValue();
             if (bod == null) {
                 JOptionPane.showMessageDialog(null, "Ngày sinh không hợp lệ!");
                 return;
@@ -389,7 +377,7 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btn_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ClearActionPerformed
         // TODO add your handling code here:
-         txt_idEmployee.setText("");
+        txt_idEmployee.setText("");
         txt_nameEmployee.setText(""); 
         txt_phone.setText(""); 
         txt_bod.setValue(null); 

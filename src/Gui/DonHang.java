@@ -21,52 +21,51 @@ public class DonHang extends javax.swing.JPanel {
     DonHangDao handleDonHang = new DonHangDao();
     public DonHang() {
         initComponents();
+        hienThiDonHang();
     }
 
     private void hienThiDonHang() {
     // Lấy danh sách tất cả đơn hàng
     List<Pojo.DonHang> dsDonHang = handleDonHang.getAllOrders();
-
-    // Tạo một DefaultTableModel cho bảng đơn hàng
     DefaultTableModel dtm = new DefaultTableModel();
     
     // Thêm các cột cho bảng đơn hàng
     dtm.addColumn("Mã đơn hàng");
-    dtm.addColumn("Khách hàng ID");
+    dtm.addColumn("Mã khách hàng");
     dtm.addColumn("Ngày đặt hàng");
     dtm.addColumn("Sản phẩm");
-
-    // Điền dữ liệu vào bảng
-    for (Pojo.DonHang donHang : dsDonHang) {
-        // Tạo mảng Object để chứa thông tin hàng
-        Object[] row = new Object[4]; // 4 cột
-        row[0] = donHang.getId(); // Mã đơn hàng
-        row[1] = donHang.getCustomerID(); // Khách hàng ID
-        row[2] = new SimpleDateFormat("yyyy-MM-dd").format(donHang.getOrderDate()); // Ngày đặt hàng
-
-        // Chuyển đổi danh sách sản phẩm thành chuỗi để hiển thị
-        StringBuilder productsString = new StringBuilder();
-        for (Pojo.DonHang.Product product : donHang.getProducts()) {
-            productsString.append(product.getProductID())
-                          .append(" (")
-                          .append(product.getQuantity())
-                          .append("), ");
+    dtm.addColumn("Tổng tiền");
+    
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    dtm.setNumRows(dsDonHang.size());
+    
+    for (int i = 0; i < dsDonHang.size(); i++) {
+        Pojo.DonHang ls = dsDonHang.get(i);
+        dtm.setValueAt(ls.getId(), i, 0);
+        dtm.setValueAt(ls.getCustomerID(), i, 1);
+        dtm.setValueAt(dateFormat.format(ls.getOrderDate()), i, 2);
+        
+        // Hiển thị danh sách sản phẩm
+        StringBuilder productsList = new StringBuilder();
+        double totalAmount = 0; // Khởi tạo biến tổng tiền
+        for (Pojo.DonHang.Product product : ls.getProducts()) {
+            productsList.append(product.getProductID()).append(" (").append(product.getQuantity()).append("), ");
+            totalAmount += product.getTotalAmount(); // Cộng dồn tổng tiền từ các sản phẩm
         }
-
-        // Xóa dấu phẩy thừa ở cuối
-        if (productsString.length() > 0) {
-            productsString.setLength(productsString.length() - 2); // Xóa ", "
+        if (productsList.length() > 0) {
+            productsList.setLength(productsList.length() - 2); // Xóa dấu phẩy cuối
         }
-
-        row[3] = productsString.toString(); // Sản phẩm
-
-        // Thêm hàng vào model
-        dtm.addRow(row);
+        dtm.setValueAt(productsList.toString(), i, 3);
+        
+        // Hiển thị tổng tiền
+        dtm.setValueAt(totalAmount, i, 4);
     }
-
+    
     // Thiết lập model cho bảng đơn hàng
     tbl_DonHang.setModel(dtm);
 }
+
+
 
 
     /**

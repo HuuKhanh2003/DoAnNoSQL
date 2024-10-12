@@ -8,9 +8,12 @@ import Pojo.DonHang;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.bson.Document;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -29,34 +32,44 @@ public class DonHangDao {
         try (MongoCursor<Document> cursor = collection.find().iterator()) {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                
-                String id = doc.getString("_id");
-                String customerID = doc.getString("customerID");
-                Date orderDate = doc.getDate("orderDate");
-                List<DonHang.Product> products = new ArrayList<>();
-
-                // Lấy danh sách sản phẩm
-                List<Document> productDocs = (List<Document>) doc.get("products");
-                for (Document productDoc : productDocs) {
-                    String productID = productDoc.getString("productID");
-                    int quantity = productDoc.getInteger("quantity");
-                    double price = productDoc.getDouble("price");
-                    String promotionID = productDoc.getString("promotionID");
-                    double discountedPrice = productDoc.getDouble("discountedPrice");
-
-                    // Tính toán tổng tiền cho sản phẩm
-                    double totalAmount = quantity * discountedPrice;
-
-                    // Tạo đối tượng Product và thêm vào danh sách
-                    DonHang.Product product = new DonHang.Product(productID, quantity, price, promotionID, discountedPrice, totalAmount);
-                    products.add(product);
+                String orderDateString = doc.getString("orderDate");
+                Date orderDate = null;
+                if (orderDateString != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    orderDate = dateFormat.parse(orderDateString);
                 }
 
-                // Tạo đối tượng DonHang và thêm vào danh sách
-                DonHang order = new DonHang(id, customerID, orderDate, products);
+                // Lấy danh sách sản phẩm từ MongoDB
+                List<Document> productDocs = (List<Document>) doc.get("products");
+                List<DonHang.Product> products = new ArrayList<>();
+
+                if (productDocs != null) {
+                    for (Document productDoc : productDocs) {
+                        DonHang.Product product = new DonHang.Product(
+                                productDoc.getString("productID"),
+                                productDoc.getInteger("quantity"),
+                                productDoc.getDouble("price"),
+                                productDoc.getString("promotionID"),
+                                productDoc.getDouble("discountedPrice"),
+                                productDoc.getDouble("totalAmount")
+                        );
+                        products.add(product);
+                    }
+                }
+
+                DonHang order = new DonHang(
+                        doc.getString("_id"),
+                        doc.getString("customerID"),
+                        orderDate,
+                        products
+                );
                 orders.add(order);
             }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        orders.sort(Comparator.comparing(DonHang::getId));
         return orders; // Trả về danh sách tất cả đơn hàng
     }
+
 }

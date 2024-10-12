@@ -83,7 +83,6 @@ public class DonHang {
             this.price = price;
             this.promotionID = promotionID;
             this.discountedPrice = discountedPrice;
-
         }
 
         // Getters và Setters cho Product

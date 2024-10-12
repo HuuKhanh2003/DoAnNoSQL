@@ -35,7 +35,9 @@ public class NhanVienDao {
     
     public List<NhanVien> getAllEmployees() {
     List<NhanVien> employees = new ArrayList<>();
-    try (MongoCursor<Document> cursor = collection.find().iterator()) {
+    MongoCursor<Document> cursor = collection.find().iterator();
+    
+    try {
         while (cursor.hasNext()) {
             Document doc = cursor.next();
 //            String bodString = doc.getString("bod"); 
@@ -55,6 +57,8 @@ public class NhanVienDao {
             );
             employees.add(employee);
         }
+    } finally{
+        cursor.close();
     }
     employees.sort(Comparator.comparing(NhanVien::getId));
     return employees;

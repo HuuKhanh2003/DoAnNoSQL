@@ -411,6 +411,21 @@ public class FrmTong extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuMouseEntered
 
+      private void lb_SanPhamMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        // TODO add your handling code here:
+        JPanel newPanel = new SanPham();
+
+        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
+        panel_GiaoDien.removeAll();
+
+        // Thêm formPhong vào panel_GiaoDien
+        panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
+        panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
+        // Cập nhật giao diện người dùng
+        panel_GiaoDien.revalidate();
+        panel_GiaoDien.repaint();
+    }                                       
+
     private void lb_DonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_DonHangMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lb_DonHangMouseClicked

@@ -53,6 +53,18 @@ public class KhachHangDao {
 
         return customers;
     }
+    public List<KhachHang> getCustomersByName(String name) {
+    // Truy vấn trực tiếp và chuyển đổi kết quả
+    return collection.find(new Document("customerName", new Document("$regex", name).append("$options", "i")))
+            .map(doc -> new KhachHang(
+                    doc.getString("_id"),
+                    doc.getString("customerName"),
+                    doc.getString("email"),
+                    doc.getString("tier"),
+                    (List<String>) doc.get("promotionIDs"),
+                    doc.getInteger("voucherQuantity")))
+            .into(new ArrayList<>());
+}
 
     // Hàm thêm khách hàng
     public boolean addCustomer(KhachHang customer) {

@@ -287,12 +287,9 @@ public class KhachHang extends javax.swing.JPanel {
             String email = tbl_KhachHang.getValueAt(selectedRow, 2).toString();
             String loaiKH = tbl_KhachHang.getValueAt(selectedRow, 3).toString();
             String soVoucher = tbl_KhachHang.getValueAt(selectedRow, 5).toString();
-            
-            
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
             txt_Email.setText(email);
-            
             txt_SoVour.setText(soVoucher);
             CB_LoaiKH.setSelectedItem(loaiKH);
         }
@@ -426,6 +423,36 @@ public class KhachHang extends javax.swing.JPanel {
 
     private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
         // TODO add your handling code here:
+        String searchText = txt_TimKiem.getText();
+
+        // Gọi phương thức getCustomersByName với tên cần tìm
+        List<Pojo.KhachHang> ds = handleKhachHang.getCustomersByName(searchText);
+
+        // Tạo mô hình bảng mới để hiển thị kết quả
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Mã khách hàng");
+        dtm.addColumn("Tên khách hàng");
+        dtm.addColumn("Email");
+        dtm.addColumn("Loại khách hàng");
+        dtm.addColumn("Chương trình khuyến mãi");
+        dtm.addColumn("Số vourcher");
+
+        // Cập nhật số lượng dòng trong mô hình bảng
+        dtm.setNumRows(ds.size());
+
+        // Duyệt qua danh sách khách hàng và thêm vào bảng
+        for (int i = 0; i < ds.size(); i++) {
+            Pojo.KhachHang kh = ds.get(i);
+            dtm.setValueAt(kh.getId(), i, 0);
+            dtm.setValueAt(kh.getCustomerName(), i, 1);
+            dtm.setValueAt(kh.getEmail(), i, 2);
+            dtm.setValueAt(kh.getTier(), i, 3);
+            dtm.setValueAt(kh.getPromotionIDs().toString(), i, 4); // Chuyển danh sách thành chuỗi
+            dtm.setValueAt(kh.getVoucherQuantity(), i, 5);
+        }
+
+        // Gán mô hình bảng mới vào bảng tbl_KhachHang
+        tbl_KhachHang.setModel(dtm);
     }//GEN-LAST:event_btn_TimKiemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

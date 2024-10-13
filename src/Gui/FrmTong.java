@@ -278,14 +278,13 @@ public class FrmTong extends javax.swing.JFrame {
         }
         else if(quyen.equals("manage"))
         {
-            lb_TaiKhoan.setEnabled(false);
+            
         }
         else
         {
             lb_KhuyenMai.setEnabled(true);
             lb_KhachHang.setEnabled(true);
             lb_NhanVien.setEnabled(true);
-            lb_TaiKhoan.setEnabled(true);
             
         }
     }
@@ -294,7 +293,6 @@ public class FrmTong extends javax.swing.JFrame {
         lb_KhuyenMai.setForeground(Color.WHITE);
         lb_DangXuat.setForeground(Color.WHITE);
         lb_KhachHang.setForeground(Color.WHITE);
-        lb_TaiKhoan.setForeground(Color.WHITE);
     }
     private void MenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuMouseClicked
         // TODO add your handling code here:

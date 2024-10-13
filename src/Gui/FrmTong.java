@@ -66,7 +66,6 @@ public class FrmTong extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lb_TrangChu = new javax.swing.JLabel();
         lb_DangXuat = new javax.swing.JLabel();
-        lb_TaiKhoan = new javax.swing.JLabel();
         lb_KhuyenMai = new javax.swing.JLabel();
         lb_KhachHang = new javax.swing.JLabel();
         lb_SanPham = new javax.swing.JLabel();
@@ -143,18 +142,6 @@ public class FrmTong extends javax.swing.JFrame {
         });
         pnMenu.add(lb_DangXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 680, 310, 80));
 
-        lb_TaiKhoan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lb_TaiKhoan.setForeground(new java.awt.Color(255, 255, 255));
-        lb_TaiKhoan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lb_TaiKhoan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/icons8-lock-50.png"))); // NOI18N
-        lb_TaiKhoan.setText("  Tài khoản");
-        lb_TaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lb_TaiKhoanMouseClicked(evt);
-            }
-        });
-        pnMenu.add(lb_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 310, 80));
-
         lb_KhuyenMai.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_KhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
         lb_KhuyenMai.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -166,7 +153,7 @@ public class FrmTong extends javax.swing.JFrame {
                 lb_KhuyenMaiMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 310, 80));
+        pnMenu.add(lb_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 310, 80));
 
         lb_KhachHang.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_KhachHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,7 +165,7 @@ public class FrmTong extends javax.swing.JFrame {
                 lb_KhachHangMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 310, 80));
+        pnMenu.add(lb_KhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 310, 80));
 
         lb_SanPham.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_SanPham.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,7 +176,7 @@ public class FrmTong extends javax.swing.JFrame {
                 lb_SanPhamMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_SanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 360, 70));
+        pnMenu.add(lb_SanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 360, 70));
 
         lb_NhanVien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_NhanVien.setForeground(new java.awt.Color(255, 255, 255));
@@ -200,7 +187,7 @@ public class FrmTong extends javax.swing.JFrame {
                 lb_NhanVienMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_NhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 360, 70));
+        pnMenu.add(lb_NhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 360, 70));
 
         lb_DonHang.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lb_DonHang.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,9 +198,9 @@ public class FrmTong extends javax.swing.JFrame {
                 lb_DonHangMouseClicked(evt);
             }
         });
-        pnMenu.add(lb_DonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 450, 360, 70));
+        pnMenu.add(lb_DonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 70));
 
-        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 770));
+        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 770));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -373,23 +360,6 @@ public class FrmTong extends javax.swing.JFrame {
         panel_GiaoDien.repaint();
     }//GEN-LAST:event_lb_KhachHangMouseClicked
 
-    private void lb_TaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_TaiKhoanMouseClicked
-        // TODO add your handling code here:
-       
-       //JPanel newPanel = new XuLyHoSo();
-
-        // Loại bỏ tất cả các thành phần con của panel_GiaoDien
-        panel_GiaoDien.removeAll();
-
-        // Thêm formPhong vào panel_GiaoDien
-        panel_GiaoDien.setLayout(new BorderLayout()); // Đảm bảo bố cục hợp lý
-        //panel_GiaoDien.add(newPanel, BorderLayout.CENTER);
-
-        // Cập nhật giao diện người dùng
-        panel_GiaoDien.revalidate();
-        panel_GiaoDien.repaint();
-    }//GEN-LAST:event_lb_TaiKhoanMouseClicked
-
     private void lb_TrangChuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_TrangChuMouseClicked
         // TODO add your handling code here:
         JPanel newPanel = new FormTrangChu();
@@ -538,7 +508,6 @@ public class FrmTong extends javax.swing.JFrame {
     private javax.swing.JLabel lb_KhuyenMai;
     public javax.swing.JLabel lb_NhanVien;
     public javax.swing.JLabel lb_SanPham;
-    private javax.swing.JLabel lb_TaiKhoan;
     private javax.swing.JLabel lb_TrangChu;
     public javax.swing.JPanel panel_GiaoDien;
     public javax.swing.JPanel pnMenu;

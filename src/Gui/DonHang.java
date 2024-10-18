@@ -126,7 +126,7 @@ public class DonHang extends javax.swing.JPanel {
         }
 
         // Thiết lập model cho bảng đơn hàng
-        tbl_DonHang.setModel(dtm);
+        tbl_SanPham.setModel(dtm);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -368,6 +368,15 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_XoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaSPActionPerformed
         // TODO add your handling code here:
+        // Lấy thông tin từ trường nhập liệu
+        String orderId = txt_Ma.getText();
+        String productId = txt_MaSP.getText();
+
+        // Gọi phương thức xóa sản phẩm
+        handleDonHang.removeProductFromOrder(orderId, productId);
+
+        // Thông báo thành công
+        JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
     }//GEN-LAST:event_btn_XoaSPActionPerformed
 
     private void tbl_ChiTietDonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChiTietDonHangMouseClicked

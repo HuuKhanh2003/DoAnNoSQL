@@ -43,7 +43,7 @@ public class SanPhamDao {
                         doc.getString("productName"),
                         price,
                         doc.getString("categoryID"),
-                        (List<String>) doc.get("promotionIDs"), // Chuyển đổi sang List<String>
+                        doc.getString("promotionIDs"),
                         doc.getBoolean("isPromotionProgram")
                 );
                 products.add(product);

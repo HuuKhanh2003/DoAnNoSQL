@@ -7,6 +7,7 @@ package Gui;
 
 import Dao.KhachHangDao;
 import Dao.KhuyenMaiDao;
+import Dao.LoaiSanPhamDao;
 import Dao.SanPhamDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -28,6 +30,7 @@ public class KhuyenMai extends javax.swing.JPanel {
     KhuyenMaiDao handleKhuyenMai = new KhuyenMaiDao();
     KhachHangDao handleKhachHang=new KhachHangDao();
     SanPhamDao handleSanPham=new SanPhamDao();
+    LoaiSanPhamDao handleLoaiSanPham=new LoaiSanPhamDao();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
     public KhuyenMai() {
@@ -37,28 +40,6 @@ public class KhuyenMai extends javax.swing.JPanel {
 
     private void hienThi()
     {
-        List<Pojo.SanPham> ds1 = handleSanPham.getAllProducts();
-        DefaultTableModel dtm1 = new DefaultTableModel();
-        dtm1.addColumn("Mã sản phẩm");
-        dtm1.addColumn("Tên sản phẩm");
-        dtm1.setNumRows(ds1.size());
-        for(int i=0;i<ds1.size();i++)
-        {
-            Pojo.SanPham ls = ds1.get(i);
-            dtm1.setValueAt(ls.getId(), i, 0);
-            dtm1.setValueAt(ls.getProductName(),i, 1);
-        }
-        tbl_SanPham.setModel(dtm1);
-        List<Pojo.KhachHang> ds2 = handleKhachHang.getAllCustomers();
-        DefaultTableModel dtm2 = new DefaultTableModel();
-        dtm2.addColumn("Loại khách hàng");
-        dtm2.setNumRows(ds2.size());
-        for(int i=0;i<ds2.size();i++)
-        {
-            Pojo.KhachHang ls = ds2.get(i);
-            dtm2.setValueAt(ls.getTier(), i, 0);
-        }
-        tbl_LoaiKhachHang.setModel(dtm1);
         List<Pojo.KhuyenMai> ds = handleKhuyenMai.getAllPromotions();
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Mã khuyến mãi");
@@ -66,8 +47,10 @@ public class KhuyenMai extends javax.swing.JPanel {
         dtm.addColumn("Giảm giá");
         dtm.addColumn("Ngày bắt đầu");
         dtm.addColumn("Ngày kết thúc");
-        dtm.addColumn("Áp dụng");
-        dtm.addColumn("Điều kiện");
+        dtm.addColumn("Sản phẩm");
+        dtm.addColumn("Loại sản phẩm");
+        dtm.addColumn("Loại khách hàng");
+        dtm.addColumn("Giá trị nhỏ nhất");
         dtm.setNumRows(ds.size());
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for(int i=0;i<ds.size();i++)
@@ -79,10 +62,79 @@ public class KhuyenMai extends javax.swing.JPanel {
             dtm.setValueAt(ls.getStartDate() !=null ? dateFormat.format(ls.getStartDate()):"", i, 3);
             dtm.setValueAt(ls.getEndDate() !=null ? dateFormat.format(ls.getEndDate()):"", i, 4);
             dtm.setValueAt(ls.getAppliedTo().getProducts(), i, 5);
-            dtm.setValueAt(ls.getConditions().getCustomerTier(), i, 6);
+            dtm.setValueAt(ls.getAppliedTo().getCategories(), i, 6);
+            dtm.setValueAt(ls.getConditions().getCustomerTier(), i, 7);
+            dtm.setValueAt(ls.getConditions().getMinOrderValue(), i, 8);
         }
         tbl_KhuyenMai.setModel(dtm);
+        List<Pojo.SanPham> ds1 = handleSanPham.getAllProducts();
+        DefaultTableModel dtm1 = new DefaultTableModel();
+        dtm1.addColumn("Mã sản phẩm");
+        dtm1.addColumn("Tên sản phẩm");
+        dtm1.addColumn("Trạng thái");
+        dtm1.setNumRows(ds1.size());
+        for(int i=0;i<ds1.size();i++)
+        {
+            Pojo.SanPham ls = ds1.get(i);
+            dtm1.setValueAt(ls.getId(), i, 0);
+            dtm1.setValueAt(ls.getProductName(),i, 1);
+        }
+        tbl_SanPham.setModel(dtm1);
+        List<Pojo.KhachHang> ds2 = handleKhachHang.getAllCustomers();
+        DefaultTableModel dtm2 = new DefaultTableModel();
+        dtm2.addColumn("Loại khách hàng");
+        dtm2.addColumn("Trạng thái");
+        dtm2.setNumRows(ds2.size());
+        for(int i=0;i<ds2.size();i++)
+        {
+            Pojo.KhachHang ls = ds2.get(i);
+            dtm2.setValueAt(ls.getTier(), i, 0);
+        }
+        tbl_LoaiKhachHang.setModel(dtm2);
+        List<Pojo.LoaiSanPham> ds3 = handleLoaiSanPham.getAllCategories();
+        DefaultTableModel dtm3 = new DefaultTableModel();
+        dtm3.addColumn("Loại sản phẩm");
+        dtm3.setNumRows(ds3.size());
+        for(int i=0;i<ds3.size();i++)
+        {
+            Pojo.LoaiSanPham ls = ds3.get(i);
+            dtm3.setValueAt(ls.getCategoryName(), i, 0);
+        }
+        tbl_LoaiSanPham.setModel(dtm3);
+        
     }
+    private void tbl_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+        int selectedRow = tbl_KhuyenMai.getSelectedRow();
+        if (selectedRow != -1) {
+            //isUpdatingFromTable = true; // Đặt cờ trước khi cập nhật
+            String ma = tbl_KhuyenMai.getValueAt(selectedRow, 0).toString();
+            String ten = tbl_KhuyenMai.getValueAt(selectedRow, 1).toString();
+            String percent = tbl_KhuyenMai.getValueAt(selectedRow, 2).toString();
+            String startDate = tbl_SanPham.getValueAt(selectedRow, 3).toString();
+            String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
+            txt_Ma.setText(ma);
+            txt_Ten.setText(ten);
+            txt_Giam.setText(percent);
+            txt_NgayBD.setText(startDate);
+            txt_NgayKT.setText(endDate);
+            // Truy vấn chi tiết khuyến mãi từ CSDL để lấy thông tin appliedTo
+            Document promoDoc = handleKhuyenMai.getPromotionById(ma); // Lấy khuyến mãi bằng ID
+            if (promoDoc != null) {
+                // Kiểm tra nếu đối tượng appliedTo tồn tại
+                if (promoDoc.containsKey("appliedTo")) {
+                    Chk_ApDung.setSelected(true); // Tích checkbox nếu appliedTo tồn tại
+                } else {
+                    Chk_ApDung.setSelected(false); // Bỏ tích nếu appliedTo không tồn tại
+                }
+            } else {
+                Chk_ApDung.setSelected(false); // Bỏ tích nếu không tìm thấy khuyến mãi
+            }
+                    
+            
+        }
+        
+    }    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,9 +151,9 @@ public class KhuyenMai extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        Chk_ApDung = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        chk_DieuKien = new javax.swing.JCheckBox();
         txt_Ma = new javax.swing.JTextField();
         txt_Ten = new javax.swing.JTextField();
         txt_Giam = new javax.swing.JTextField();
@@ -120,6 +172,9 @@ public class KhuyenMai extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        btn_Them = new javax.swing.JButton();
+        btn_Sua = new javax.swing.JButton();
+        btn_Xoa = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -138,24 +193,24 @@ public class KhuyenMai extends javax.swing.JPanel {
         jLabel5.setText("Ngày kết thúc:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 244, -1, -1));
 
-        jCheckBox1.setText("Áp dụng");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        Chk_ApDung.setText("Áp dụng");
+        Chk_ApDung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                Chk_ApDungActionPerformed(evt);
             }
         });
-        add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
+        add(Chk_ApDung, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
 
         jLabel9.setText("Trị giá HD nhỏ nhất:");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, -1));
 
-        jCheckBox2.setText("Điều kiện:");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+        chk_DieuKien.setText("Điều kiện:");
+        chk_DieuKien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
+                chk_DieuKienActionPerformed(evt);
             }
         });
-        add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, -1, -1));
+        add(chk_DieuKien, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 130, -1, -1));
         add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 81, 216, -1));
         add(txt_Ten, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 121, 139, -1));
         add(txt_Giam, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 161, 221, -1));
@@ -239,31 +294,52 @@ public class KhuyenMai extends javax.swing.JPanel {
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 60, -1));
 
         jButton2.setText("<<<");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 60, -1));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 60, 30));
 
         jButton3.setText("Sửa");
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 610, -1, -1));
+
+        btn_Them.setText("Thêm ");
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemActionPerformed(evt);
+            }
+        });
+        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+
+        btn_Sua.setText("Sửa");
+        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, -1, -1));
+
+        btn_Xoa.setText("Xóa");
+        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void Chk_ApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Chk_ApDungActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_Chk_ApDungActionPerformed
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+    private void chk_DieuKienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_DieuKienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    }//GEN-LAST:event_chk_DieuKienActionPerformed
 
     private void txt_NgayBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NgayBDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_NgayBDActionPerformed
 
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_ThemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox Chk_ApDung;
+    private javax.swing.JButton btn_Sua;
+    private javax.swing.JButton btn_Them;
+    private javax.swing.JButton btn_Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chk_DieuKien;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

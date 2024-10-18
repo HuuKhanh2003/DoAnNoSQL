@@ -56,6 +56,11 @@ public class KhuyenMaiDao {
         promotions.sort(Comparator.comparing(KhuyenMai::getId));
         return promotions;
     }
+    public Document getPromotionById(String promotionId) {
+        Document query = new Document("_id", promotionId);
+        Document promotionDoc = collection.find(query).first();
+        return promotionDoc;
+    }
 
     // Thêm khuyến mãi mới
     public void addPromotion(KhuyenMai promotion) {

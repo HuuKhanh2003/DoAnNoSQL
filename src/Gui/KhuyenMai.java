@@ -13,7 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -68,7 +70,15 @@ public class KhuyenMai extends javax.swing.JPanel {
         }
         tbl_KhuyenMai.setModel(dtm);
         List<Pojo.SanPham> ds1 = handleSanPham.getAllProducts();
-        DefaultTableModel dtm1 = new DefaultTableModel();
+        DefaultTableModel dtm1 = new DefaultTableModel(){
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 2) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
         dtm1.addColumn("Mã sản phẩm");
         dtm1.addColumn("Tên sản phẩm");
         dtm1.addColumn("Trạng thái");
@@ -78,30 +88,111 @@ public class KhuyenMai extends javax.swing.JPanel {
             Pojo.SanPham ls = ds1.get(i);
             dtm1.setValueAt(ls.getId(), i, 0);
             dtm1.setValueAt(ls.getProductName(),i, 1);
+            dtm1.setValueAt(false,i, 2);
         }
         tbl_SanPham.setModel(dtm1);
         List<Pojo.KhachHang> ds2 = handleKhachHang.getAllCustomers();
-        DefaultTableModel dtm2 = new DefaultTableModel();
+        Set<String> uniqueCustomerTiers = new HashSet<>();
+        for (Pojo.KhachHang kh : ds2) {
+            uniqueCustomerTiers.add(kh.getTier());
+        }
+        DefaultTableModel dtm2 = new DefaultTableModel(){
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 1) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
         dtm2.addColumn("Loại khách hàng");
         dtm2.addColumn("Trạng thái");
-        dtm2.setNumRows(ds2.size());
-        for(int i=0;i<ds2.size();i++)
-        {
-            Pojo.KhachHang ls = ds2.get(i);
-            dtm2.setValueAt(ls.getTier(), i, 0);
+        dtm2.setNumRows(uniqueCustomerTiers.size());
+        int rowIndex1 = 0;
+        for (String customerTier : uniqueCustomerTiers) {
+            dtm2.setValueAt(customerTier, rowIndex1, 0);
+            dtm2.setValueAt(false, rowIndex1, 1);
+            rowIndex1++;
         }
         tbl_LoaiKhachHang.setModel(dtm2);
         List<Pojo.LoaiSanPham> ds3 = handleLoaiSanPham.getAllCategories();
-        DefaultTableModel dtm3 = new DefaultTableModel();
+        DefaultTableModel dtm3 = new DefaultTableModel(){
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 2) {
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
+        dtm3.addColumn("Mã loại sản phẩm");
         dtm3.addColumn("Loại sản phẩm");
+        dtm3.addColumn("Trạng thái");
         dtm3.setNumRows(ds3.size());
+
         for(int i=0;i<ds3.size();i++)
         {
             Pojo.LoaiSanPham ls = ds3.get(i);
-            dtm3.setValueAt(ls.getCategoryName(), i, 0);
+            dtm3.setValueAt(ls.getId(), i, 0);
+            dtm3.setValueAt(ls.getCategoryName(),i, 1);
+            dtm3.setValueAt(false,i, 2);
         }
+
         tbl_LoaiSanPham.setModel(dtm3);
-        
+        tbl_KhuyenMai.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbl_KhuyenMai.getSelectedRow();
+                if (selectedRow != -1) {
+                    List<String> promotionProductCodes = (List<String>) dtm.getValueAt(selectedRow, 5);
+                    List<String> productTypes = (List<String>) dtm.getValueAt(selectedRow, 6);
+                    String customerTypes = (String) dtm.getValueAt(selectedRow, 7);
+                    String[] customerTypeArray = customerTypes.split(",");
+                    
+                    for (int i = 0; i < tbl_LoaiSanPham.getRowCount(); i++) {
+                        String productType = (String) dtm3.getValueAt(i, 0);
+                        boolean shouldBeChecked = false;
+
+                        for (String prodType : productTypes) {
+                            if (prodType.equals(productType)) {
+                                shouldBeChecked = true;
+                                break;
+                            }
+                        }
+
+                        dtm3.setValueAt(shouldBeChecked, i, 2);
+                    }
+
+                    
+                    for (int i = 0; i < tbl_LoaiKhachHang.getRowCount(); i++) {
+                        String customerTier = (String) dtm2.getValueAt(i, 0);
+                        boolean shouldBeChecked = false;
+
+                        for (String promoCustomerType : customerTypeArray) {
+                            if (promoCustomerType.trim().equalsIgnoreCase(customerTier)) {
+                                shouldBeChecked = true;
+                                break;
+                            }
+                        }
+
+                        dtm2.setValueAt(shouldBeChecked, i, 1);
+                    }
+
+                    for (int i = 0; i < tbl_SanPham.getRowCount(); i++) {
+                        String productCode = (String) dtm1.getValueAt(i, 0);
+                        boolean shouldBeChecked = false;
+
+                        for (String promoCode : promotionProductCodes) {
+                            if (promoCode.equals(productCode)) {
+                                shouldBeChecked = true;
+                                break;
+                            }
+                        }
+
+                        dtm1.setValueAt(shouldBeChecked, i, 2);
+                    }
+                }
+            }
+        });
     }
      
     

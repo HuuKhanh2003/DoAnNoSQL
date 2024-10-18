@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 public class SanPham {
     private String id;
     private String productName;
-    private BigDecimal price;
+    private Double price;
     private String categoryID;
     private String promotionIDs;
     private boolean isPromotionProgram;
 
     // Constructor
-    public SanPham(String id, String productName, BigDecimal price, String categoryID, String promotionIDs, boolean isPromotionProgram) {
+    public SanPham(String id, String productName, Double price, String categoryID, String promotionIDs, boolean isPromotionProgram) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -47,11 +47,11 @@ public class SanPham {
         this.productName = productName;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

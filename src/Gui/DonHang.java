@@ -385,8 +385,8 @@ public class DonHang extends javax.swing.JPanel {
         if(selectedRow != -1)
         {
             String ma = tbl_ChiTietDonHang.getValueAt(selectedRow, 0).toString();
-            String soLuong = tbl_ChiTietDonHang.getValueAt(selectedRow, 2).toString();
-            String gia=tbl_ChiTietDonHang.getValueAt(selectedRow, 1).toString();
+            String soLuong = tbl_ChiTietDonHang.getValueAt(selectedRow, 1).toString();
+            String gia=tbl_ChiTietDonHang.getValueAt(selectedRow, 2).toString();
             String khuyenMai = tbl_ChiTietDonHang.getValueAt(selectedRow, 3).toString();
             String giaGiam=tbl_ChiTietDonHang.getValueAt(selectedRow, 4).toString();
             txt_MaSP.setText(ma);

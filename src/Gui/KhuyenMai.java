@@ -103,38 +103,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         tbl_LoaiSanPham.setModel(dtm3);
         
     }
-    private void tbl_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        // TODO add your handling code here:
-        int selectedRow = tbl_KhuyenMai.getSelectedRow();
-        if (selectedRow != -1) {
-            //isUpdatingFromTable = true; // Đặt cờ trước khi cập nhật
-            String ma = tbl_KhuyenMai.getValueAt(selectedRow, 0).toString();
-            String ten = tbl_KhuyenMai.getValueAt(selectedRow, 1).toString();
-            String percent = tbl_KhuyenMai.getValueAt(selectedRow, 2).toString();
-            String startDate = tbl_SanPham.getValueAt(selectedRow, 3).toString();
-            String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
-            txt_Ma.setText(ma);
-            txt_Ten.setText(ten);
-            txt_Giam.setText(percent);
-            txt_NgayBD.setText(startDate);
-            txt_NgayKT.setText(endDate);
-            // Truy vấn chi tiết khuyến mãi từ CSDL để lấy thông tin appliedTo
-            Document promoDoc = handleKhuyenMai.getPromotionById(ma); // Lấy khuyến mãi bằng ID
-            if (promoDoc != null) {
-                // Kiểm tra nếu đối tượng appliedTo tồn tại
-                if (promoDoc.containsKey("appliedTo")) {
-                    Chk_ApDung.setSelected(true); // Tích checkbox nếu appliedTo tồn tại
-                } else {
-                    Chk_ApDung.setSelected(false); // Bỏ tích nếu appliedTo không tồn tại
-                }
-            } else {
-                Chk_ApDung.setSelected(false); // Bỏ tích nếu không tìm thấy khuyến mãi
-            }
-                    
-            
-        }
-        
-    }    
+     
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -241,6 +210,11 @@ public class KhuyenMai extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_KhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_KhuyenMaiMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_KhuyenMai);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 387, 300));
@@ -330,6 +304,35 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_ThemActionPerformed
 
+    private void tbl_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_KhuyenMaiMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = tbl_KhuyenMai.getSelectedRow();
+        if (selectedRow != -1) {
+            //isUpdatingFromTable = true; // Đặt cờ trước khi cập nhật
+            String ma = tbl_KhuyenMai.getValueAt(selectedRow, 0).toString();
+            String ten = tbl_KhuyenMai.getValueAt(selectedRow, 1).toString();
+            String percent = tbl_KhuyenMai.getValueAt(selectedRow, 2).toString();
+            String startDate = tbl_SanPham.getValueAt(selectedRow, 3).toString();
+            String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
+            txt_Ma.setText(ma);
+            txt_Ten.setText(ten);
+            txt_Giam.setText(percent);
+            txt_NgayBD.setText(startDate);
+            txt_NgayKT.setText(endDate);
+             //Truy vấn chi tiết khuyến mãi từ CSDL để lấy thông tin appliedTo
+//            Document promoDoc = handleKhuyenMai.getPromotionById(ma); // Lấy khuyến mãi bằng ID
+//            if (promoDoc != null) {
+//                // Kiểm tra nếu đối tượng appliedTo tồn tại
+//                if (promoDoc.containsKey("appliedTo")) {
+//                    Chk_ApDung.setSelected(true); // Tích checkbox nếu appliedTo tồn tại
+//                } else {
+//                    Chk_ApDung.setSelected(false); // Bỏ tích nếu appliedTo không tồn tại
+//                }
+//            } else {
+//                Chk_ApDung.setSelected(false); // Bỏ tích nếu không tìm thấy khuyến mãi
+//            }
+    }//GEN-LAST:event_tbl_KhuyenMaiMouseClicked
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox Chk_ApDung;
     private javax.swing.JButton btn_Sua;

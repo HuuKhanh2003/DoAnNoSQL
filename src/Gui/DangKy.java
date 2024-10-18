@@ -207,12 +207,12 @@ public class DangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_FormDangNhapActionPerformed
 
     private void btn_DangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DangKyActionPerformed
-        String username = txt_Email.getText().toString();
+        String username = txt_TaiKhoanDangKy.getText().toString();
         String pass = txt_MatKhauDangKy.getText().toString();
         String repeatPass = txt_NhapLaiTaiKhoan.getText().toString();
         String email=txt_Email.getText().toString();
         if (pass.equals(repeatPass)) {
-            boolean success = dangkyDao.registerAccount(dangkyDao.collection,email, username, pass);
+            boolean success = dangkyDao.registerAccount(email, username, pass);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công.", "New Account Success", JOptionPane.ERROR_MESSAGE);
             } else {

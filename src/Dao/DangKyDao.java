@@ -16,20 +16,20 @@ import java.util.Date;
  */
 public class DangKyDao {
     public static MongoCollection<Document> collection;
-      public static MongoCollection<Document> collectionEmployee;
+    public static MongoCollection<Document> collectionEmployee;
     public DangKyDao() {
         // Kết nối tới MongoDB
         collection = database.getCollection("Account");
         collectionEmployee=database.getCollection("Employee");
     }
-    public boolean isUsernameTaken(MongoCollection<Document> collection, String username) {
+    public boolean isUsernameTaken(String username) {
         Document query = new Document("username", username);
         Document account = collection.find(query).first();
         return account != null;
     }
 
-    public boolean registerAccount(MongoCollection<Document> collection,String email, String username, String password) {
-        if (isUsernameTaken(collection, username)) {
+    public boolean registerAccount(String email, String username, String password) {
+        if (isUsernameTaken(username)) {
             return false;
         }
 
@@ -43,7 +43,6 @@ public class DangKyDao {
         collectionEmployee.insertOne(newEmployee);
 
         ObjectId employeeId = newEmployee.getObjectId("_id");
-
         Document newAccount = new Document("username", username)
                             .append("password", hashedPassword)
                             .append("role","employee")

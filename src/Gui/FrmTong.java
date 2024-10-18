@@ -29,6 +29,7 @@ public class FrmTong extends javax.swing.JFrame {
         initComponents();
         dangNhap=dn;
         txt_ChucVu.setText(dangNhap.role);
+        txt_TenDangNhap.setText(dangNhap.name);
         Date ngayGioHienTai = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String ngayGioFormatted = sdf.format(ngayGioHienTai);

@@ -16,6 +16,7 @@ public class DangNhap extends javax.swing.JFrame {
     String username="";
     String password="";
     String role="";
+    String name="";
     /**
      * Creates new form DangNhap
      */
@@ -159,11 +160,12 @@ public class DangNhap extends javax.swing.JFrame {
         username=txt_TaiKhoan.getText().toString();
         password=txt_MatKhau.getText().toString();
         // Gọi phương thức đăng nhập
-        boolean success = dangNhapDao.login(dangNhapDao.collection,username,password);
+        boolean success = dangNhapDao.login(username,password);
 
         if (success==true) {
             if (kiemTraNhapDuLieu()) {
                 role=dangNhapDao.getRoleByUsernameAndPassword(username, password);
+                name=dangNhapDao.getEmployeeNameByUsernameAndPassword(username, password);
                 this.setVisible(false);
                 FrmTong temp = new FrmTong(this);
                 temp.setVisible(true);

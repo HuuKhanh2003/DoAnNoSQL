@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -48,7 +49,7 @@ public class NhanVienDao {
 //            }
             Date bod = doc.getDate("bod");
             NhanVien employee = new NhanVien(
-                    doc.getString("_id"),
+                    doc.getObjectId("_id").toString(),
                     doc.getString("nameEmployee"),
                     doc.getString("position"),
                     doc.getString("phone"),
@@ -60,21 +61,20 @@ public class NhanVienDao {
     } finally{
         cursor.close();
     }
-    employees.sort(Comparator.comparing(NhanVien::getId));
+    employees.sort(Comparator.comparing(NhanVien::getNameEmployee));
     return employees;
 }
 
     public boolean addEmployee(NhanVien employee) {
     try {
-        // Không cần chuyển đổi Date sang String, lưu trực tiếp Date vào MongoDB
         Date bod = employee.getBod();
 
-        Document doc = new Document("_id", employee.getId())
+        Document doc = new Document()
                 .append("nameEmployee", employee.getNameEmployee())
                 .append("position", employee.getPosition())
                 .append("phone", employee.getPhone())
                 .append("gender", employee.getGender())
-                .append("bod", bod); // Lưu trực tiếp kiểu Date
+                .append("bod", bod);
 
         collection.insertOne(doc);
         System.out.println("Thêm nhân viên thành công!");
@@ -85,9 +85,13 @@ public class NhanVienDao {
     }
 }
 
+public boolean deleteEmployee(String employeeId) {
+    try {
+        // Chuyển đổi chuỗi employeeId thành ObjectId
+        ObjectId objectId = new ObjectId(employeeId);
 
-    public boolean deleteEmployee(String employeeId) {
-        DeleteResult result = collection.deleteOne(Filters.eq("_id", employeeId));
+        // Thực hiện xóa dựa trên ObjectId
+        DeleteResult result = collection.deleteOne(Filters.eq("_id", objectId));
 
         if (result.getDeletedCount() > 0) {
             System.out.println("Nhân viên đã được xóa thành công!");
@@ -96,15 +100,37 @@ public class NhanVienDao {
             System.out.println("Không tìm thấy nhân viên để xóa!");
             return false;
         }
+    } catch (IllegalArgumentException e) {
+        // Bắt lỗi nếu chuỗi employeeId không hợp lệ để chuyển thành ObjectId
+        System.out.println("ID không hợp lệ: " + employeeId);
+        return false;
+    } catch (Exception e) {
+        System.out.println("Lỗi khi xóa nhân viên: " + e.getMessage());
+        return false;
     }
-
+//    public boolean deleteEmployee(String employeeId) {
+//        DeleteResult result = collection.deleteOne(Filters.eq("_id", employeeId));
+//
+//        if (result.getDeletedCount() > 0) {
+//            System.out.println("Nhân viên đã được xóa thành công!");
+//            return true;
+//        } else {
+//            System.out.println("Không tìm thấy nhân viên để xóa!");
+//            return false;
+//        }
+//    }
+}
     public boolean updateEmployee(NhanVien employee) {
-    try {
+        try {
+        // Chuyển đổi ID của nhân viên thành ObjectId nếu cần thiết
+        ObjectId objectId = new ObjectId(employee.getId());
+
         // Lấy Date trực tiếp từ đối tượng employee
         Date bod = employee.getBod();
 
+        // Thực hiện update với các trường dữ liệu mới
         UpdateResult result = collection.updateOne(
-                Filters.eq("_id", employee.getId()),
+                Filters.eq("_id", objectId), // Sử dụng ObjectId
                 Updates.combine(
                         Updates.set("nameEmployee", employee.getNameEmployee()),
                         Updates.set("position", employee.getPosition()),
@@ -121,9 +147,13 @@ public class NhanVienDao {
             System.out.println("Không tìm thấy nhân viên để cập nhật!");
             return false;
         }
+    } catch (IllegalArgumentException e) {
+        // Bắt lỗi nếu chuỗi ID không hợp lệ để chuyển thành ObjectId
+        System.out.println("ID không hợp lệ: " + employee.getId());
+        return false;
     } catch (Exception e) {
         System.out.println("Lỗi khi cập nhật nhân viên: " + e.getMessage());
-        return false; 
+        return false;
     }
 }
 

@@ -9,6 +9,7 @@ import Dao.KhachHangDao;
 import Dao.SanPhamDao;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,11 +35,7 @@ public class DonHang extends javax.swing.JPanel {
         {
             CB_KH.addItem(KH);
         }
-        List<String> dsSanPham=handleSanPham.getAllProductIDs();
-        for(String SP:dsSanPham)
-        {
-            CB_SanPham.addItem(SP);
-        }
+        
         
         
         
@@ -165,7 +162,6 @@ public class DonHang extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        CB_SanPham = new javax.swing.JComboBox<>();
         txt_SoLuong = new javax.swing.JTextField();
         txt_Gia = new javax.swing.JTextField();
         txt_KhuyenMai = new javax.swing.JTextField();
@@ -173,6 +169,7 @@ public class DonHang extends javax.swing.JPanel {
         btn_SuaSP = new javax.swing.JButton();
         btn_XoaSP = new javax.swing.JButton();
         btn_ThemSP = new javax.swing.JButton();
+        txt_MaSP = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -231,7 +228,7 @@ public class DonHang extends javax.swing.JPanel {
         jLabel5.setText("Tổng tiền:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 85, -1, -1));
         add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 48, 165, -1));
-        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(464, 82, 160, -1));
+        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 160, -1));
         add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 82, 165, -1));
 
         add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(461, 48, 163, -1));
@@ -285,10 +282,8 @@ public class DonHang extends javax.swing.JPanel {
 
         jLabel10.setText("Giá giảm:");
         add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(881, 85, -1, -1));
-
-        add(CB_SanPham, new org.netbeans.lib.awtextra.AbsoluteConstraints(765, 48, 104, -1));
-        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(765, 82, 104, -1));
-        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(765, 122, 104, -1));
+        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 104, -1));
+        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 104, -1));
         add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(951, 48, 101, -1));
 
         txt_GiaGiam.addActionListener(new java.awt.event.ActionListener() {
@@ -321,6 +316,7 @@ public class DonHang extends javax.swing.JPanel {
             }
         });
         add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 410, 50, 40));
+        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 100, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
@@ -353,6 +349,21 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_SuaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaSPActionPerformed
         // TODO add your handling code here:
+        String orderId = txt_Ma.getText();
+        String productId = txt_MaSP.getText();
+        int quantity = Integer.parseInt(txt_SoLuong.getText());
+        double price = Double.parseDouble(txt_Gia.getText());
+        double discountedPrice = Double.parseDouble(txt_GiaGiam.getText());
+        String promotionId = txt_KhuyenMai.getText();
+
+        // Tạo đối tượng sản phẩm mới
+        Pojo.DonHang.Product updatedProduct = new Pojo.DonHang.Product(productId, quantity, price, promotionId, discountedPrice);
+
+        // Gọi phương thức cập nhật sản phẩm
+        handleDonHang.updateProductInOrder(orderId, updatedProduct);
+
+        // Thông báo thành công
+        JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thành công!");
     }//GEN-LAST:event_btn_SuaSPActionPerformed
 
     private void btn_XoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaSPActionPerformed
@@ -369,7 +380,7 @@ public class DonHang extends javax.swing.JPanel {
             String gia=tbl_ChiTietDonHang.getValueAt(selectedRow, 1).toString();
             String khuyenMai = tbl_ChiTietDonHang.getValueAt(selectedRow, 3).toString();
             String giaGiam=tbl_ChiTietDonHang.getValueAt(selectedRow, 4).toString();
-            CB_SanPham.setSelectedItem(ma);
+            txt_MaSP.setText(ma);
             txt_SoLuong.setText(soLuong);
             txt_Gia.setText(gia);
             txt_KhuyenMai.setText(khuyenMai);
@@ -384,7 +395,6 @@ public class DonHang extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CB_KH;
-    private javax.swing.JComboBox<String> CB_SanPham;
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Sua;
     private javax.swing.JButton btn_SuaSP;
@@ -413,6 +423,7 @@ public class DonHang extends javax.swing.JPanel {
     private javax.swing.JTextField txt_GiaGiam;
     private javax.swing.JTextField txt_KhuyenMai;
     private javax.swing.JTextField txt_Ma;
+    private javax.swing.JTextField txt_MaSP;
     private javax.swing.JFormattedTextField txt_NgayLap;
     private javax.swing.JTextField txt_SoLuong;
     private javax.swing.JTextField txt_TongTien;

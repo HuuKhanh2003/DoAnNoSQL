@@ -170,14 +170,14 @@ public class FrmKhachHang extends javax.swing.JPanel {
         });
         add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 200, 80, -1));
 
-        add(CB_LoaiKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 450, -1));
-        add(txt_SoVour, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 110, 450, -1));
+        add(CB_LoaiKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, 450, -1));
+        add(txt_SoVour, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 450, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText("Tìm kiếm:");
         add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 150, -1, -1));
-        add(txt_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 150, 340, -1));
+        add(txt_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 340, -1));
 
         btn_TimKiem.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btn_TimKiem.setText("Tìm kiếm");
@@ -186,7 +186,7 @@ public class FrmKhachHang extends javax.swing.JPanel {
                 btn_TimKiemActionPerformed(evt);
             }
         });
-        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 150, -1, -1));
+        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 150, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
      private void hienThi()

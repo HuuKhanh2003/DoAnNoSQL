@@ -285,14 +285,14 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="770" y="70" width="450" height="-1"/>
+          <AbsoluteConstraints x="780" y="70" width="450" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_SoVour">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="770" y="110" width="450" height="-1"/>
+          <AbsoluteConstraints x="780" y="110" width="450" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -315,7 +315,7 @@
     <Component class="javax.swing.JTextField" name="txt_TimKiem">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="770" y="150" width="340" height="-1"/>
+          <AbsoluteConstraints x="780" y="150" width="340" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -331,7 +331,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1130" y="150" width="-1" height="-1"/>
+          <AbsoluteConstraints x="1140" y="150" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

@@ -35,15 +35,15 @@ public class SanPhamDao {
         try {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                BigDecimal price;
+                Double price;
                 Object priceObject = doc.get("price");
-                price = BigDecimal.valueOf((Integer) priceObject);
+                price = ((Double) priceObject);
                 SanPham product = new SanPham(
                         doc.getString("_id"),
                         doc.getString("productName"),
                         price,
                         doc.getString("categoryID"),
-                        (List<String>) doc.get("promotionIDs"), // Chuyển đổi sang List<String>
+                        doc.getString("promotionIDs"),
                         doc.getBoolean("isPromotionProgram")
                 );
                 products.add(product);

@@ -5,8 +5,6 @@
 package Pojo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -15,13 +13,13 @@ import java.util.List;
 public class SanPham {
     private String id;
     private String productName;
-    private BigDecimal price;
+    private Double price;
     private String categoryID;
-    private List<String> promotionIDs;
+    private String promotionIDs;
     private boolean isPromotionProgram;
 
     // Constructor
-    public SanPham(String id, String productName, BigDecimal price, String categoryID, List<String> promotionIDs, boolean isPromotionProgram) {
+    public SanPham(String id, String productName, Double price, String categoryID, String promotionIDs, boolean isPromotionProgram) {
         this.id = id;
         this.productName = productName;
         this.price = price;
@@ -30,7 +28,6 @@ public class SanPham {
         this.isPromotionProgram = isPromotionProgram;
     }
     public SanPham() {
-        this.promotionIDs = new ArrayList<>(); // Khởi tạo mặc định là một danh sách rỗng
     }
 
     // Getters and Setters
@@ -50,11 +47,11 @@ public class SanPham {
         this.productName = productName;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -66,11 +63,11 @@ public class SanPham {
         this.categoryID = categoryID;
     }
 
-    public List<String> getPromotionIDs() {
+    public String getPromotionIDs() {
         return promotionIDs;
     }
 
-    public void setPromotionIDs(List<String> promotionIDs) {
+    public void setPromotionIDs(String promotionIDs) {
         this.promotionIDs = promotionIDs;
     }
 

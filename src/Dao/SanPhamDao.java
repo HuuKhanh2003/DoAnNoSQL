@@ -35,9 +35,9 @@ public class SanPhamDao {
         try {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                BigDecimal price;
+                Double price;
                 Object priceObject = doc.get("price");
-                price = BigDecimal.valueOf((Integer) priceObject);
+                price = ((Double) priceObject);
                 SanPham product = new SanPham(
                         doc.getString("_id"),
                         doc.getString("productName"),

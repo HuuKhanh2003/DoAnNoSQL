@@ -10,6 +10,7 @@ import org.bson.Document;
 import static Dao.Connect.mongoClient; // Import mongoClient from Connect class
 import static Dao.Connect.database; 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -18,35 +19,27 @@ import org.bson.Document;
 public class DangNhapDao {
 
     public static MongoCollection<Document> collection;
+    public static MongoCollection<Document> employeeCollection;
     public DangNhapDao() {
         // Kết nối tới MongoDB
         collection = database.getCollection("Account");
+        employeeCollection = database.getCollection("Employee");
     }
     
-    public boolean login(MongoCollection<Document> collection, String username, String password) 
+    public boolean login( String username, String password) 
     {
-        // Tạo tài liệu truy vấn với username
-        Document query = new Document("username", username);
-
+        String hashedPassword = hashPassword(password);
+        Document query = new Document("username", username)
+                             .append("password", hashedPassword);
         // Tìm tài liệu tương ứng
         Document account = collection.find(query).first();
 
-        if (account == null) {
-            System.out.println("Account not found.");
-            return false;
+        if (account != null) {
+            ObjectId employeeId = account.getObjectId("employeeID");
+            Document employee = employeeCollection.find(new Document("_id", employeeId)).first();
+            return employee != null;
         }
-
-        String storedHashedPassword = account.getString("password");
-
-        String hashedPassword = hashPassword(password);
-
-        if (storedHashedPassword.equals(hashedPassword)) {
-            System.out.println("Login successful!");
-            return true;
-        } else {
-            System.out.println("Invalid password.");
-            return false;
-        }
+        return false;
     }
     public String hashPassword(String password) {
         return Integer.toHexString(password.hashCode());
@@ -65,6 +58,26 @@ public class DangNhapDao {
             return account.getString("role"); // Giả sử "role" là trường lưu quyền của tài khoản
         }
         
+        return null;
+    }
+    
+    public String getEmployeeNameByUsernameAndPassword(String username, String password) {
+        String hashedPassword = hashPassword(password);
+        Document query = new Document("username", username)
+                             .append("password", hashedPassword);
+
+        Document account = collection.find(query).first();
+
+        if (account != null) {
+            ObjectId employeeId = account.getObjectId("employeeID");
+
+            Document employee = employeeCollection.find(new Document("_id", employeeId)).first();
+
+            if (employee != null) {
+                return employee.getString("nameEmployee");
+            }
+        }
+
         return null;
     }
 }

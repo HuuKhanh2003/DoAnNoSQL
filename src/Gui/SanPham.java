@@ -398,7 +398,7 @@ public class SanPham extends javax.swing.JPanel {
         String ma = txt_Ma.getText();
         String ten= txt_Ten.getText();
         String priceString = txt_Gia.getText().trim();
-        BigDecimal price = new BigDecimal(priceString);
+        Double price = Double.parseDouble(priceString);
         String loaiSP = (String) CB_LoaiSP.getSelectedItem();
         // Chuyển đổi ngày sinh từ String sang Date
         
@@ -467,7 +467,7 @@ public class SanPham extends javax.swing.JPanel {
         String ma = txt_Ma.getText();
         String ten= txt_Ten.getText();
         String priceString = txt_Gia.getText().trim();
-        BigDecimal price = new BigDecimal(priceString);
+        Double price = Double.parseDouble(priceString);
         String loaiSP = (String) CB_LoaiSP.getSelectedItem();
         String promotionIDs = txt_CTKM.getText();
 

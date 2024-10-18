@@ -33,26 +33,11 @@ public class KhuyenMaiDao {
         try (MongoCursor<Document> cursor = collection.find().iterator()) {
             while (cursor.hasNext()) {
                 Document doc = cursor.next();
-                String startDateString = doc.getString("startDate"); 
-                Date startDate = null;
-                if (startDateString != null) {
-                    // Chuyển đổi chuỗi sang Date
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    startDate = dateFormat.parse(startDateString);
-                }
-                String endDateString = doc.getString("endDate"); 
-                Date endDate = null;
-                if (endDateString != null) {
-                    // Chuyển đổi chuỗi sang Date
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    endDate = dateFormat.parse(endDateString);
-                }
                 KhuyenMai promotion = parsePromotion(doc);
                 promotions.add(promotion);
             }
-        }catch (ParseException e) {
-            e.printStackTrace(); // Xử lý lỗi nếu có
         }
+        // Xử lý lỗi nếu có
         promotions.sort(Comparator.comparing(KhuyenMai::getId));
         return promotions;
     }
@@ -126,22 +111,8 @@ public class KhuyenMaiDao {
 
     // Chuyển đổi các trường 'startDate' và 'endDate' từ chuỗi sang Date
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date startDate = null;
-    Date endDate = null;
-
-    try {
-        String startDateString = doc.getString("startDate");
-        if (startDateString != null) {
-            startDate = dateFormat.parse(startDateString);
-        }
-
-        String endDateString = doc.getString("endDate");
-        if (endDateString != null) {
-            endDate = dateFormat.parse(endDateString);
-        }
-    } catch (ParseException e) {
-        e.printStackTrace(); // In lỗi để xem thông tin chi tiết nếu có lỗi
-    }
+    Date startDate = doc.getDate("startDate");
+    Date endDate = doc.getDate("endDate");
 
     KhuyenMai.AppliedTo appliedTo = new KhuyenMai.AppliedTo(
             (List<String>) appliedToDoc.get("products"),

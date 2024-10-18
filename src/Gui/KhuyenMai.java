@@ -208,6 +208,7 @@ public class KhuyenMai extends javax.swing.JPanel {
                 }
             }
         });
+        tbl_LoaiSanPham.setModel(dtm3);
         tbl_KhuyenMai.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tbl_KhuyenMai.getSelectedRow();
@@ -383,7 +384,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         jLabel12.setText("Chương trình khuyến mãi");
         add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 24, -1, -1));
 
-        txt_NgayBD.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy/MM/dd"))));
+        txt_NgayBD.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         txt_NgayBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_NgayBDActionPerformed(evt);
@@ -391,7 +392,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         });
         add(txt_NgayBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 201, 218, -1));
 
-        txt_NgayKT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy/MM/dd"))));
+        txt_NgayKT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         add(txt_NgayKT, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 241, 217, -1));
 
         tbl_KhuyenMai.setModel(new javax.swing.table.DefaultTableModel(

@@ -119,7 +119,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         DefaultTableModel dtm3 = new DefaultTableModel(){
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 1) {
+                if (columnIndex == 2) {
                     return Boolean.class;
                 }
                 return super.getColumnClass(columnIndex);

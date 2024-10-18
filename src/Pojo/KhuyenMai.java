@@ -95,12 +95,10 @@ public class KhuyenMai {
     public static class AppliedTo {
         private List<String> products;
         private List<String> categories;
-        private List<String> customers;
 
-        public AppliedTo(List<String> products, List<String> categories, List<String> customers) {
+        public AppliedTo(List<String> products, List<String> categories) {
             this.products = products;
             this.categories = categories;
-            this.customers = customers;
         }
 
         // Getters and Setters for AppliedTo
@@ -118,14 +116,6 @@ public class KhuyenMai {
 
         public void setCategories(List<String> categories) {
             this.categories = categories;
-        }
-
-        public List<String> getCustomers() {
-            return customers;
-        }
-
-        public void setCustomers(List<String> customers) {
-            this.customers = customers;
         }
     }
 

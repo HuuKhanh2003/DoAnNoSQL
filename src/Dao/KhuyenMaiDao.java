@@ -63,43 +63,60 @@ public class KhuyenMaiDao {
     }
 
     // Thêm khuyến mãi mới
-    public void addPromotion(KhuyenMai promotion) {
-        Document doc = new Document("_id", promotion.getId())
+    public boolean addPromotion(KhuyenMai promotion) {
+        try{
+            Document doc = new Document("_id", promotion.getId())
                 .append("promotionName", promotion.getPromotionName())
-//                .append("promotionType", promotion.getPromotionType())
                 .append("discountPercent", promotion.getDiscountPercent())
                 .append("startDate", promotion.getStartDate())
                 .append("endDate", promotion.getEndDate())
                 .append("appliedTo", new Document("products", promotion.getAppliedTo().getProducts())
                         .append("categories", promotion.getAppliedTo().getCategories())
-                        .append("customers", promotion.getAppliedTo().getCustomers()))
+                )
                 .append("conditions", new Document("minOrderValue", promotion.getConditions().getMinOrderValue())
-//                        .append("minQuantity", promotion.getConditions().getMinQuantity())
                         .append("customerTier", promotion.getConditions().getCustomerTier()));
 
-        collection.insertOne(doc);
+        // Insert the document into the collection
+            collection.insertOne(doc);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
+
     // Xóa khuyến mãi theo ID
-    public void deletePromotion(String id) {
-        collection.deleteOne(new Document("_id", id));
+    public boolean deletePromotion(String id) {
+        try{
+            collection.deleteOne(new Document("_id", id));
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
     // Cập nhật thông tin khuyến mãi
-    public void updatePromotion(String id, KhuyenMai updatedPromotion) {
-        Document updateDoc = new Document("$set", new Document("promotionName", updatedPromotion.getPromotionName())
+    public boolean updatePromotion(String id, KhuyenMai updatedPromotion) {
+        try{
+            Document updateDoc = new Document("$set", new Document("promotionName", updatedPromotion.getPromotionName())
 //                .append("promotionType", updatedPromotion.getPromotionType())
-                .append("discountPercent", updatedPromotion.getDiscountPercent())
-                .append("startDate", updatedPromotion.getStartDate())
-                .append("endDate", updatedPromotion.getEndDate())
-                .append("appliedTo", new Document("products", updatedPromotion.getAppliedTo().getProducts())
-                        .append("categories", updatedPromotion.getAppliedTo().getCategories())
-                        .append("customers", updatedPromotion.getAppliedTo().getCustomers()))
-                .append("conditions", new Document("minOrderValue", updatedPromotion.getConditions().getMinOrderValue())
+            .append("discountPercent", updatedPromotion.getDiscountPercent())
+            .append("startDate", updatedPromotion.getStartDate())
+            .append("endDate", updatedPromotion.getEndDate())
+            .append("appliedTo", new Document("products", updatedPromotion.getAppliedTo().getProducts())
+                    .append("categories", updatedPromotion.getAppliedTo().getCategories()))
+            .append("conditions", new Document("minOrderValue", updatedPromotion.getConditions().getMinOrderValue())
 //                        .append("minQuantity", updatedPromotion.getConditions().getMinQuantity())
-                        .append("customerTier", updatedPromotion.getConditions().getCustomerTier())));
+                    .append("customerTier", updatedPromotion.getConditions().getCustomerTier())));
 
-        collection.updateOne(new Document("_id", id), updateDoc);
+            collection.updateOne(new Document("_id", id), updateDoc);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
     // Phân tích Document thành đối tượng KhuyenMai
@@ -128,8 +145,7 @@ public class KhuyenMaiDao {
 
     KhuyenMai.AppliedTo appliedTo = new KhuyenMai.AppliedTo(
             (List<String>) appliedToDoc.get("products"),
-            (List<String>) appliedToDoc.get("categories"),
-            (List<String>) appliedToDoc.get("customers")
+            (List<String>) appliedToDoc.get("categories")
     );
 
     KhuyenMai.Conditions conditions = new KhuyenMai.Conditions(

@@ -174,7 +174,7 @@ public class DonHang extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Đơn hàng");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 19, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(301, 19, -1, -1));
 
         tbl_DonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -194,7 +194,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_DonHang);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 122, 624, 187));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 270, 162));
 
         tbl_ChiTietDonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,33 +214,33 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbl_ChiTietDonHang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, 419, 103));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 373, 624, 170));
 
         jLabel2.setText("Mã đơn hàng:");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 51, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 51, -1, -1));
 
         jLabel3.setText("Ngày lập:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 85, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 85, -1, -1));
 
         jLabel4.setText("Khách hàng:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 51, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 51, -1, -1));
 
         jLabel5.setText("Tổng tiền:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(379, 85, -1, -1));
-        add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 48, 165, -1));
-        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 160, -1));
-        add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 82, 165, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 85, -1, -1));
+        add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 165, -1));
+        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(499, 82, 160, -1));
+        add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(136, 82, 165, -1));
 
-        add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(461, 48, 163, -1));
+        add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 48, 161, -1));
 
         btn_Them.setText("Thêm");
-        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 315, -1, -1));
+        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 350, -1, -1));
 
         btn_Xoa.setText("Xóa");
-        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 315, -1, -1));
+        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, -1, -1));
 
         btn_Sua.setText("Sửa");
-        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 315, -1, -1));
+        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
 
         btn_LamMoi.setText("Làm mới");
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -248,86 +248,75 @@ public class DonHang extends javax.swing.JPanel {
                 btn_LamMoiActionPerformed(evt);
             }
         });
-        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(403, 315, -1, -1));
+        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, -1, -1));
 
         btn_TimKiem.setText("Tìm kiếm");
-        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 315, -1, -1));
+        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(579, 315, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn_Them)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_Xoa)
-                                .addGap(50, 50, 50)
-                                .addComponent(btn_Sua)
-                                .addGap(71, 71, 71)
-                                .addComponent(btn_LamMoi)
-                                .addGap(66, 66, 66)
-                                .addComponent(btn_TimKiem))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_Ma)
-                            .addComponent(txt_NgayLap, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE))
-                        .addGap(113, 113, 113)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(32, 32, 32)
-                                .addComponent(txt_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(CB_KH, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(txt_Ma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CB_KH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_NgayLap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Them)
-                    .addComponent(btn_Xoa)
-                    .addComponent(btn_Sua)
-                    .addComponent(btn_LamMoi)
-                    .addComponent(btn_TimKiem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
-        );
+        tbl_SanPham.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tbl_SanPham);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 500, 210));
+
+        jLabel6.setText("Sản phẩm:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 110, 70));
+
+        jLabel7.setText("Số lượng:");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 160, 40));
+
+        jLabel8.setText("Giá:");
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 60, 40));
+
+        jLabel9.setText("Khuyến mãi:");
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, 160, 50));
+
+        jLabel10.setText("Giá giảm:");
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 340, 260, 30));
+        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 300, 20));
+        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 140, 30));
+        add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 120, 20));
+
+        txt_GiaGiam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_GiaGiamActionPerformed(evt);
+            }
+        });
+        add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 80, 30));
+
+        btn_SuaSP.setText("Sửa");
+        btn_SuaSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SuaSPActionPerformed(evt);
+            }
+        });
+        add(btn_SuaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 100, 30));
+
+        btn_XoaSP.setText("Xóa");
+        btn_XoaSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_XoaSPActionPerformed(evt);
+            }
+        });
+        add(btn_XoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 140, 20));
+
+        btn_ThemSP.setText(">>");
+        btn_ThemSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemSPActionPerformed(evt);
+            }
+        });
+        add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 150, 30));
+        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 80, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed

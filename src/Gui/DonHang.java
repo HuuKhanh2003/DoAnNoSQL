@@ -6,6 +6,7 @@ package Gui;
 
 import Dao.DonHangDao;
 import Dao.KhachHangDao;
+import Dao.KhuyenMaiDao;
 import Dao.SanPhamDao;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -25,6 +27,7 @@ public class DonHang extends javax.swing.JPanel {
      */
     DonHangDao handleDonHang = new DonHangDao();
     KhachHangDao handleKhachHang=new KhachHangDao();
+    KhuyenMaiDao handleKhuyenMai=new KhuyenMaiDao();
     SanPhamDao handleSanPham=new SanPhamDao();
     public DonHang() {
         initComponents();
@@ -116,12 +119,14 @@ public class DonHang extends javax.swing.JPanel {
         dtm.addColumn("Tên sản phẩm");
         dtm.addColumn("Loại sản phẩm");
         dtm.addColumn("Giá");
+        dtm.addColumn("Khuyến mãi");
         for (Pojo.SanPham sanPham : dsSanPham) {
             dtm.addRow(new Object[]{
                 sanPham.getId(),
                 sanPham.getProductName(),
                 sanPham.getCategoryID(),
-                sanPham.getPrice()
+                sanPham.getPrice(),
+                sanPham.getPromotionIDs()
             });
         }
 
@@ -399,8 +404,41 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_ThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemSPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_ThemSPActionPerformed
+        int selectedRow = tbl_SanPham.getSelectedRow();
+        if (selectedRow == -1) {
+            System.out.println("Vui lòng chọn sản phẩm trước khi thêm.");
+            return;
+        }
 
+        String maSP = tbl_SanPham.getValueAt(selectedRow, 0).toString(); // Cột chứa mã sản phẩm
+        String tenSP = tbl_SanPham.getValueAt(selectedRow, 1).toString(); // Cột chứa tên sản phẩm
+        String loaiSP = tbl_SanPham.getValueAt(selectedRow, 2).toString(); // Cột chứa loại sản phẩm
+        double gia = Double.parseDouble(tbl_SanPham.getValueAt(selectedRow, 3).toString()); // Cột chứa giá
+        String maKhuyenMai = tbl_SanPham.getValueAt(selectedRow, 4).toString(); // Cột chứa mã khuyến mãi (nếu có)
+
+        // Mặc định số lượng = 1
+        int soLuong = 1;
+
+        // Kiểm tra chương trình khuyến mãi dựa vào mã khuyến mãi
+        double tyLeKhuyenMai = handleKhuyenMai.getKhuyenMaiPercent(maKhuyenMai); // Hàm để lấy tỷ lệ khuyến mãi từ collection
+        double giaKhuyenMai = gia * (1 - tyLeKhuyenMai / 100);
+
+        // Tính tổng tiền (ThanhTien = Gia * SoLuong)
+        double thanhTien = gia * soLuong;
+
+        // Tạo đối tượng sản phẩm để thêm vào bảng chi tiết đơn hàng
+        Object[] rowData = new Object[] {
+            maSP, soLuong, gia, maKhuyenMai, giaKhuyenMai, thanhTien
+        };
+
+        // Thêm sản phẩm vào bảng chi tiết đơn hàng
+        DefaultTableModel model = (DefaultTableModel) tbl_ChiTietDonHang.getModel();
+        model.addRow(rowData);
+
+        System.out.println("Sản phẩm đã được thêm vào chi tiết đơn hàng.");
+        
+    }//GEN-LAST:event_btn_ThemSPActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CB_KH;

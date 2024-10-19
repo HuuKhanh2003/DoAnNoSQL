@@ -201,7 +201,7 @@ public class FrmTong extends javax.swing.JFrame {
         });
         pnMenu.add(lb_DonHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 360, 70));
 
-        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 770));
+        getContentPane().add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 770));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -345,7 +345,7 @@ public class FrmTong extends javax.swing.JFrame {
 
     private void lb_KhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_KhachHangMouseClicked
         // TODO add your handling code here:
-        JPanel newPanel = new KhachHang();
+        JPanel newPanel = new FrmKhachHang();
 
         // Loại bỏ tất cả các thành phần con của panel_GiaoDien
         panel_GiaoDien.removeAll();

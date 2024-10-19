@@ -13,10 +13,10 @@ import javax.swing.JOptionPane;
  */
 public class DangNhap extends javax.swing.JFrame {
 
-    String username="";
-    String password="";
-    String role="";
-    String name="";
+    public String username="";
+    public String password="";
+    public String role="";
+    public String name="";
     /**
      * Creates new form DangNhap
      */

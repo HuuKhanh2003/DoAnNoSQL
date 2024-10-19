@@ -9,13 +9,21 @@ import Dao.KhachHangDao;
 import Dao.KhuyenMaiDao;
 import Dao.LoaiSanPhamDao;
 import Dao.SanPhamDao;
+import Pojo.KhuyenMai.AppliedTo;
+import Pojo.KhuyenMai.Conditions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
@@ -35,6 +43,9 @@ public class KhuyenMai extends javax.swing.JPanel {
     LoaiSanPhamDao handleLoaiSanPham=new LoaiSanPhamDao();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
+    List<String> selectedprodIDs = new ArrayList<>();
+    List<String> selectedprodTypeIDs = new ArrayList<>();
+    String selectedCustomerType = null;
     public KhuyenMai() {
         initComponents();
         hienThi();
@@ -91,6 +102,24 @@ public class KhuyenMai extends javax.swing.JPanel {
             dtm1.setValueAt(false,i, 2);
         }
         tbl_SanPham.setModel(dtm1);
+        
+        dtm1.addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            if (column == 2) {
+                Boolean isChecked = (Boolean) dtm1.getValueAt(row, 2);
+                String id = (String) dtm1.getValueAt(row, 0);
+
+                if (isChecked != null && isChecked) {
+                    if (!selectedprodIDs.contains(id)) {
+                        selectedprodIDs.add(id);
+                    }
+                } else {
+                    selectedprodIDs.remove(id);
+                }
+            }
+        });
         List<Pojo.KhachHang> ds2 = handleKhachHang.getAllCustomers();
         Set<String> uniqueCustomerTiers = new HashSet<>();
         for (Pojo.KhachHang kh : ds2) {
@@ -114,6 +143,30 @@ public class KhuyenMai extends javax.swing.JPanel {
             dtm2.setValueAt(false, rowIndex1, 1);
             rowIndex1++;
         }
+        dtm2.addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            if (column == 1) {
+                Boolean isChecked = (Boolean) dtm2.getValueAt(row, 1);
+                String id = (String) dtm2.getValueAt(row, 0);
+
+                if (isChecked != null && isChecked) {
+                    for (int i = 0; i < dtm2.getRowCount(); i++) {
+                        if (i != row) {
+                            dtm2.setValueAt(false, i, 1);
+                        }
+                    }
+                    selectedCustomerType = id;
+
+                } else {
+                    selectedCustomerType = null;
+                }
+
+                // Debug: print the currently selected customer type
+                System.out.println("Selected Customer Type: " + selectedCustomerType);
+            }
+        });
         tbl_LoaiKhachHang.setModel(dtm2);
         List<Pojo.LoaiSanPham> ds3 = handleLoaiSanPham.getAllCategories();
         DefaultTableModel dtm3 = new DefaultTableModel(){
@@ -138,6 +191,23 @@ public class KhuyenMai extends javax.swing.JPanel {
             dtm3.setValueAt(false,i, 2);
         }
 
+        dtm3.addTableModelListener(e -> {
+            int row = e.getFirstRow();
+            int column = e.getColumn();
+
+            if (column == 2) {
+                Boolean isChecked = (Boolean) dtm3.getValueAt(row, 2);
+                String id = (String) dtm3.getValueAt(row, 0);
+
+                if (isChecked != null && isChecked) {
+                    if (!selectedprodTypeIDs.contains(id)) {
+                        selectedprodTypeIDs.add(id);
+                    }
+                } else {
+                    selectedprodTypeIDs.remove(id);
+                }
+            }
+        });
         tbl_LoaiSanPham.setModel(dtm3);
         tbl_KhuyenMai.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -193,20 +263,10 @@ public class KhuyenMai extends javax.swing.JPanel {
                 }
             }
         });
-        tbl_SanPham.setEnabled(false);
-        tbl_SanPham.setFocusable(false);
-        tbl_SanPham.getTableHeader().setEnabled(false);
-        tbl_LoaiSanPham.setEnabled(false);
-        tbl_LoaiSanPham.setFocusable(false);
-        tbl_LoaiSanPham.getTableHeader().setEnabled(false);
-        tbl_LoaiKhachHang.setEnabled(false);
-        tbl_LoaiKhachHang.setFocusable(false);
-        tbl_LoaiKhachHang.getTableHeader().setEnabled(false);
-        txt_GiaTriNhoNhat.setEnabled(false);
         Chk_ApDung.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Chk_ApDung.isSelected()) {
+                if (!Chk_ApDung.isSelected()) {
                     tbl_SanPham.setEnabled(true);
                     tbl_SanPham.setFocusable(true);
                     tbl_SanPham.getTableHeader().setEnabled(true);
@@ -324,7 +384,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         jLabel12.setText("Chương trình khuyến mãi");
         add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 24, -1, -1));
 
-        txt_NgayBD.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy/MM/dd"))));
+        txt_NgayBD.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         txt_NgayBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_NgayBDActionPerformed(evt);
@@ -332,7 +392,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         });
         add(txt_NgayBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 201, 218, -1));
 
-        txt_NgayKT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy/MM/dd"))));
+        txt_NgayKT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         add(txt_NgayKT, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 241, 217, -1));
 
         tbl_KhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
@@ -465,6 +525,9 @@ public class KhuyenMai extends javax.swing.JPanel {
                 String minOrderValue = tbl_KhuyenMai.getValueAt(selectedRow, 8).toString();
                 txt_GiaTriNhoNhat.setText(minOrderValue);
             }
+            else{
+                txt_GiaTriNhoNhat.setText("");
+            }
             // Truy vấn chi tiết khuyến mãi từ CSDL để lấy thông tin appliedTo
             Document promoDoc = handleKhuyenMai.getPromotionById(ma); // Lấy khuyến mãi bằng ID
             if (promoDoc != null) {
@@ -482,7 +545,54 @@ public class KhuyenMai extends javax.swing.JPanel {
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         // TODO add your handling code here:
+        String ma = txt_Ma.getText();
+        String ten= txt_Ten.getText();
+        String giamGiaString = txt_Giam.getText().trim();
+        int giamGia = Integer.parseInt(giamGiaString);
         
+        String ngayBD = txt_NgayBD.getText().trim();
+        String ngayKT = txt_NgayKT.getText().trim();
+        String gtnnString = txt_GiaTriNhoNhat.getText().trim();
+        int gtnn = Integer.parseInt(gtnnString);
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        
+        AppliedTo apDung = new AppliedTo(selectedprodIDs,selectedprodTypeIDs);
+        
+        Conditions dieuKien = new Conditions(gtnn,selectedCustomerType);
+        
+        Pojo.KhuyenMai km = new Pojo.KhuyenMai();
+        km.setId(ma);
+        km.setPromotionName(ten);
+        km.setDiscountPercent(giamGia);
+        Date bd;
+        try {
+            bd = dateFormat.parse(ngayBD);
+            km.setStartDate(bd);
+        } catch (ParseException ex) {
+            Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date kt;
+        try {
+            kt = dateFormat.parse(ngayKT);
+            km.setEndDate(kt); 
+        } catch (ParseException ex) {
+            Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        km.setAppliedTo(apDung);
+        km.setConditions(dieuKien);
+
+        boolean success = handleKhuyenMai.addPromotion(km);
+
+        // Thông báo kết quả
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!");
+            hienThi();
+        } else {
+            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thất bại!");
+        }
     }//GEN-LAST:event_btn_AddActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

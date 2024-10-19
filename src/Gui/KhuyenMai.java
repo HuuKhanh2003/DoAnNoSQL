@@ -337,10 +337,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         tbl_LoaiKhachHang = new javax.swing.JTable();
         btn_Add = new javax.swing.JButton();
         btn_Del = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        btn_Them = new javax.swing.JButton();
         btn_Sua = new javax.swing.JButton();
-        btn_Xoa = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -470,24 +467,20 @@ public class KhuyenMai extends javax.swing.JPanel {
         add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 60, -1));
 
         btn_Del.setText("<<<");
-        add(btn_Del, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 60, 30));
-
-        jButton3.setText("Sửa");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 610, -1, -1));
-
-        btn_Them.setText("Thêm ");
-        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+        btn_Del.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ThemActionPerformed(evt);
+                btn_DelActionPerformed(evt);
             }
         });
-        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+        add(btn_Del, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 470, 60, 30));
 
         btn_Sua.setText("Sửa");
-        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, -1, -1));
-
-        btn_Xoa.setText("Xóa");
-        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 230, -1, -1));
+        btn_Sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SuaActionPerformed(evt);
+            }
+        });
+        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void Chk_ApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Chk_ApDungActionPerformed
@@ -501,10 +494,6 @@ public class KhuyenMai extends javax.swing.JPanel {
     private void txt_NgayBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_NgayBDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_NgayBDActionPerformed
-
-    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_ThemActionPerformed
 
     private void tbl_KhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_KhuyenMaiMouseClicked
         // TODO add your handling code here:
@@ -589,23 +578,82 @@ public class KhuyenMai extends javax.swing.JPanel {
 
         // Thông báo kết quả
         if (success) {
-            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thành công!");
+            JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thành công!");
             hienThi();
         } else {
-            JOptionPane.showMessageDialog(null, "Thêm sản phẩm thất bại!");
+            JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thất bại!");
         }
     }//GEN-LAST:event_btn_AddActionPerformed
+
+    private void btn_DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DelActionPerformed
+        // TODO add your handling code here:
+        String ma = txt_Ma.getText();
+        boolean success = handleKhuyenMai.deletePromotion(ma);
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Xoá khuyến mãi thành công!");
+            hienThi();
+        } else {
+            JOptionPane.showMessageDialog(null, "Xoá khuyến mãi thất bại!");
+        }
+    }//GEN-LAST:event_btn_DelActionPerformed
+
+    private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
+        // TODO add your handling code here:
+        String ma = txt_Ma.getText();
+        String ten= txt_Ten.getText();
+        String giamGiaString = txt_Giam.getText().trim();
+        int giamGia = Integer.parseInt(giamGiaString);
+        
+        String ngayBD = txt_NgayBD.getText().trim();
+        String ngayKT = txt_NgayKT.getText().trim();
+        String gtnnString = txt_GiaTriNhoNhat.getText().trim();
+        int gtnn = Integer.parseInt(gtnnString);
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        
+        AppliedTo apDung = new AppliedTo(selectedprodIDs,selectedprodTypeIDs);
+        
+        Conditions dieuKien = new Conditions(gtnn,selectedCustomerType);
+        
+        Pojo.KhuyenMai km = new Pojo.KhuyenMai();
+        km.setId(ma);
+        km.setPromotionName(ten);
+        km.setDiscountPercent(giamGia);
+        Date bd;
+        try {
+            bd = dateFormat.parse(ngayBD);
+            km.setStartDate(bd);
+        } catch (ParseException ex) {
+            Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Date kt;
+        try {
+            kt = dateFormat.parse(ngayKT);
+            km.setEndDate(kt); 
+        } catch (ParseException ex) {
+            Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        km.setAppliedTo(apDung);
+        km.setConditions(dieuKien);
+        boolean success = handleKhuyenMai.updatePromotion(km.getId(),km);
+        
+        if (success) {
+            JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thành công!");
+            hienThi();
+        } else {
+            JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thất bại!");
+        }
+    }//GEN-LAST:event_btn_SuaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox Chk_ApDung;
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Del;
     private javax.swing.JButton btn_Sua;
-    private javax.swing.JButton btn_Them;
-    private javax.swing.JButton btn_Xoa;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chk_DieuKien;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

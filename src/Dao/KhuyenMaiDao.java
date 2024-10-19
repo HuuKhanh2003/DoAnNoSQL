@@ -9,6 +9,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -26,6 +28,30 @@ public class KhuyenMaiDao {
         collection = Connect.database.getCollection("Promotions");
     }
     
+    
+    public void checkAndUpdatePromotion(String promotionID) {
+        Document promotion = collection.find(new Document("_id", promotionID)).first();
+
+        if (promotion != null) {
+            Date endDate = promotion.getDate("endDate");
+
+            Date today = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+            if (today.after(endDate)) {
+                removePromotionFromProducts(promotionID);
+            }
+        }
+    }
+    
+    public void removePromotionFromProducts(String promotionID) {
+        MongoCollection<Document> collectionProducts = Connect.database.getCollection("Product");
+
+        collectionProducts.updateMany(
+            new Document("promotionIDs", promotionID),
+            new Document("$set", new Document("isPromotionProgram", false))
+                .append("$pull", new Document("promotionIDs", promotionID))
+        );
+    }
 
     // Lấy danh sách tất cả các khuyến mãi
     public List<KhuyenMai> getAllPromotions() {

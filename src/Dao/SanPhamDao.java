@@ -14,7 +14,9 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.bson.Document;
 
 /**
@@ -23,10 +25,11 @@ import org.bson.Document;
  */
 public class SanPhamDao {
     public static MongoCollection<Document> collection;
-
+    public static MongoCollection<Document> collection_Promotion;
     public SanPhamDao() {
         // Kết nối tới MongoDB
         collection = Connect.database.getCollection("Product");
+        collection_Promotion=Connect.database.getCollection("Promotions");
     }
     public List<SanPham> getAllProducts() {
         List<SanPham> products = new ArrayList<>();
@@ -191,6 +194,132 @@ public class SanPhamDao {
 
     return result;
     }
+    
+//   public List<SanPham> getProductsByCustomerTier(String tier) {
+//    List<SanPham> products = new ArrayList<>();
+//
+//    // Tìm các chương trình khuyến mãi áp dụng cho tier khách hàng cụ thể
+//    MongoCursor<Document> promoCursor = collection_Promotion.find(new Document("conditions.customerTier", tier)).iterator();
+//    Set<String> validProductIDs = new HashSet<>();
+//
+//    try {
+//        // Lấy danh sách các sản phẩm từ các chương trình khuyến mãi
+//        while (promoCursor.hasNext()) {
+//            Document promoDoc = promoCursor.next();
+//            
+//            // Kiểm tra xem trường "appliedTo" có tồn tại và không phải là null
+//            if (promoDoc.containsKey("appliedTo")) {
+//                Document appliedToDoc = (Document) promoDoc.get("appliedTo");
+//                
+//                // Kiểm tra xem "products" có tồn tại trong "appliedTo"
+//                if (appliedToDoc.containsKey("products")) {
+//                    List<String> promoProductIDs = appliedToDoc.getList("products", String.class);
+//                    validProductIDs.addAll(promoProductIDs);
+//                }
+//            }
+//        }
+//    } finally {
+//        promoCursor.close();
+//    }
+//
+//    // Nếu không có sản phẩm nào được áp dụng khuyến mãi cho tier này, trả về danh sách rỗng
+//    if (validProductIDs.isEmpty()) {
+//        return products;
+//    }
+//
+//    // Truy vấn sản phẩm theo danh sách sản phẩm hợp lệ
+//    MongoCursor<Document> productCursor = collection.find(new Document("_id", new Document("$in", validProductIDs))).iterator();
+//
+//    try {
+//        while (productCursor.hasNext()) {
+//            Document doc = productCursor.next();
+//            Double price;
+//            Object priceObject = doc.get("price");
+//            price = ((Double) priceObject);
+//
+//            // Tạo đối tượng SanPham từ dữ liệu lấy được
+//            SanPham product = new SanPham(
+//                doc.getString("_id"),
+//                doc.getString("productName"),
+//                price,
+//                doc.getString("categoryID"),
+//                doc.getString("promotionIDs"),
+//                doc.getBoolean("isPromotionProgram")
+//            );
+//            products.add(product);
+//        }
+//    } finally {
+//        productCursor.close();
+//    }
+//
+//    return products;
+//}
+
+    public List<SanPham> getProductsByCustomerTier(String tier) {
+    List<SanPham> products = new ArrayList<>();
+
+    // Lấy tất cả các sản phẩm từ collection sản phẩm
+    MongoCursor<Document> productCursor = collection.find().iterator();
+
+    try {
+        // Duyệt qua tất cả sản phẩm
+        while (productCursor.hasNext()) {
+            Document doc = productCursor.next();
+            
+            // Kiểm tra và lấy giá trị price một cách an toàn
+            Double price = 0.0;
+            Object priceObject = doc.get("price");
+            if (priceObject instanceof Double) {
+                price = (Double) priceObject;
+            } else if (priceObject instanceof Integer) {
+                price = ((Integer) priceObject).doubleValue();
+            }
+
+            // Lấy thông tin khuyến mãi từ sản phẩm
+            String promotionIDs = "";  // Mặc định không có khuyến mãi
+
+            // Kiểm tra các chương trình khuyến mãi áp dụng cho loại khách hàng này
+            MongoCursor<Document> promoCursor = collection_Promotion.find(new Document("conditions.customerTier", tier)).iterator();
+            try {
+                while (promoCursor.hasNext()) {
+                    Document promoDoc = promoCursor.next();
+                    
+                    // Kiểm tra xem chương trình khuyến mãi này có áp dụng cho sản phẩm này không
+                    if (promoDoc.containsKey("appliedTo")) {
+                        Document appliedToDoc = (Document) promoDoc.get("appliedTo");
+                        
+                        // Kiểm tra sản phẩm này có nằm trong danh sách sản phẩm áp dụng khuyến mãi không
+                        if (appliedToDoc.containsKey("products")) {
+                            List<String> promoProductIDs = appliedToDoc.getList("products", String.class);
+                            if (promoProductIDs.contains(doc.getString("_id"))) {
+                                promotionIDs = promoDoc.getString("_id");  // Lấy mã khuyến mãi
+                                break;  // Dừng ngay khi tìm được khuyến mãi cho sản phẩm này
+                            }
+                        }
+                    }
+                }
+            } finally {
+                promoCursor.close();
+            }
+
+            // Tạo đối tượng SanPham từ dữ liệu lấy được
+            SanPham product = new SanPham(
+                doc.getString("_id"),
+                doc.getString("productName"),
+                price,
+                doc.getString("categoryID"),
+                promotionIDs,  // Thêm khuyến mãi nếu có
+                doc.getBoolean("isPromotionProgram", false)  // Nếu không có trường này, mặc định là false
+            );
+            products.add(product);
+        }
+    } finally {
+        productCursor.close();
+    }
+
+    return products;
+}
+
 
     // Đóng kết nối
     public void close() {

@@ -5,9 +5,11 @@
 package Dao;
 
 import Pojo.DonHang;
+import Pojo.SanPham;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.bson.Document;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -118,79 +123,93 @@ public class DonHangDao {
 
         return null;
     }
-    public void removeProductFromOrder(String orderId, String productId) {
-        Document query = new Document("_id", orderId);
-        Document doc = collection.find(query).first();
+   
+   // Thêm đơn hàng mới
+    public void addOrder(DonHang order) {
+        Document orderDoc = new Document("_id", order.getId())
+                .append("customerID", order.getCustomerID())
+                .append("orderDate", order.getOrderDate())
+                .append("products", createProductDocuments(order.getProducts()))
+                .append("totalAmount", order.getTotalAmount());
 
-        if (doc != null) {
-            List<Document> productDocs = (List<Document>) doc.get("products");
-            if (productDocs != null) {
-                // Tìm và xóa sản phẩm theo productID
-                productDocs.removeIf(productDoc -> productDoc.getString("productID").equals(productId));
-
-                // Cập nhật danh sách sản phẩm sau khi xóa vào MongoDB
-                Document update = new Document("products", productDocs);
-                collection.updateOne(query, new Document("$set", update));
-
-                System.out.println("Product removed successfully.");
-            }
-        } else {
-            System.out.println("Order not found.");
-        }
+        collection.insertOne(orderDoc);
+        System.out.println("Đơn hàng đã được thêm thành công!");
     }
-    public void updateProductInOrder(String orderId, Pojo.DonHang.Product updatedProduct) {
-        Document query = new Document("_id", orderId);
-        Document doc = collection.find(query).first();
 
-        if (doc != null) {
-            List<Document> productDocs = (List<Document>) doc.get("products");
-            if (productDocs != null) {
-                for (Document productDoc : productDocs) {
-                    if (productDoc.getString("productID").equals(updatedProduct.getProductID())) {
-                        // Cập nhật thông tin sản phẩm
-                        productDoc.put("quantity", updatedProduct.getQuantity());
-                        productDoc.put("price", updatedProduct.getPrice());
-                        productDoc.put("promotionID", updatedProduct.getPromotionID());
-                        productDoc.put("discountedPrice", updatedProduct.getDiscountedPrice());
-                        break;
-                    }
-                }
-
-                // Cập nhật danh sách sản phẩm sau khi sửa vào MongoDB
-                Document update = new Document("products", productDocs);
-                collection.updateOne(query, new Document("$set", update));
-
-                System.out.println("Product updated successfully.");
-            }
-        } else {
-            System.out.println("Order not found.");
-        }
+    // Xóa đơn hàng
+    public void deleteOrder(String orderId) {
+        Bson filter = Filters.eq("_id", orderId);
+        collection.deleteOne(filter);
+        System.out.println("Đơn hàng đã được xóa!");
     }
-    public void updateTotalAmount(String orderId) {
-        Document query = new Document("_id", orderId);
-        Document doc = collection.find(query).first();
 
-        if (doc != null) {
-            List<Document> productDocs = (List<Document>) doc.get("products");
-            double totalAmount = 0.0;
+    // Sửa đơn hàng
+    public void updateOrder(DonHang order) {
+        // Bước 1: Xác định điều kiện lọc đơn hàng theo _id
+        Bson filter = Filters.eq("_id", order.getId());
 
-            if (productDocs != null) {
-                for (Document productDoc : productDocs) {
-                    int quantity = productDoc.getInteger("quantity");
-                    double discountedPrice = productDoc.getDouble("discountedPrice");
-                    totalAmount += quantity * discountedPrice;
-                }
-            }
-
-            // Cập nhật tổng số tiền vào MongoDB
-            Document update = new Document("totalAmount", totalAmount);
-            collection.updateOne(query, new Document("$set", update));
-
-            System.out.println("Total amount updated successfully.");
-        } else {
-            System.out.println("Order not found.");
+        // Bước 2: Chuẩn bị mảng products để đưa vào MongoDB (thêm mới, xóa cũ)
+        List<Document> productDocuments = new ArrayList<>();
+        for (DonHang.Product product : order.getProducts()) {
+            Document productDoc = new Document()
+                .append("productID", product.getProductID())
+                .append("quantity", product.getQuantity())
+                .append("price", product.getPrice())
+                .append("promotionID", product.getPromotionID())
+                .append("discountedPrice", product.getDiscountedPrice());
+            productDocuments.add(productDoc);
         }
+
+        // Bước 3: Chuẩn bị bản cập nhật cho đơn hàng
+        Bson update = Updates.combine(
+            Updates.set("customerID", order.getCustomerID()),
+            Updates.set("orderDate", order.getOrderDate()),
+            Updates.set("products", productDocuments), 
+            Updates.set("totalAmount", order.getTotalAmount())
+        );
+
+        // Bước 4: Thực hiện cập nhật đơn hàng trong MongoDB
+        collection.updateOne(filter, update);
+        System.out.println("Đơn hàng đã được cập nhật!");
     }
 
 
+
+    private List<Document> createProductDocuments(List<DonHang.Product> products) {
+        List<Document> productDocs = new ArrayList<>();
+        for (DonHang.Product product : products) {
+            Document productDoc = new Document("productID", product.getProductID())
+                    .append("quantity", product.getQuantity())
+                    .append("price", product.getPrice())
+                    .append("promotionID", product.getPromotionID())
+                    .append("discountedPrice", product.getDiscountedPrice());
+
+            productDocs.add(productDoc);
+        }
+        return productDocs;
+    }
+
+    public List<Object[]> getAllRowsFromTable(JTable table) {
+        List<Object[]> rowDataList = new ArrayList<>();
+
+        // Lấy TableModel từ JTable
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        // Duyệt qua tất cả các hàng trong bảng
+        for (int rowIndex = 0; rowIndex < model.getRowCount(); rowIndex++) {
+            // Tạo mảng chứa dữ liệu của từng hàng
+            Object[] rowData = new Object[model.getColumnCount()];
+
+            // Duyệt qua tất cả các cột của hàng hiện tại
+            for (int colIndex = 0; colIndex < model.getColumnCount(); colIndex++) {
+                // Lấy giá trị của ô (cell) tại vị trí rowIndex, colIndex
+                rowData[colIndex] = model.getValueAt(rowIndex, colIndex);
+            }
+
+            // Thêm hàng vào danh sách
+            rowDataList.add(rowData);
+        }
+    
+        return rowDataList;
+    }
 }

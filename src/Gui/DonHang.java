@@ -8,14 +8,18 @@ import Dao.DonHangDao;
 import Dao.KhachHangDao;
 import Dao.KhuyenMaiDao;
 import Dao.SanPhamDao;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
-
 /**
  *
  * @author AD
@@ -32,7 +36,6 @@ public class DonHang extends javax.swing.JPanel {
     public DonHang() {
         initComponents();
         hienThiDonHang();
-        hienThiDSSanPham();
         List<String> dsKhachHang = handleKhachHang.getCustomerID();
         for(String KH:dsKhachHang)
         {
@@ -80,7 +83,7 @@ public class DonHang extends javax.swing.JPanel {
         // Thiết lập model cho bảng đơn hàng
         tbl_DonHang.setModel(dtm);
     }
-
+    double tongTien=0;
     private void hienThiChiTietDonHang(String orderId) {
         Pojo.DonHang donHang = handleDonHang.getOrderById(orderId); // Lấy thông tin chi tiết đơn hàng
 
@@ -90,28 +93,44 @@ public class DonHang extends javax.swing.JPanel {
         dtmChiTiet.addColumn("Giá");
         dtmChiTiet.addColumn("Mã khuyến mãi");
         dtmChiTiet.addColumn("Giá khuyến mãi");
-        dtmChiTiet.addColumn("Thành tiền"); // Thêm cột Thành tiền
+        //dtmChiTiet.addColumn("Thành tiền"); // Thêm cột Thành tiền
 
         if (donHang != null && donHang.getProducts() != null) {
+            double tongThanhTien=0;
+            double tongThanhTien1=0;
+            
             for (Pojo.DonHang.Product product : donHang.getProducts()) {
-                double thanhTien = product.getQuantity() * product.getPrice(); // Tính Thành tiền
+                double thanhTien = product.getQuantity() * product.getPrice();
+                double thanhTien1= product.getQuantity()*product.getDiscountedPrice();
                 dtmChiTiet.addRow(new Object[]{
                     product.getProductID(),
                     product.getQuantity(),
                     product.getPrice(),
                     product.getPromotionID(),
                     product.getDiscountedPrice(),
-                    thanhTien // Thêm Thành tiền vào bảng
+                    //thanhTien
                 });
+                tongThanhTien+=thanhTien;
+                tongThanhTien1+=thanhTien1;
             }
+            if(tongThanhTien>=500000)
+            {
+                tongTien+=tongThanhTien1;
+            }
+            else
+            {
+                tongTien=tongThanhTien;
+            }
+            txt_TongTien.setText(""+tongTien);
         }
 
         // Thiết lập model cho bảng chi tiết đơn hàng
         tbl_ChiTietDonHang.setModel(dtmChiTiet);
     }
     
-    private void hienThiDSSanPham() {
-        List<Pojo.SanPham> dsSanPham = handleSanPham.getAllProducts();
+    private void hienThiDSSanPham(String customerID) {
+        String customerTier=handleKhachHang.getCustomerTiersByID(customerID);
+        List<Pojo.SanPham> dsSanPham = handleSanPham.getProductsByCustomerTier(customerTier);
         DefaultTableModel dtm = new DefaultTableModel();
 
         // Thêm các cột cho bảng đơn hàng
@@ -132,6 +151,7 @@ public class DonHang extends javax.swing.JPanel {
 
         // Thiết lập model cho bảng đơn hàng
         tbl_SanPham.setModel(dtm);
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,9 +162,6 @@ public class DonHang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menu_CTDH = new java.awt.MenuBar();
-        delete = new java.awt.Menu();
-        edit = new java.awt.Menu();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_DonHang = new javax.swing.JTable();
@@ -174,8 +191,6 @@ public class DonHang extends javax.swing.JPanel {
         txt_Gia = new javax.swing.JTextField();
         txt_KhuyenMai = new javax.swing.JTextField();
         txt_GiaGiam = new javax.swing.JTextField();
-        btn_SuaSP = new javax.swing.JButton();
-        btn_XoaSP = new javax.swing.JButton();
         btn_ThemSP = new javax.swing.JButton();
         txt_MaSP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -183,18 +198,7 @@ public class DonHang extends javax.swing.JPanel {
         refresh_CTDH = new javax.swing.JButton();
         chk_IsVoucher = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
-
-        menu_CTDH.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        menu_CTDH.setName("");
-
-        delete.setLabel("File");
-        menu_CTDH.add(delete);
-
-        edit.setLabel("Edit");
-        menu_CTDH.add(edit);
-
-        menu_CTDH.getAccessibleContext().setAccessibleName("");
-        menu_CTDH.getAccessibleContext().setAccessibleParent(tbl_ChiTietDonHang);
+        btn_LuuCTDH = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1370, 700));
         setPreferredSize(new java.awt.Dimension(1370, 700));
@@ -238,7 +242,7 @@ public class DonHang extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã sản phẩm", "Số lượng", "Giá", "Mã khuyến mãi", "Giá khuyến mãi", "Thành tiền"
+                "Mã sản phẩm", "Số lượng", "Giá", "Mã khuyến mãi", "Giá đã khuyến mãi", "Thành tiền"
             }
         ));
         tbl_ChiTietDonHang.setToolTipText("");
@@ -256,7 +260,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbl_ChiTietDonHang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 640, 530));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 640, 470));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 204));
@@ -276,17 +280,32 @@ public class DonHang extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Tổng tiền:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 650, -1, -1));
         add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 120, -1));
-        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 120, -1));
+        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 650, 120, -1));
         add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, -1));
 
+        CB_KH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CB_KHActionPerformed(evt);
+            }
+        });
         add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 120, -1));
 
         btn_Them.setText("Thêm");
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemActionPerformed(evt);
+            }
+        });
         add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 30));
 
         btn_Xoa.setText("Xóa");
+        btn_Xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_XoaActionPerformed(evt);
+            }
+        });
         add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, -1, 30));
 
         btn_Sua.setText("Sửa");
@@ -359,22 +378,6 @@ public class DonHang extends javax.swing.JPanel {
         });
         add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 388, 110, -1));
 
-        btn_SuaSP.setText("Sửa");
-        btn_SuaSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SuaSPActionPerformed(evt);
-            }
-        });
-        add(btn_SuaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 50, 20));
-
-        btn_XoaSP.setText("Xóa");
-        btn_XoaSP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_XoaSPActionPerformed(evt);
-            }
-        });
-        add(btn_XoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 450, 50, 20));
-
         btn_ThemSP.setText(">>");
         btn_ThemSP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,11 +416,20 @@ public class DonHang extends javax.swing.JPanel {
         chk_IsVoucher.setMinimumSize(new java.awt.Dimension(25, 25));
         chk_IsVoucher.setPreferredSize(new java.awt.Dimension(25, 25));
         chk_IsVoucher.setRolloverEnabled(false);
-        add(chk_IsVoucher, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 70, 30, 20));
+        add(chk_IsVoucher, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 30, 20));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 51, 204));
         jLabel13.setText("Sử dụng voucher");
-        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, -1, -1));
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, 20));
+
+        btn_LuuCTDH.setText("Lưu");
+        btn_LuuCTDH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LuuCTDHActionPerformed(evt);
+            }
+        });
+        add(btn_LuuCTDH, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 130, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
@@ -447,38 +459,6 @@ public class DonHang extends javax.swing.JPanel {
     private void txt_GiaGiamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_GiaGiamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_GiaGiamActionPerformed
-
-    private void btn_SuaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaSPActionPerformed
-        // TODO add your handling code here:
-        String orderId = txt_Ma.getText();
-        String productId = txt_MaSP.getText();
-        int quantity = Integer.parseInt(txt_SoLuong.getText());
-        double price = Double.parseDouble(txt_Gia.getText());
-        double discountedPrice = Double.parseDouble(txt_GiaGiam.getText());
-        String promotionId = txt_KhuyenMai.getText();
-
-        // Tạo đối tượng sản phẩm mới
-        Pojo.DonHang.Product updatedProduct = new Pojo.DonHang.Product(productId, quantity, price, promotionId, discountedPrice);
-
-        // Gọi phương thức cập nhật sản phẩm
-        handleDonHang.updateProductInOrder(orderId, updatedProduct);
-
-        // Thông báo thành công
-        JOptionPane.showMessageDialog(this, "Cập nhật sản phẩm thành công!");
-    }//GEN-LAST:event_btn_SuaSPActionPerformed
-
-    private void btn_XoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaSPActionPerformed
-        // TODO add your handling code here:
-        // Lấy thông tin từ trường nhập liệu
-        String orderId = txt_Ma.getText();
-        String productId = txt_MaSP.getText();
-
-        // Gọi phương thức xóa sản phẩm
-        handleDonHang.removeProductFromOrder(orderId, productId);
-
-        // Thông báo thành công
-        JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!");
-    }//GEN-LAST:event_btn_XoaSPActionPerformed
 
     private void tbl_ChiTietDonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChiTietDonHangMouseClicked
         // TODO add your handling code here:
@@ -512,6 +492,8 @@ public class DonHang extends javax.swing.JPanel {
         double gia = Double.parseDouble(tbl_SanPham.getValueAt(selectedRow, 3).toString()); // Cột chứa giá
         String maKhuyenMai = tbl_SanPham.getValueAt(selectedRow, 4).toString(); // Cột chứa mã khuyến mãi (nếu có)
 
+        String customerId=CB_KH.getSelectedItem().toString();
+        String customerTier = handleKhachHang.getCustomerTiersByID(customerId);
         // Mặc định số lượng = 1
         int soLuong = 1;
 
@@ -544,21 +526,101 @@ public class DonHang extends javax.swing.JPanel {
     private void tbl_ChiTietDonHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChiTietDonHangMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_tbl_ChiTietDonHangMousePressed
+
+    private void CB_KHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_KHActionPerformed
+        // TODO add your handling code here:
+        String customerID=CB_KH.getSelectedItem().toString();
+        hienThiDSSanPham(customerID);
+    }//GEN-LAST:event_CB_KHActionPerformed
+
     
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+        // TODO add your handling code here:
+        String orderID = txt_Ma.getText();
+        String customerID = CB_KH.getSelectedItem().toString();
+        Date orderDate;
+        try {
+            orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
+            double totalAmount = 0;
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0);
+            List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
+            for (Object[] row : ctdh) {
+                String productID = row[0].toString();
+                int quantity = Integer.parseInt(row[1].toString());
+                double price = Double.parseDouble(row[2].toString());
+                String promotionID = row[3].toString();
+                double discountedPrice = Double.parseDouble(row[4].toString());
+
+                // Tạo đối tượng Product và thêm vào danh sách trong DonHang
+                Pojo.DonHang.Product sanPham = new Pojo.DonHang.Product(
+                    productID,
+                    quantity,
+                    price,
+                    promotionID,
+                    discountedPrice
+                );
+                donHang.getProducts().add(sanPham);
+                donHang.setTotalAmount(donHang.getTotalAmount() + discountedPrice * quantity);
+            }
+            handleDonHang.addOrder(donHang);
+        } catch (ParseException ex) {
+            Logger.getLogger(DonHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }//GEN-LAST:event_btn_ThemActionPerformed
+
+    private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
+        // TODO add your handling code here:
+        handleDonHang.deleteOrder(txt_Ma.getText());
+    }//GEN-LAST:event_btn_XoaActionPerformed
+
+    private void btn_LuuCTDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuCTDHActionPerformed
+        // TODO add your handling code here:
+        String orderID = txt_Ma.getText();
+        String customerID = CB_KH.getSelectedItem().toString();
+        Date orderDate;
+        try {
+            orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
+            double totalAmount = 0;
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0);
+            List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
+            for (Object[] row : ctdh) {
+                String productID = row[0].toString();
+                int quantity = Integer.parseInt(row[1].toString());
+                double price = Double.parseDouble(row[2].toString());
+                String promotionID = row[3].toString();
+                double discountedPrice = Double.parseDouble(row[4].toString());
+
+                // Tạo đối tượng Product và thêm vào danh sách trong DonHang
+                Pojo.DonHang.Product sanPham = new Pojo.DonHang.Product(
+                    productID,
+                    quantity,
+                    price,
+                    promotionID,
+                    discountedPrice
+                );
+                donHang.getProducts().add(sanPham);
+                donHang.setTotalAmount(donHang.getTotalAmount() + discountedPrice * quantity);
+            }
+            handleDonHang.updateOrder(donHang);
+        } catch (ParseException ex) {
+            Logger.getLogger(DonHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }//GEN-LAST:event_btn_LuuCTDHActionPerformed
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CB_KH;
     private javax.swing.JButton btn_LamMoi;
+    private javax.swing.JButton btn_LuuCTDH;
     private javax.swing.JButton btn_Sua;
-    private javax.swing.JButton btn_SuaSP;
     private javax.swing.JButton btn_Them;
     private javax.swing.JButton btn_ThemSP;
     private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_Xoa;
-    private javax.swing.JButton btn_XoaSP;
     private javax.swing.JCheckBox chk_IsVoucher;
-    private java.awt.Menu delete;
-    private java.awt.Menu edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -575,7 +637,6 @@ public class DonHang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private java.awt.MenuBar menu_CTDH;
     private javax.swing.JButton refresh_CTDH;
     private javax.swing.JTable tbl_ChiTietDonHang;
     private javax.swing.JTable tbl_DonHang;

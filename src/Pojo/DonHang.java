@@ -26,6 +26,9 @@ public class DonHang {
         this.products = products;
         this.totalAmount = totalAmount;
     }
+    public DonHang() {
+       
+    }
 
     // Getters và Setters cho Order
     public String getId() {

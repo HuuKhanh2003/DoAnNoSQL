@@ -48,8 +48,8 @@ public class KhuyenMaiDao {
 
         collectionProducts.updateMany(
             new Document("promotionIDs", promotionID),
-            new Document("$set", new Document("isPromotionProgram", false))
-                .append("$pull", new Document("promotionIDs", promotionID))
+            new Document("$set", new Document("isPromotionProgram", false)
+                    .append("promotionIDs", ""))
         );
     }
 

@@ -16,20 +16,18 @@ public class KhachHang {
     private String customerName;
     private String email;
     private String tier;
-    private List<String> promotionIDs;
     private int voucherQuantity;
     
     // Constructor
-    public KhachHang(String id, String customerName, String email, String tier, List<String> promotionIDs, int voucherQuantity) {
+    public KhachHang(String id, String customerName, String email, String tier,  int voucherQuantity) {
         this.id = id;
         this.customerName = customerName;
         this.email = email;
         this.tier = tier;
-        this.promotionIDs = promotionIDs;
         this.voucherQuantity = voucherQuantity;
     }
     public KhachHang() {
-        this.promotionIDs = new ArrayList<>();
+        
     }
 
     // Getters and Setters
@@ -65,13 +63,7 @@ public class KhachHang {
         this.tier = tier;
     }
 
-    public List<String> getPromotionIDs() {
-        return promotionIDs;
-    }
-
-    public void setPromotionIDs(List<String> promotionIDs) {
-        this.promotionIDs = promotionIDs;
-    }
+   
 
     public int getVoucherQuantity() {
         return voucherQuantity;

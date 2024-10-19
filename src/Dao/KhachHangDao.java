@@ -40,7 +40,7 @@ public class KhachHangDao {
                         doc.getString("customerName"),
                         doc.getString("email"),
                         doc.getString("tier"),
-                        (List<String>) doc.get("promotionIDs"), // Chuyển đổi sang List<String>
+                        
                         doc.getInteger("voucherQuantity")
                 );
                 customers.add(customer);
@@ -61,7 +61,7 @@ public class KhachHangDao {
                     doc.getString("customerName"),
                     doc.getString("email"),
                     doc.getString("tier"),
-                    (List<String>) doc.get("promotionIDs"),
+                    
                     doc.getInteger("voucherQuantity")))
             .into(new ArrayList<>());
 }
@@ -74,7 +74,7 @@ public class KhachHangDao {
                     .append("customerName", customer.getCustomerName())
                     .append("email", customer.getEmail())
                     .append("tier", customer.getTier())
-                    .append("promotionIDs", customer.getPromotionIDs())
+                    
                     .append("voucherQuantity", customer.getVoucherQuantity());
 
             // Thêm tài liệu vào collection
@@ -113,7 +113,7 @@ public class KhachHangDao {
                 Updates.set("customerName", customer.getCustomerName()),
                 Updates.set("email", customer.getEmail()),
                 Updates.set("tier", customer.getTier()),
-                Updates.set("promotionIDs", customer.getPromotionIDs()),
+                
                 Updates.set("voucherQuantity", customer.getVoucherQuantity())
             )
         );

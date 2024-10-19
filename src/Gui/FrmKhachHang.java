@@ -198,7 +198,6 @@ public class FrmKhachHang extends javax.swing.JPanel {
         dtm.addColumn("Tên khách hàng");
         dtm.addColumn("Email");
         dtm.addColumn("Loại khách hàng");
-        dtm.addColumn("Chương trình khuyến mãi");
         dtm.addColumn("Số vourcher");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dtm.setNumRows(ds.size());
@@ -209,8 +208,7 @@ public class FrmKhachHang extends javax.swing.JPanel {
             dtm.setValueAt(ls.getCustomerName(),i, 1);
             dtm.setValueAt(ls.getEmail(), i, 2);
             dtm.setValueAt(ls.getTier(), i, 3);
-            dtm.setValueAt(ls.getPromotionIDs(), i, 4);
-            dtm.setValueAt(ls.getVoucherQuantity(), i, 5);
+            dtm.setValueAt(ls.getVoucherQuantity(), i, 4);
         }
         tbl_KhachHang.setModel(dtm);
     }
@@ -224,7 +222,7 @@ public class FrmKhachHang extends javax.swing.JPanel {
             String ten = tbl_KhachHang.getValueAt(selectedRow, 1).toString();
             String email = tbl_KhachHang.getValueAt(selectedRow, 2).toString();
             String loaiKH = tbl_KhachHang.getValueAt(selectedRow, 3).toString();
-            String soVoucher = tbl_KhachHang.getValueAt(selectedRow, 5).toString();
+            String soVoucher = tbl_KhachHang.getValueAt(selectedRow, 4).toString();
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
             txt_Email.setText(email);
@@ -257,14 +255,10 @@ public class FrmKhachHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Số lượng voucher phải là số hợp lệ!");
             return;
         }
-        List<String> promotionIDs = new ArrayList<>();
-
-        // Tạo đối tượng NguoiKhieuNai
         Pojo.KhachHang kh = new Pojo.KhachHang();
         kh.setId(ma);
         kh.setCustomerName(ten);
         kh.setEmail(email);
-        kh.setPromotionIDs(promotionIDs);
         kh.setTier(loaiKH);
         kh.setVoucherQuantity(voucherQuantity);
 
@@ -332,7 +326,6 @@ public class FrmKhachHang extends javax.swing.JPanel {
         kh.setId(ma);
         kh.setCustomerName(ten);
         kh.setEmail(email);
-        kh.setPromotionIDs(promotionIDs);
         kh.setTier(loaiKH);
         kh.setVoucherQuantity(voucherQuantity);
 
@@ -361,7 +354,6 @@ public class FrmKhachHang extends javax.swing.JPanel {
         dtm.addColumn("Tên khách hàng");
         dtm.addColumn("Email");
         dtm.addColumn("Loại khách hàng");
-        dtm.addColumn("Chương trình khuyến mãi");
         dtm.addColumn("Số vourcher");
 
         // Cập nhật số lượng dòng trong mô hình bảng
@@ -374,8 +366,7 @@ public class FrmKhachHang extends javax.swing.JPanel {
             dtm.setValueAt(kh.getCustomerName(), i, 1);
             dtm.setValueAt(kh.getEmail(), i, 2);
             dtm.setValueAt(kh.getTier(), i, 3);
-            dtm.setValueAt(kh.getPromotionIDs().toString(), i, 4); // Chuyển danh sách thành chuỗi
-            dtm.setValueAt(kh.getVoucherQuantity(), i, 5);
+            dtm.setValueAt(kh.getVoucherQuantity(), i, 4);
         }
 
         // Gán mô hình bảng mới vào bảng tbl_KhachHang

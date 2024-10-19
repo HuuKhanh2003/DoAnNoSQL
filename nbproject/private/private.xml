@@ -3,31 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/NhanVienDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/DatLaiMatKhauDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/Start.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/Connect.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/FormTrangChu.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/KhachHang.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Pojo/TaiKhoan.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/KhuyenMai.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/DatLaiMatKhau.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/NhapOTP.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Anh/icons8-home-50.png</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/DonHangDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Pojo/KhachHang.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/SanPham.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Anh/employee.png</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/FrmTong.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/NhanVien.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/DangNhapDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/QuenMatKhau.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/DonHang.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/KhachHangDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/DangKyDao.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/DangKy.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Gui/DangNhap.java</file>
-            <file>file:/C:/Users/84862/Desktop/DoAnNosql/DoAnNoSQL/src/Dao/QuenMatKhauDao.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/Start.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/DangNhap.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/DonHang.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/SanPham.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Dao/QuenMatKhauDao.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Dao/SanPhamDao.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/NhanVien.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Gui/DangKy.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Dao/Connect.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Dao/DonHangDao.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Pojo/DonHang.java</file>
+            <file>file:/D:/DoAnNoSQL/src/Pojo/SanPham.java</file>
         </group>
     </open-files>
 </project-private>

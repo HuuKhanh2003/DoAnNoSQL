@@ -158,18 +158,25 @@ public class KhuyenMaiDao {
                 endDate,
                 appliedTo,
                 conditions
-    );
+        );
     }
-    public double getKhuyenMaiPercent(String maKhuyenMai) {
+   public double getKhuyenMaiPercent(String maKhuyenMai) {
         // Truy vấn collection "KhuyenMai" để lấy tỷ lệ phần trăm khuyến mãi
         Document promotion = collection.find(new Document("_id", maKhuyenMai)).first();
 
-        if (promotion != null) {
-            // Giả sử tỷ lệ khuyến mãi được lưu trong trường "percent"
-            return promotion.getDouble("percent");
+        if (promotion != null && promotion.containsKey("discountPercent")) {
+            Object discountValue = promotion.get("discountPercent");
+
+            if (discountValue instanceof Double) {
+                return (Double) discountValue;
+            } else if (discountValue instanceof Integer) {
+                return ((Integer) discountValue).doubleValue(); // Chuyển đổi Integer sang Double
+            }
         }
 
-        // Nếu không có khuyến mãi, trả về 0
+        // Nếu không có khuyến mãi hoặc discountPercent là null, trả về 0
         return 0.0;
     }
+
+
 }

@@ -70,6 +70,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         {
             Pojo.KhuyenMai ls = ds.get(i);
             dtm.setValueAt(ls.getId(), i, 0);
+            handleKhuyenMai.checkAndUpdatePromotion(ls.getId());
             dtm.setValueAt(ls.getPromotionName(),i, 1);
             dtm.setValueAt(ls.getDiscountPercent(), i, 2);
             dtm.setValueAt(ls.getStartDate() !=null ? dateFormat.format(ls.getStartDate()):"", i, 3);

@@ -6,6 +6,7 @@ package Gui;
 
 import Dao.DonHangDao;
 import Dao.KhachHangDao;
+import Dao.KhuyenMaiDao;
 import Dao.SanPhamDao;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
@@ -25,6 +27,7 @@ public class DonHang extends javax.swing.JPanel {
      */
     DonHangDao handleDonHang = new DonHangDao();
     KhachHangDao handleKhachHang=new KhachHangDao();
+    KhuyenMaiDao handleKhuyenMai=new KhuyenMaiDao();
     SanPhamDao handleSanPham=new SanPhamDao();
     public DonHang() {
         initComponents();
@@ -116,12 +119,14 @@ public class DonHang extends javax.swing.JPanel {
         dtm.addColumn("Tên sản phẩm");
         dtm.addColumn("Loại sản phẩm");
         dtm.addColumn("Giá");
+        dtm.addColumn("Khuyến mãi");
         for (Pojo.SanPham sanPham : dsSanPham) {
             dtm.addRow(new Object[]{
                 sanPham.getId(),
                 sanPham.getProductName(),
                 sanPham.getCategoryID(),
-                sanPham.getPrice()
+                sanPham.getPrice(),
+                sanPham.getPromotionIDs()
             });
         }
 
@@ -194,7 +199,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_DonHang);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 270, 162));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 620, 162));
 
         tbl_ChiTietDonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,7 +219,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbl_ChiTietDonHang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 373, 624, 170));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 410, 410, 170));
 
         jLabel2.setText("Mã đơn hàng:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 51, -1, -1));
@@ -234,13 +239,13 @@ public class DonHang extends javax.swing.JPanel {
         add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 48, 161, -1));
 
         btn_Them.setText("Thêm");
-        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 350, -1, -1));
+        add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
 
         btn_Xoa.setText("Xóa");
-        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 460, -1, -1));
+        add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, -1, -1));
 
         btn_Sua.setText("Sửa");
-        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
+        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, -1, -1));
 
         btn_LamMoi.setText("Làm mới");
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -248,10 +253,10 @@ public class DonHang extends javax.swing.JPanel {
                 btn_LamMoiActionPerformed(evt);
             }
         });
-        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, -1, -1));
+        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, -1, -1));
 
         btn_TimKiem.setText("Tìm kiếm");
-        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(579, 315, -1, -1));
+        add(btn_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 360, -1, -1));
 
         tbl_SanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -266,32 +271,32 @@ public class DonHang extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(tbl_SanPham);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 500, 210));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 580, 170));
 
         jLabel6.setText("Sản phẩm:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 110, 70));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, 80, 20));
 
         jLabel7.setText("Số lượng:");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 160, 40));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 110, 50, 20));
 
         jLabel8.setText("Giá:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 60, 40));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 150, 60, 40));
 
         jLabel9.setText("Khuyến mãi:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, 160, 50));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 70, 20));
 
         jLabel10.setText("Giá giảm:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 340, 260, 30));
-        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 300, 20));
-        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 140, 30));
-        add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 120, 20));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 50, 60, 30));
+        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, 80, 20));
+        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 160, 80, 20));
+        add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 110, 80, 20));
 
         txt_GiaGiam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_GiaGiamActionPerformed(evt);
             }
         });
-        add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 80, 30));
+        add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 50, 80, 20));
 
         btn_SuaSP.setText("Sửa");
         btn_SuaSP.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +304,7 @@ public class DonHang extends javax.swing.JPanel {
                 btn_SuaSPActionPerformed(evt);
             }
         });
-        add(btn_SuaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 100, 30));
+        add(btn_SuaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 210, 100, 20));
 
         btn_XoaSP.setText("Xóa");
         btn_XoaSP.addActionListener(new java.awt.event.ActionListener() {
@@ -307,7 +312,7 @@ public class DonHang extends javax.swing.JPanel {
                 btn_XoaSPActionPerformed(evt);
             }
         });
-        add(btn_XoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 140, 20));
+        add(btn_XoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 210, 100, 20));
 
         btn_ThemSP.setText(">>");
         btn_ThemSP.addActionListener(new java.awt.event.ActionListener() {
@@ -315,8 +320,8 @@ public class DonHang extends javax.swing.JPanel {
                 btn_ThemSPActionPerformed(evt);
             }
         });
-        add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 150, 30));
-        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 80, 30));
+        add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 480, 60, 30));
+        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, 80, 20));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
@@ -399,8 +404,41 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_ThemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemSPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn_ThemSPActionPerformed
+        int selectedRow = tbl_SanPham.getSelectedRow();
+        if (selectedRow == -1) {
+            System.out.println("Vui lòng chọn sản phẩm trước khi thêm.");
+            return;
+        }
 
+        String maSP = tbl_SanPham.getValueAt(selectedRow, 0).toString(); // Cột chứa mã sản phẩm
+        String tenSP = tbl_SanPham.getValueAt(selectedRow, 1).toString(); // Cột chứa tên sản phẩm
+        String loaiSP = tbl_SanPham.getValueAt(selectedRow, 2).toString(); // Cột chứa loại sản phẩm
+        double gia = Double.parseDouble(tbl_SanPham.getValueAt(selectedRow, 3).toString()); // Cột chứa giá
+        String maKhuyenMai = tbl_SanPham.getValueAt(selectedRow, 4).toString(); // Cột chứa mã khuyến mãi (nếu có)
+
+        // Mặc định số lượng = 1
+        int soLuong = 1;
+
+        // Kiểm tra chương trình khuyến mãi dựa vào mã khuyến mãi
+        double tyLeKhuyenMai = handleKhuyenMai.getKhuyenMaiPercent(maKhuyenMai); // Hàm để lấy tỷ lệ khuyến mãi từ collection
+        double giaKhuyenMai = gia * (1 - tyLeKhuyenMai / 100);
+
+        // Tính tổng tiền (ThanhTien = Gia * SoLuong)
+        double thanhTien = gia * soLuong;
+
+        // Tạo đối tượng sản phẩm để thêm vào bảng chi tiết đơn hàng
+        Object[] rowData = new Object[] {
+            maSP, soLuong, gia, maKhuyenMai, giaKhuyenMai, thanhTien
+        };
+
+        // Thêm sản phẩm vào bảng chi tiết đơn hàng
+        DefaultTableModel model = (DefaultTableModel) tbl_ChiTietDonHang.getModel();
+        model.addRow(rowData);
+
+        System.out.println("Sản phẩm đã được thêm vào chi tiết đơn hàng.");
+        
+    }//GEN-LAST:event_btn_ThemSPActionPerformed
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CB_KH;

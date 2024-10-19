@@ -133,31 +133,43 @@ public class KhuyenMaiDao {
     // Phân tích Document thành đối tượng KhuyenMai
     private KhuyenMai parsePromotion(Document doc) {
         Document appliedToDoc = doc.get("appliedTo", Document.class);
-    Document conditionsDoc = doc.get("conditions", Document.class);
+        Document conditionsDoc = doc.get("conditions", Document.class);
 
-    // Chuyển đổi các trường 'startDate' và 'endDate' từ chuỗi sang Date
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    Date startDate = doc.getDate("startDate");
-    Date endDate = doc.getDate("endDate");
+        // Chuyển đổi các trường 'startDate' và 'endDate' từ chuỗi sang Date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = doc.getDate("startDate");
+        Date endDate = doc.getDate("endDate");
 
-    KhuyenMai.AppliedTo appliedTo = new KhuyenMai.AppliedTo(
-            (List<String>) appliedToDoc.get("products"),
-            (List<String>) appliedToDoc.get("categories")
+        KhuyenMai.AppliedTo appliedTo = new KhuyenMai.AppliedTo(
+                (List<String>) appliedToDoc.get("products"),
+                (List<String>) appliedToDoc.get("categories")
+        );
+
+        KhuyenMai.Conditions conditions = new KhuyenMai.Conditions(
+                conditionsDoc.getInteger("minOrderValue"),
+                conditionsDoc.getString("customerTier")
+        );
+
+        return new KhuyenMai(
+                doc.getString("_id"),
+                doc.getString("promotionName"),
+                doc.getInteger("discountPercent"),
+                startDate,
+                endDate,
+                appliedTo,
+                conditions
     );
+    }
+    public double getKhuyenMaiPercent(String maKhuyenMai) {
+        // Truy vấn collection "KhuyenMai" để lấy tỷ lệ phần trăm khuyến mãi
+        Document promotion = collection.find(new Document("_id", maKhuyenMai)).first();
 
-    KhuyenMai.Conditions conditions = new KhuyenMai.Conditions(
-            conditionsDoc.getInteger("minOrderValue"),
-            conditionsDoc.getString("customerTier")
-    );
+        if (promotion != null) {
+            // Giả sử tỷ lệ khuyến mãi được lưu trong trường "percent"
+            return promotion.getDouble("percent");
+        }
 
-    return new KhuyenMai(
-            doc.getString("_id"),
-            doc.getString("promotionName"),
-            doc.getInteger("discountPercent"),
-            startDate,
-            endDate,
-            appliedTo,
-            conditions
-    );
+        // Nếu không có khuyến mãi, trả về 0
+        return 0.0;
     }
 }

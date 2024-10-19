@@ -46,6 +46,7 @@ public class KhuyenMai extends javax.swing.JPanel {
     List<String> selectedprodIDs = new ArrayList<>();
     List<String> selectedprodTypeIDs = new ArrayList<>();
     String selectedCustomerType = null;
+    Set<String> inPromtionProducts = new HashSet<>();
     public KhuyenMai() {
         initComponents();
         hienThi();
@@ -76,6 +77,7 @@ public class KhuyenMai extends javax.swing.JPanel {
             dtm.setValueAt(ls.getStartDate() !=null ? dateFormat.format(ls.getStartDate()):"", i, 3);
             dtm.setValueAt(ls.getEndDate() !=null ? dateFormat.format(ls.getEndDate()):"", i, 4);
             dtm.setValueAt(ls.getAppliedTo().getProducts(), i, 5);
+            inPromtionProducts.addAll(ls.getAppliedTo().getProducts());
             dtm.setValueAt(ls.getAppliedTo().getCategories(), i, 6);
             dtm.setValueAt(ls.getConditions().getCustomerTier(), i, 7);
             dtm.setValueAt(ls.getConditions().getMinOrderValue(), i, 8);
@@ -338,6 +340,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         btn_Add = new javax.swing.JButton();
         btn_Del = new javax.swing.JButton();
         btn_Sua = new javax.swing.JButton();
+        btn_LamMoi = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -481,6 +484,14 @@ public class KhuyenMai extends javax.swing.JPanel {
             }
         });
         add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+
+        btn_LamMoi.setText("Làm mới");
+        btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_LamMoiActionPerformed(evt);
+            }
+        });
+        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void Chk_ApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Chk_ApDungActionPerformed
@@ -505,19 +516,13 @@ public class KhuyenMai extends javax.swing.JPanel {
             String percent = tbl_KhuyenMai.getValueAt(selectedRow, 2).toString();
             String startDate = tbl_KhuyenMai.getValueAt(selectedRow, 3).toString();
             String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
+            String minOrderValue = tbl_KhuyenMai.getValueAt(selectedRow, 8).toString();
             
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
             txt_Giam.setText(percent);
             txt_NgayBD.setText(startDate);
             txt_NgayKT.setText(endDate);
-            if (chk_DieuKien.isSelected()) {
-                String minOrderValue = tbl_KhuyenMai.getValueAt(selectedRow, 8).toString();
-                txt_GiaTriNhoNhat.setText(minOrderValue);
-            }
-            else{
-                txt_GiaTriNhoNhat.setText("");
-            }
             // Truy vấn chi tiết khuyến mãi từ CSDL để lấy thông tin appliedTo
             Document promoDoc = handleKhuyenMai.getPromotionById(ma); // Lấy khuyến mãi bằng ID
             if (promoDoc != null) {
@@ -527,6 +532,16 @@ public class KhuyenMai extends javax.swing.JPanel {
                 } else {
                     Chk_ApDung.setSelected(false); // Bỏ tích nếu appliedTo không tồn tại
                 }
+                
+                if (promoDoc.containsKey("conditions")) {
+                    chk_DieuKien.setSelected(true);
+                    txt_GiaTriNhoNhat.setEnabled(true);
+                    txt_GiaTriNhoNhat.setText(minOrderValue);
+                } else {
+                    chk_DieuKien.setSelected(false);
+                    txt_GiaTriNhoNhat.setText("");
+                    txt_GiaTriNhoNhat.setEnabled(false);
+                }
             } else {
                 Chk_ApDung.setSelected(false); // Bỏ tích nếu không tìm thấy khuyến mãi
             }
@@ -535,6 +550,14 @@ public class KhuyenMai extends javax.swing.JPanel {
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         // TODO add your handling code here:
+        
+        for(String item : inPromtionProducts){
+            if (selectedprodIDs.contains(item)){
+                JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
+                return;
+            }
+        }
+        
         String ma = txt_Ma.getText();
         String ten= txt_Ten.getText();
         String giamGiaString = txt_Giam.getText().trim();
@@ -571,8 +594,12 @@ public class KhuyenMai extends javax.swing.JPanel {
             Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        km.setAppliedTo(apDung);
-        km.setConditions(dieuKien);
+        if (Chk_ApDung.isSelected()){
+            km.setAppliedTo(apDung);
+        }
+        if (chk_DieuKien.isSelected()){
+            km.setConditions(dieuKien);
+        }
 
         boolean success = handleKhuyenMai.addPromotion(km);
 
@@ -588,6 +615,7 @@ public class KhuyenMai extends javax.swing.JPanel {
     private void btn_DelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DelActionPerformed
         // TODO add your handling code here:
         String ma = txt_Ma.getText();
+        handleKhuyenMai.removePromotionFromProducts(ma);
         boolean success = handleKhuyenMai.deletePromotion(ma);
         if (success) {
             JOptionPane.showMessageDialog(null, "Xoá khuyến mãi thành công!");
@@ -599,6 +627,14 @@ public class KhuyenMai extends javax.swing.JPanel {
 
     private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
         // TODO add your handling code here:
+        
+        for(String item : inPromtionProducts){
+            if (selectedprodIDs.contains(item)){
+                JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
+                return;
+            }
+        }
+        
         String ma = txt_Ma.getText();
         String ten= txt_Ten.getText();
         String giamGiaString = txt_Giam.getText().trim();
@@ -635,8 +671,13 @@ public class KhuyenMai extends javax.swing.JPanel {
             Logger.getLogger(KhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        km.setAppliedTo(apDung);
-        km.setConditions(dieuKien);
+        if (Chk_ApDung.isSelected()){
+            km.setAppliedTo(apDung);
+        }
+        if (chk_DieuKien.isSelected()){
+            km.setConditions(dieuKien);
+        }
+        
         boolean success = handleKhuyenMai.updatePromotion(km.getId(),km);
         
         if (success) {
@@ -647,10 +688,24 @@ public class KhuyenMai extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn_SuaActionPerformed
 
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
+        // TODO add your handling code here:
+        txt_Ma.setText("");
+        txt_Ten.setText("");
+        txt_Giam.setText("");
+        txt_NgayBD.setText("");
+        txt_NgayKT.setText("");
+        Chk_ApDung.setSelected(false);
+        chk_DieuKien.setSelected(false);
+        txt_GiaTriNhoNhat.setText("");
+        hienThi();
+    }//GEN-LAST:event_btn_LamMoiActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox Chk_ApDung;
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Del;
+    private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Sua;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chk_DieuKien;

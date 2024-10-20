@@ -485,6 +485,7 @@ public class DonHang extends javax.swing.JPanel {
         txt_Ma.setText("");
         txt_NgayLap.setText("");
         txt_TongTien.setText("");
+        hienThiDonHang();
     }//GEN-LAST:event_btn_LamMoiActionPerformed
     private void btn_SuaSPActionPerformed(java.awt.event.ActionEvent evt) {
         
@@ -646,6 +647,11 @@ public class DonHang extends javax.swing.JPanel {
                 donHang.setTotalAmount(donHang.getTotalAmount() - discount);
                 handleKhachHang.updateVoucher(customerID, -1); 
             }
+            else{
+                double discount = calculateDiscount(donHang.getTotalAmount()); 
+                donHang.setTotalAmount(donHang.getTotalAmount() - discount);
+                handleKhachHang.updateVoucher(customerID, +1); 
+            }
 
             handleDonHang.addOrder(donHang);
             JOptionPane.showMessageDialog(this, "Đơn hàng đã được thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -704,7 +710,11 @@ public class DonHang extends javax.swing.JPanel {
                 donHang.setTotalAmount(donHang.getTotalAmount() - discount);
                 handleKhachHang.updateVoucher(customerID, -1); 
             }
-
+            else{
+                double discount = calculateDiscount(donHang.getTotalAmount()); 
+                donHang.setTotalAmount(donHang.getTotalAmount() - discount);
+                handleKhachHang.updateVoucher(customerID, +1); 
+            }
             handleDonHang.updateOrder(donHang);
             JOptionPane.showMessageDialog(this, "Đơn hàng đã được lưu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         
@@ -718,7 +728,6 @@ public class DonHang extends javax.swing.JPanel {
 
     private void chk_IsVoucherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_IsVoucherActionPerformed
         // TODO add your handling code here:
-        //if(chk_IsVoucher.is)
     }//GEN-LAST:event_chk_IsVoucherActionPerformed
     
 

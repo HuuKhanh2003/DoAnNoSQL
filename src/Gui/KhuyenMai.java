@@ -44,6 +44,7 @@ public class KhuyenMai extends javax.swing.JPanel {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
     List<String> selectedprodIDs = new ArrayList<>();
+    List<String> initialProdIDs = new ArrayList<>();
     List<String> selectedprodTypeIDs = new ArrayList<>();
     String selectedCustomerType = null;
     Set<String> inPromtionProducts = new HashSet<>();
@@ -116,7 +117,8 @@ public class KhuyenMai extends javax.swing.JPanel {
                     if (!selectedprodIDs.contains(id)) {
                         selectedprodIDs.add(id);
                     }
-                } else {
+                }
+                else if(isChecked == false){
                     selectedprodIDs.remove(id);
                 }
             }
@@ -265,7 +267,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         Chk_ApDung.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!Chk_ApDung.isSelected()) {
+                if (Chk_ApDung.isSelected()) {
                     tbl_SanPham.setEnabled(true);
                     tbl_SanPham.setFocusable(true);
                     tbl_SanPham.getTableHeader().setEnabled(true);
@@ -292,9 +294,9 @@ public class KhuyenMai extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (chk_DieuKien.isSelected()) {
-                    txt_LoaiKhachHang.setEnabled(true);
+                    tbl_LoaiKhachHang.setEnabled(true);
                 } else {
-                    txt_LoaiKhachHang.setEnabled(false);
+                    tbl_LoaiKhachHang.setEnabled(false);
                 }
             }
         });
@@ -513,6 +515,7 @@ public class KhuyenMai extends javax.swing.JPanel {
             String startDate = tbl_KhuyenMai.getValueAt(selectedRow, 3).toString();
             String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
             String cusType = tbl_KhuyenMai.getValueAt(selectedRow, 7).toString();
+            initialProdIDs = (List<String>) tbl_KhuyenMai.getValueAt(selectedRow, 5);
             
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
@@ -548,7 +551,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         for(String item : inPromtionProducts){
-            if (selectedprodIDs.contains(item)){
+            if (selectedprodIDs.contains(item) && !initialProdIDs.contains(item)){
                 JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
                 return;
             }
@@ -601,6 +604,8 @@ public class KhuyenMai extends javax.swing.JPanel {
         if (success) {
             JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thành công!");
             inPromtionProducts.clear();
+            selectedprodIDs.clear();
+            selectedprodTypeIDs.clear();
             hienThi();
         } else {
             JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thất bại!");
@@ -624,7 +629,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         for(String item : inPromtionProducts){
-            if (selectedprodIDs.contains(item)){
+            if (selectedprodIDs.contains(item) && !initialProdIDs.contains(item)){
                 JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
                 return;
             }
@@ -676,6 +681,8 @@ public class KhuyenMai extends javax.swing.JPanel {
         if (success) {
             JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thành công!");
             inPromtionProducts.clear();
+            selectedprodIDs.clear();
+            selectedprodTypeIDs.clear();
             hienThi();
         } else {
             JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thất bại!");

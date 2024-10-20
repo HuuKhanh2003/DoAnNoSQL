@@ -65,40 +65,49 @@ public class DonHang extends javax.swing.JPanel {
     });
     }
 
-    private void hienThiDonHang() {
-        List<Pojo.DonHang> dsDonHang = handleDonHang.getAllOrders();
-        DefaultTableModel dtm = new DefaultTableModel() {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 3) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(columnIndex);
+  private void hienThiDonHang() {
+    List<Pojo.DonHang> dsDonHang = handleDonHang.getAllOrders();
+    DefaultTableModel dtm = new DefaultTableModel() {
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            if (columnIndex == 3) {
+                return Boolean.class; // Cột checkbox sẽ hiển thị Boolean
             }
-        };
-
-        // Thêm các cột cho bảng đơn hàng
-        dtm.addColumn("Mã đơn hàng");
-        dtm.addColumn("Mã khách hàng");
-        dtm.addColumn("Ngày đặt hàng");
-        dtm.addColumn("Sử dụng Voucher");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dtm.setNumRows(dsDonHang.size());
-        for (int i=0;i<dsDonHang.size();i++) {
-            Pojo.DonHang ls=dsDonHang.get(i);
-            dtm.setValueAt(ls.getId(), i, 0);
-            dtm.setValueAt(ls.getCustomerID(), i, 1);
-            dtm.setValueAt(dateFormat.format(ls.getOrderDate()), i, 2);
-            dtm.setValueAt(ls.isIsCheckVoucher(), i, 3);
+            return super.getColumnClass(columnIndex);
         }
 
-        // Thiết lập model cho bảng đơn hàng
-        tbl_DonHang.setModel(dtm);
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Không cho phép chỉnh sửa cột checkbox (cột 3)
+            return false;
+        }
+    };
 
-        // Cập nhật lại bảng để có checkbox hiển thị chính xác
-        tbl_DonHang.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JCheckBox()));
-        tbl_DonHang.getColumnModel().getColumn(3).setCellRenderer(tbl_DonHang.getDefaultRenderer(Boolean.class));
+    // Thêm các cột cho bảng đơn hàng
+    dtm.addColumn("Mã đơn hàng");
+    dtm.addColumn("Mã khách hàng");
+    dtm.addColumn("Ngày đặt hàng");
+    dtm.addColumn("Sử dụng Voucher");
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    dtm.setNumRows(dsDonHang.size());
+
+    for (int i = 0; i < dsDonHang.size(); i++) {
+        Pojo.DonHang ls = dsDonHang.get(i);
+        dtm.setValueAt(ls.getId(), i, 0);
+        dtm.setValueAt(ls.getCustomerID(), i, 1);
+        dtm.setValueAt(dateFormat.format(ls.getOrderDate()), i, 2);
+        dtm.setValueAt(ls.isIsCheckVoucher(), i, 3); // Cột checkbox lưu trạng thái Boolean
     }
+
+    // Thiết lập model cho bảng đơn hàng
+    tbl_DonHang.setModel(dtm);
+
+    // Cập nhật lại bảng để hiển thị checkbox (không cho phép chỉnh sửa)
+    tbl_DonHang.getColumnModel().getColumn(3).setCellRenderer(tbl_DonHang.getDefaultRenderer(Boolean.class));
+}
+
+
     
     double tongTien=0;
     private void hienThiChiTietDonHang(String orderId) {

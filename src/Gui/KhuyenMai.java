@@ -160,8 +160,6 @@ public class KhuyenMai extends javax.swing.JPanel {
                     }
                     selectedCustomerType = id;
 
-                } else {
-                    selectedCustomerType = null;
                 }
 
                 // Debug: print the currently selected customer type
@@ -602,6 +600,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         // Thông báo kết quả
         if (success) {
             JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thành công!");
+            inPromtionProducts.clear();
             hienThi();
         } else {
             JOptionPane.showMessageDialog(null, "Thêm khuyến mãi thất bại!");
@@ -676,6 +675,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         
         if (success) {
             JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thành công!");
+            inPromtionProducts.clear();
             hienThi();
         } else {
             JOptionPane.showMessageDialog(null, "Sửa khuyến mãi thất bại!");

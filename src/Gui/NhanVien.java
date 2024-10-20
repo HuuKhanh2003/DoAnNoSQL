@@ -94,20 +94,51 @@ public class NhanVien extends javax.swing.JPanel {
         btn_Clear = new javax.swing.JButton();
         txt_bod = new javax.swing.JFormattedTextField();
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 204));
         jLabel1.setText("Nhân viên");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 204));
         jLabel2.setText("Mã nhân viên");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 51, 204));
         jLabel3.setText("Tên nhân viên");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 204));
         jLabel4.setText("Số điện thoại");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Giới tính");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 51, 204));
         jLabel6.setText("Chức vụ");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText("Ngày sinh");
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 140, -1, -1));
+        add(txt_idEmployee, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 270, -1));
+        add(txt_nameEmployee, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 270, -1));
+        add(txt_phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 60, 270, -1));
 
+        add(cbx_position, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 270, -1));
+
+        add(cbx_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 270, -1));
+
+        tbl_Employee.setForeground(new java.awt.Color(0, 51, 204));
         tbl_Employee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -119,6 +150,9 @@ public class NhanVien extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Employee.setRowHeight(40);
+        tbl_Employee.setSelectionBackground(new java.awt.Color(0, 51, 204));
+        tbl_Employee.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbl_Employee.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_EmployeeMouseClicked(evt);
@@ -126,125 +160,51 @@ public class NhanVien extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_Employee);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 1370, 420));
+
+        btn_Add.setBackground(new java.awt.Color(51, 255, 0));
+        btn_Add.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Add.setForeground(new java.awt.Color(255, 255, 255));
         btn_Add.setText("Thêm");
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddActionPerformed(evt);
             }
         });
+        add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 70, 30));
 
+        btn_Delete.setBackground(new java.awt.Color(255, 0, 0));
+        btn_Delete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Delete.setForeground(new java.awt.Color(255, 255, 255));
         btn_Delete.setText("Xóa");
         btn_Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_DeleteActionPerformed(evt);
             }
         });
+        add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 60, 30));
 
+        btn_Update.setBackground(new java.awt.Color(0, 51, 204));
+        btn_Update.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Update.setForeground(new java.awt.Color(255, 255, 255));
         btn_Update.setText("Sửa");
         btn_Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_UpdateActionPerformed(evt);
             }
         });
+        add(btn_Update, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 60, 30));
 
-        btn_Clear.setText("Làm mới");
+        btn_Clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/reset_1.png"))); // NOI18N
         btn_Clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ClearActionPerformed(evt);
             }
         });
+        add(btn_Clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 180, 30, 30));
 
         txt_bod.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nameEmployee))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_idEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(31, 31, 31)
-                        .addComponent(cbx_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(220, 220, 220))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbx_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txt_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_bod, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(btn_Add)
-                        .addGap(32, 32, 32)
-                        .addComponent(btn_Delete)
-                        .addGap(37, 37, 37)
-                        .addComponent(btn_Update)
-                        .addGap(37, 37, 37)
-                        .addComponent(btn_Clear)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(txt_idEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_nameEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbx_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(cbx_position, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_bod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Add)
-                    .addComponent(btn_Delete)
-                    .addComponent(btn_Update)
-                    .addComponent(btn_Clear))
-                .addContainerGap(48, Short.MAX_VALUE))
-        );
+        add(txt_bod, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 140, 270, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed

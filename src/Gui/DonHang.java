@@ -297,7 +297,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbl_ChiTietDonHang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 640, 440));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 200, 640, 410));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 204));
@@ -329,6 +329,9 @@ public class DonHang extends javax.swing.JPanel {
         });
         add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 120, -1));
 
+        btn_Them.setBackground(new java.awt.Color(51, 255, 0));
+        btn_Them.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Them.setForeground(new java.awt.Color(255, 255, 255));
         btn_Them.setText("Thêm");
         btn_Them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -337,6 +340,9 @@ public class DonHang extends javax.swing.JPanel {
         });
         add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, 30));
 
+        btn_Xoa.setBackground(new java.awt.Color(255, 0, 0));
+        btn_Xoa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_Xoa.setForeground(new java.awt.Color(255, 255, 255));
         btn_Xoa.setText("Xóa");
         btn_Xoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,7 +357,7 @@ public class DonHang extends javax.swing.JPanel {
                 btn_LamMoiActionPerformed(evt);
             }
         });
-        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 30, 30));
+        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 40, 30));
 
         tbl_SanPham.setForeground(new java.awt.Color(0, 51, 204));
         tbl_SanPham.setModel(new javax.swing.table.DefaultTableModel(
@@ -370,7 +376,7 @@ public class DonHang extends javax.swing.JPanel {
         tbl_SanPham.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setViewportView(tbl_SanPham);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 480, 180));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 490, 180));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 204));
@@ -415,7 +421,7 @@ public class DonHang extends javax.swing.JPanel {
                 btn_ThemSPActionPerformed(evt);
             }
         });
-        add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 570, 60, 30));
+        add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 500, 60, 30));
 
         txt_MaSP.setEnabled(false);
         add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, 120, -1));
@@ -436,7 +442,7 @@ public class DonHang extends javax.swing.JPanel {
                 refresh_CTDHActionPerformed(evt);
             }
         });
-        add(refresh_CTDH, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 140, 40, 20));
+        add(refresh_CTDH, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 150, 40, -1));
 
         chk_IsVoucher.setAlignmentX(1.0F);
         chk_IsVoucher.setHideActionText(true);
@@ -459,6 +465,9 @@ public class DonHang extends javax.swing.JPanel {
         jLabel13.setText("Sử dụng voucher");
         add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, -1, 20));
 
+        btn_LuuCTDH.setBackground(new java.awt.Color(0, 255, 204));
+        btn_LuuCTDH.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_LuuCTDH.setForeground(new java.awt.Color(255, 255, 255));
         btn_LuuCTDH.setText("Sửa");
         btn_LuuCTDH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

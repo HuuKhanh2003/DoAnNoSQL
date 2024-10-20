@@ -121,23 +121,12 @@ public class KhuyenMai {
 
     // Inner class for conditions object
     public static class Conditions {
-        private int minOrderValue;
         //private int minQuantity;
         private String customerTier;
 
-        public Conditions(int minOrderValue,  String customerTier) {
-            this.minOrderValue = minOrderValue;
+        public Conditions(String customerTier) {
             //this.minQuantity = minQuantity;
             this.customerTier = customerTier;
-        }
-
-        // Getters and Setters for Conditions
-        public int getMinOrderValue() {
-            return minOrderValue;
-        }
-
-        public void setMinOrderValue(int minOrderValue) {
-            this.minOrderValue = minOrderValue;
         }
 
 //        public int getMinQuantity() {

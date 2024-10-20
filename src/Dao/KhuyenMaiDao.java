@@ -84,8 +84,7 @@ public class KhuyenMaiDao {
                 .append("appliedTo", new Document("products", promotion.getAppliedTo().getProducts())
                         .append("categories", promotion.getAppliedTo().getCategories())
                 )
-                .append("conditions", new Document("minOrderValue", promotion.getConditions().getMinOrderValue())
-                        .append("customerTier", promotion.getConditions().getCustomerTier()));
+                .append("conditions", new Document("customerTier", promotion.getConditions().getCustomerTier()));
 
         // Insert the document into the collection
             collection.insertOne(doc);
@@ -118,9 +117,7 @@ public class KhuyenMaiDao {
             .append("endDate", updatedPromotion.getEndDate())
             .append("appliedTo", new Document("products", updatedPromotion.getAppliedTo().getProducts())
                     .append("categories", updatedPromotion.getAppliedTo().getCategories()))
-            .append("conditions", new Document("minOrderValue", updatedPromotion.getConditions().getMinOrderValue())
-//                        .append("minQuantity", updatedPromotion.getConditions().getMinQuantity())
-                    .append("customerTier", updatedPromotion.getConditions().getCustomerTier())));
+            .append("conditions", new Document("customerTier", updatedPromotion.getConditions().getCustomerTier())));
 
             collection.updateOne(new Document("_id", id), updateDoc);
             return true;
@@ -145,10 +142,9 @@ public class KhuyenMaiDao {
                 (List<String>) appliedToDoc.get("categories")
         );
 
-        KhuyenMai.Conditions conditions = new KhuyenMai.Conditions(
-                conditionsDoc.getInteger("minOrderValue"),
-                conditionsDoc.getString("customerTier")
-        );
+    KhuyenMai.Conditions conditions = new KhuyenMai.Conditions(
+            conditionsDoc.getString("customerTier")
+    );
 
         return new KhuyenMai(
                 doc.getString("_id"),

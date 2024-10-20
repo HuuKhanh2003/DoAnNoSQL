@@ -228,8 +228,9 @@ public class DonHang extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         txt_Ma = new javax.swing.JTextField();
 
-        setMinimumSize(new java.awt.Dimension(1370, 700));
-        setPreferredSize(new java.awt.Dimension(1370, 700));
+        setAutoscrolls(true);
+        setMinimumSize(new java.awt.Dimension(1370, 650));
+        setPreferredSize(new java.awt.Dimension(1370, 650));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -259,15 +260,12 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tbl_DonHang);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 490, 170));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 490, 150));
 
         tbl_ChiTietDonHang.setForeground(new java.awt.Color(0, 51, 204));
         tbl_ChiTietDonHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Mã sản phẩm", "Số lượng", "Giá", "Mã khuyến mãi", "Giá đã khuyến mãi", "Thành tiền"
@@ -288,7 +286,7 @@ public class DonHang extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbl_ChiTietDonHang);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 640, 470));
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 170, 640, 440));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 51, 204));
@@ -308,9 +306,9 @@ public class DonHang extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Tổng tiền:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 650, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 620, -1, -1));
         add(txt_MaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, 120, -1));
-        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 650, 120, -1));
+        add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 620, 120, -1));
         add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, -1));
 
         CB_KH.addActionListener(new java.awt.event.ActionListener() {
@@ -372,44 +370,44 @@ public class DonHang extends javax.swing.JPanel {
         tbl_SanPham.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setViewportView(tbl_SanPham);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 490, 210));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 490, 180));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 204));
         jLabel6.setText("Sản phẩm:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 80, 20));
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 80, 20));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 204));
         jLabel7.setText("Số lượng:");
-        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 80, 20));
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, 80, 20));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 204));
         jLabel8.setText("Giá:");
-        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 60, 20));
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 60, 20));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 51, 204));
         jLabel9.setText("Khuyến mãi:");
-        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, 100, 20));
+        add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 100, 20));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 51, 204));
         jLabel10.setText("Giá giảm:");
-        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 80, 20));
-        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 120, 20));
-        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 120, 20));
+        add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 80, 20));
+        add(txt_SoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 120, 20));
+        add(txt_Gia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 120, 20));
 
         txt_KhuyenMai.setEnabled(false);
-        add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 110, 20));
+        add(txt_KhuyenMai, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, 110, 20));
 
         txt_GiaGiam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_GiaGiamActionPerformed(evt);
             }
         });
-        add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 388, 110, -1));
+        add(txt_GiaGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, 110, -1));
 
         btn_ThemSP.setText(">>");
         btn_ThemSP.addActionListener(new java.awt.event.ActionListener() {
@@ -420,7 +418,7 @@ public class DonHang extends javax.swing.JPanel {
         add(btn_ThemSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 570, 60, 30));
 
         txt_MaSP.setEnabled(false);
-        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 120, -1));
+        add(txt_MaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 120, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 51, 204));
@@ -430,7 +428,7 @@ public class DonHang extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 51, 204));
         jLabel12.setText("Sản phẩm");
-        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, -1, -1));
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
 
         refresh_CTDH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/reset_1.png"))); // NOI18N
         refresh_CTDH.addActionListener(new java.awt.event.ActionListener() {
@@ -676,7 +674,8 @@ public class DonHang extends javax.swing.JPanel {
                     quantity,
                     price,
                     promotionID,
-                    discountedPrice
+                    discountedPrice,
+                    isCheckVoucher
                 );
                 donHang.getProducts().add(sanPham);
                 donHang.setTotalAmount(donHang.getTotalAmount() + discountedPrice * quantity);

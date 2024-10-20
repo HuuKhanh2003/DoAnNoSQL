@@ -18,15 +18,26 @@ public class DonHang {
     private List<Product> products;
     private double totalAmount;
     private String employeeID;
+    private boolean isCheckVoucher;
 
+    public boolean isIsCheckVoucher() {
+        return isCheckVoucher;
+    }
+
+    public void setIsCheckVoucher(boolean isCheckVoucher) {
+        this.isCheckVoucher = isCheckVoucher;
+    }
+
+    
     // Constructor
-    public DonHang(String id, String customerID, Date orderDate, List<Product> products, double totalAmount, String employeeID) {
+    public DonHang(String id, String customerID, Date orderDate, List<Product> products, double totalAmount, String employeeID,boolean isCheckVoucher) {
         this.id = id;
         this.customerID = customerID;
         this.orderDate = orderDate;
         this.products = products;
         this.totalAmount = totalAmount;
         this.employeeID = employeeID;
+        this.isCheckVoucher=isCheckVoucher;
     }
 
     public String getEmployeeID() {

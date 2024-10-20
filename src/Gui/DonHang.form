@@ -571,6 +571,9 @@
         </Property>
         <Property name="rolloverEnabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chk_IsVoucherActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="DonHang_chk_IsVoucher"/>
       </AuxValues>

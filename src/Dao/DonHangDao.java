@@ -35,67 +35,70 @@ public class DonHangDao {
     }
     
     public List<DonHang> getAllOrders() {
-    List<DonHang> orders = new ArrayList<>();
-    MongoCursor<Document> cursor = collection.find().iterator();
-    
-    try {
-        while (cursor.hasNext()) {
-            Document doc = cursor.next();
+        List<DonHang> orders = new ArrayList<>();
+        MongoCursor<Document> cursor = collection.find().iterator();
 
-            Date orderDate = doc.getDate("orderDate");
+        try {
+            while (cursor.hasNext()) {
+                Document doc = cursor.next();
+                Date orderDate = doc.getDate("orderDate");
 
-            // Lấy danh sách sản phẩm từ MongoDB
-            List<Document> productDocs = (List<Document>) doc.get("products");
-            List<DonHang.Product> products = new ArrayList<>();
-            double totalAmount = 0.0;
+                // Lấy danh sách sản phẩm từ MongoDB
+                List<Document> productDocs = (List<Document>) doc.get("products");
+                List<DonHang.Product> products = new ArrayList<>();
+                double totalAmount = 0.0;
 
-            if (productDocs != null) {
-                for (Document productDoc : productDocs) {
-                    Double price = productDoc.getDouble("price");
-                    if (price == null) {
-                        price = 0.0;
+                if (productDocs != null) {
+                    for (Document productDoc : productDocs) {
+                        Double price = productDoc.getDouble("price");
+                        if (price == null) price = 0.0;
+
+                        Double discountedPrice = productDoc.getDouble("discountedPrice");
+                        if (discountedPrice == null) discountedPrice = 0.0;
+
+                        int quantity = productDoc.getInteger("quantity", 0);
+                        totalAmount += price * quantity;
+
+                        DonHang.Product product = new DonHang.Product(
+                            productDoc.getString("productID"),
+                            quantity,
+                            price,
+                            productDoc.getString("promotionID"),
+                            discountedPrice
+                        );
+                        products.add(product);
                     }
-
-                    Double discountedPrice = productDoc.getDouble("discountedPrice");
-                    if (discountedPrice == null) {
-                        discountedPrice = 0.0;
-                    }
-
-                    int quantity = productDoc.getInteger("quantity", 0);
-                    totalAmount += price * quantity;
-
-                    DonHang.Product product = new DonHang.Product(
-                        productDoc.getString("productID"),
-                        quantity,
-                        price,
-                        productDoc.getString("promotionID"),
-                        discountedPrice
-                    );
-                    products.add(product);
                 }
+
+                ObjectId employeeObjectId = doc.getObjectId("employeeID");
+                String employeeID = (employeeObjectId != null) ? employeeObjectId.toString() : null;
+
+                // Lấy giá trị isCheckVoucher
+                boolean isCheckVoucher = doc.getBoolean("isCheckVoucher", false);
+
+                DonHang order = new DonHang(
+                    doc.getString("_id"),
+                    doc.getString("customerID"),
+                    orderDate,
+                    products,
+                    totalAmount,
+                    employeeID,
+                    isCheckVoucher
+                );
+                orders.add(order);
             }
-            Object employeeObjectID = doc.getObjectId("employeeID");
-            String employeeID = (employeeObjectID != null) ? employeeObjectID.toString() : null;
-            DonHang order = new DonHang(
-                doc.getString("_id"),
-                doc.getString("customerID"),
-                orderDate,
-                products,
-                totalAmount,
-                employeeID
-            );
-            orders.add(order);
+        } finally {
+            cursor.close();
         }
-    } finally {
-        cursor.close();
+
+        orders.sort(Comparator.comparing(DonHang::getId));
+
+        return orders;
     }
 
-    orders.sort(Comparator.comparing(DonHang::getId));
 
-    return orders;
-}
 
-    public Pojo.DonHang getOrderById(String orderId) {
+   public Pojo.DonHang getOrderById(String orderId) {
         Document query = new Document("_id", orderId);
         Document doc = collection.find(query).first();
 
@@ -120,13 +123,20 @@ public class DonHangDao {
                     products.add(product);
                 }
             }
+
             ObjectId employeeObjectId = doc.getObjectId("employeeID");
             String employeeID = (employeeObjectId != null) ? employeeObjectId.toString() : null; 
-            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"), employeeID);
+
+            // Lấy giá trị isCheckVoucher
+            boolean isCheckVoucher = doc.getBoolean("isCheckVoucher", false);
+
+            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"), employeeID, isCheckVoucher);
         }
 
         return null;
     }
+
+
    
    // Thêm đơn hàng mới
     public void addOrder(DonHang order) {
@@ -135,7 +145,9 @@ public class DonHangDao {
                 .append("orderDate", order.getOrderDate())
                 .append("products", createProductDocuments(order.getProducts()))
                 .append("totalAmount", order.getTotalAmount())
-                .append("employeeID", new ObjectId("671288853ec5e6060ab93c2a"));
+                .append("employeeID", new ObjectId("671288853ec5e6060ab93c2a"))
+                .append("isCheckVoucher",order.isIsCheckVoucher());
+
 
         collection.insertOne(orderDoc);
         System.out.println("Đơn hàng đã được thêm thành công!");
@@ -171,7 +183,8 @@ public class DonHangDao {
             Updates.set("orderDate", order.getOrderDate()),
             Updates.set("products", productDocuments), 
             Updates.set("totalAmount", order.getTotalAmount()),
-            Updates.set("employeeID", new ObjectId("671288853ec5e6060ab93c2a"))
+            Updates.set("employeeID", new ObjectId("671288853ec5e6060ab93c2a")),
+            Updates.set("isCheckVoucher",order.isIsCheckVoucher())
         );
 
         // Bước 4: Thực hiện cập nhật đơn hàng trong MongoDB

@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -65,13 +67,22 @@ public class DonHang extends javax.swing.JPanel {
 
     private void hienThiDonHang() {
         List<Pojo.DonHang> dsDonHang = handleDonHang.getAllOrders();
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 4) { // Cột checkbox là cột số 4
+                    return Boolean.class;
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
 
         // Thêm các cột cho bảng đơn hàng
         dtm.addColumn("Mã đơn hàng");
         dtm.addColumn("Mã khách hàng");
         dtm.addColumn("Ngày đặt hàng");
         dtm.addColumn("Tổng tiền");
+        dtm.addColumn("Sử dụng Voucher"); // Thêm cột checkbox cho isCheckVoucher
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -80,13 +91,19 @@ public class DonHang extends javax.swing.JPanel {
                 donHang.getId(),
                 donHang.getCustomerID(),
                 dateFormat.format(donHang.getOrderDate()),
-                donHang.getTotalAmount()
+                donHang.getTotalAmount(),
+                donHang.isIsCheckVoucher() 
             });
         }
 
         // Thiết lập model cho bảng đơn hàng
         tbl_DonHang.setModel(dtm);
+
+        // Cập nhật lại bảng để có checkbox hiển thị chính xác
+        tbl_DonHang.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(new JCheckBox()));
+        tbl_DonHang.getColumnModel().getColumn(4).setCellRenderer(tbl_DonHang.getDefaultRenderer(Boolean.class));
     }
+
     double tongTien=0;
     private void hienThiChiTietDonHang(String orderId) {
         Pojo.DonHang donHang = handleDonHang.getOrderById(orderId); // Lấy thông tin chi tiết đơn hàng
@@ -97,40 +114,45 @@ public class DonHang extends javax.swing.JPanel {
         dtmChiTiet.addColumn("Giá");
         dtmChiTiet.addColumn("Mã khuyến mãi");
         dtmChiTiet.addColumn("Giá khuyến mãi");
-        //dtmChiTiet.addColumn("Thành tiền"); // Thêm cột Thành tiền
 
         if (donHang != null && donHang.getProducts() != null) {
-            double tongThanhTien=0;
-            double tongThanhTien1=0;
-            
+            double tongThanhTien = 0;
+            double tongThanhTien1 = 0;
+
             for (Pojo.DonHang.Product product : donHang.getProducts()) {
                 double thanhTien = product.getQuantity() * product.getPrice();
-                double thanhTien1= product.getQuantity()*product.getDiscountedPrice();
+                double thanhTien1 = product.getQuantity() * product.getDiscountedPrice();
+
                 dtmChiTiet.addRow(new Object[]{
                     product.getProductID(),
                     product.getQuantity(),
                     product.getPrice(),
                     product.getPromotionID(),
                     product.getDiscountedPrice(),
-                    //thanhTien
                 });
-                tongThanhTien+=thanhTien;
-                tongThanhTien1+=thanhTien1;
+
+                tongThanhTien += thanhTien;
+                tongThanhTien1 += thanhTien1;
             }
-            if(tongThanhTien>=500000)
-            {
-                tongTien+=tongThanhTien1;
+
+            // Kiểm tra giá trị isCheckVoucher
+            if (donHang.isIsCheckVoucher() && tongThanhTien >= 500000) {
+                tongTien = tongThanhTien1;
+            } else {
+                tongTien = tongThanhTien;
             }
-            else
-            {
-                tongTien=tongThanhTien;
-            }
-            txt_TongTien.setText(""+tongTien);
+
+            // Hiển thị tổng tiền
+            txt_TongTien.setText(String.valueOf(tongTien));
+
+            // Hiển thị trạng thái sử dụng Voucher (checkbox)
+            chk_IsVoucher.setSelected(donHang.isIsCheckVoucher());
         }
 
         // Thiết lập model cho bảng chi tiết đơn hàng
         tbl_ChiTietDonHang.setModel(dtmChiTiet);
     }
+
     
     private void hienThiDSSanPham(String customerID) {
         String customerTier=handleKhachHang.getCustomerTiersByID(customerID);
@@ -304,7 +326,6 @@ public class DonHang extends javax.swing.JPanel {
                 btn_ThemActionPerformed(evt);
             }
         });
-
         add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 30));
 
         btn_Xoa.setText("Xóa");
@@ -313,12 +334,15 @@ public class DonHang extends javax.swing.JPanel {
                 btn_XoaActionPerformed(evt);
             }
         });
-
         add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, -1, 30));
 
         btn_Sua.setText("Sửa");
+        btn_Sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SuaActionPerformed(evt);
+            }
+        });
         add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, -1, 30));
-
 
         btn_LamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/reset_1.png"))); // NOI18N
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -425,6 +449,11 @@ public class DonHang extends javax.swing.JPanel {
         chk_IsVoucher.setMinimumSize(new java.awt.Dimension(25, 25));
         chk_IsVoucher.setPreferredSize(new java.awt.Dimension(25, 25));
         chk_IsVoucher.setRolloverEnabled(false);
+        chk_IsVoucher.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chk_IsVoucherActionPerformed(evt);
+            }
+        });
         add(chk_IsVoucher, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 30, 20));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -453,21 +482,38 @@ public class DonHang extends javax.swing.JPanel {
         txt_NgayLap.setText("");
         txt_TongTien.setText("");
     }//GEN-LAST:event_btn_LamMoiActionPerformed
-
+    private void btn_SuaSPActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
     private void tbl_DonHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DonHangMouseClicked
         // TODO add your handling code here:
-        int selectedRow = tbl_DonHang.getSelectedRow();
-        if(selectedRow != -1)
-        {
-            String ma = tbl_DonHang.getValueAt(selectedRow, 0).toString();
-            String ngayLap = tbl_DonHang.getValueAt(selectedRow, 2).toString();
-            String khachHang=tbl_DonHang.getValueAt(selectedRow, 1).toString();
-            String tongTien = tbl_DonHang.getValueAt(selectedRow, 3).toString();
+        int selectedRow = tbl_DonHang.getSelectedRow(); // Lấy dòng được chọn
+        if (selectedRow != -1) {
+            // Lấy dữ liệu từ bảng dựa trên hàng được chọn
+            String ma = tbl_DonHang.getValueAt(selectedRow, 0).toString(); // Mã đơn hàng
+            String khachHang = tbl_DonHang.getValueAt(selectedRow, 1).toString(); // Mã khách hàng
+            String ngayLap = tbl_DonHang.getValueAt(selectedRow, 2).toString(); // Ngày lập đơn
+            String tongTien = tbl_DonHang.getValueAt(selectedRow, 3).toString(); // Tổng tiền
+
+            // Hiển thị dữ liệu lên các trường tương ứng
             txt_Ma.setText(ma);
             txt_NgayLap.setText(ngayLap);
-            CB_KH.setSelectedItem(khachHang);
+            CB_KH.setSelectedItem(khachHang); // Set giá trị cho ComboBox khách hàng
             txt_TongTien.setText(tongTien);
-            
+
+            // Gọi hàm lấy chi tiết đơn hàng và hiển thị
+            Pojo.DonHang donHang = handleDonHang.getOrderById(ma); // Lấy chi tiết đơn hàng theo mã
+            if (donHang != null) {
+                // Kiểm tra trạng thái của isCheckVoucher và cập nhật checkbox
+                if (donHang.isIsCheckVoucher()) {
+                    chk_IsVoucher.setSelected(true); // Tick checkbox nếu isCheckVoucher là true
+                } else {
+                    chk_IsVoucher.setSelected(false); // Bỏ tick nếu isCheckVoucher là false
+                }
+
+                // Gọi hàm hiển thị chi tiết đơn hàng trong bảng chi tiết
+                hienThiChiTietDonHang(ma);
+            }
         }
     }//GEN-LAST:event_tbl_DonHangMouseClicked
 
@@ -549,7 +595,9 @@ public class DonHang extends javax.swing.JPanel {
         hienThiDSSanPham(customerID);
     }//GEN-LAST:event_CB_KHActionPerformed
 
-
+    private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {    
+        
+    }
     
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
         // TODO add your handling code here:
@@ -560,7 +608,12 @@ public class DonHang extends javax.swing.JPanel {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
             ObjectId employeeID = new ObjectId("671288853ec5e6060ab93c2a");
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString());
+
+            // Lấy giá trị từ checkbox isCheckVoucher
+            boolean isCheckVoucher = chk_IsVoucher.isSelected();  // Giả sử chk_IsCheckVoucher là biến của checkbox trên form
+
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString(), isCheckVoucher);
+
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();
@@ -580,6 +633,8 @@ public class DonHang extends javax.swing.JPanel {
                 donHang.getProducts().add(sanPham);
                 donHang.setTotalAmount(donHang.getTotalAmount() + discountedPrice * quantity);
             }
+
+            // Gọi hàm thêm đơn hàng
             handleDonHang.addOrder(donHang);
         } catch (ParseException ex) {
             Logger.getLogger(DonHang.class.getName()).log(Level.SEVERE, null, ex);
@@ -601,7 +656,12 @@ public class DonHang extends javax.swing.JPanel {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
             ObjectId employeeID = new ObjectId("671288853ec5e6060ab93c2a");
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString());
+
+            // Lấy trạng thái của checkbox isCheckVoucher
+            boolean isCheckVoucher = chk_IsVoucher.isSelected(); // Giả sử bạn có một JCheckBox tên là checkBoxIsCheckVoucher
+
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString(), isCheckVoucher);
+
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();
@@ -627,6 +687,11 @@ public class DonHang extends javax.swing.JPanel {
         }
      
     }//GEN-LAST:event_btn_LuuCTDHActionPerformed
+
+    private void chk_IsVoucherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chk_IsVoucherActionPerformed
+        // TODO add your handling code here:
+        //if(chk_IsVoucher.is)
+    }//GEN-LAST:event_chk_IsVoucherActionPerformed
     
 
 

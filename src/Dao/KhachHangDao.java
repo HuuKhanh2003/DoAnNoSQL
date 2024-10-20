@@ -65,6 +65,20 @@ public class KhachHangDao {
                     doc.getInteger("voucherQuantity")))
             .into(new ArrayList<>());
 }
+        public List<String> getCustomerTiersByID(String id) {
+        // Truy vấn trực tiếp và chuyển đổi kết quả
+        List<String> tierList = new ArrayList<>();
+
+        collection.find(new Document("tier", new Document("$regex", id).append("$options", "i")))
+            .forEach(doc -> {
+                String customerTier = doc.getString("tier");
+                if (!tierList.contains(customerTier)) {
+                    tierList.add(customerTier); // Thêm vào danh sách nếu chưa có
+                }
+            });
+
+        return tierList;
+    }
 
     // Hàm thêm khách hàng
     public boolean addCustomer(KhachHang customer) {

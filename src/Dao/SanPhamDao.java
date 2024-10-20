@@ -14,7 +14,9 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.bson.Document;
 
 /**
@@ -54,6 +56,7 @@ public class SanPhamDao {
 
         return products;
     }
+    
 
     // Hàm thêm sản phẩm
     public boolean addProduct(SanPham product) {

@@ -239,12 +239,27 @@ public class DonHang extends javax.swing.JPanel {
         add(CB_KH, new org.netbeans.lib.awtextra.AbsoluteConstraints(498, 48, 161, -1));
 
         btn_Them.setText("Thêm");
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemActionPerformed(evt);
+            }
+        });
         add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
 
         btn_Xoa.setText("Xóa");
+        btn_Xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_XoaActionPerformed(evt);
+            }
+        });
         add(btn_Xoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, -1, -1));
 
         btn_Sua.setText("Sửa");
+        btn_Sua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SuaActionPerformed(evt);
+            }
+        });
         add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, -1, -1));
 
         btn_LamMoi.setText("Làm mới");
@@ -438,6 +453,18 @@ public class DonHang extends javax.swing.JPanel {
         System.out.println("Sản phẩm đã được thêm vào chi tiết đơn hàng.");
         
     }//GEN-LAST:event_btn_ThemSPActionPerformed
+
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_ThemActionPerformed
+
+    private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_XoaActionPerformed
+
+    private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_SuaActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

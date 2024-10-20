@@ -297,8 +297,10 @@ public class KhuyenMai extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (chk_DieuKien.isSelected()) {
                     txt_GiaTriNhoNhat.setEnabled(true);
+                    tbl_LoaiKhachHang.setEnabled(true);
                 } else {
                     txt_GiaTriNhoNhat.setEnabled(false);
+                    tbl_LoaiKhachHang.setEnabled(false);
                 }
             }
         });

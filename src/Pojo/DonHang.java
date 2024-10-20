@@ -17,29 +17,31 @@ public class DonHang {
     private Date orderDate;
     private List<Product> products;
     private double totalAmount;
-    private String idEmployee;
+    private String employeeID;
 
     // Constructor
-    public DonHang(String id, String customerID, Date orderDate, List<Product> products, double totalAmount, String idEmployee) {
+    public DonHang(String id, String customerID, Date orderDate, List<Product> products, double totalAmount, String employeeID) {
         this.id = id;
         this.customerID = customerID;
         this.orderDate = orderDate;
         this.products = products;
         this.totalAmount = totalAmount;
-        this.idEmployee = idEmployee;
+        this.employeeID = employeeID;
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
     }
 
     public DonHang() {
        
     }
 
-    public String getIdEmployee() {
-        return idEmployee;
-    }
 
-     public void setIdEmployee(String idEmployee) {
-        this.idEmployee = idEmployee;
-    }
     // Getters và Setters cho Order
     public String getId() {
         return id;

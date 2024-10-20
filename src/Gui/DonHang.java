@@ -44,7 +44,9 @@ public class DonHang extends javax.swing.JPanel {
             CB_KH.addItem(KH);
         }
         
-        
+        String hardcodedEmployeeID = "671288853ec5e6060ab93c2a"; // Giá trị được gán cứng
+        txt_MaNV.setText(hardcodedEmployeeID);
+        txt_MaNV.setEnabled(false); 
         
         
     tbl_DonHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -444,7 +446,7 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
         // TODO add your handling code here:
-        txt_MaNV.setText("");
+        txt_Ma.setText("");
         txt_NgayLap.setText("");
         txt_TongTien.setText("");
     }//GEN-LAST:event_btn_LamMoiActionPerformed
@@ -458,7 +460,7 @@ public class DonHang extends javax.swing.JPanel {
             String ngayLap = tbl_DonHang.getValueAt(selectedRow, 2).toString();
             String khachHang=tbl_DonHang.getValueAt(selectedRow, 1).toString();
             String tongTien = tbl_DonHang.getValueAt(selectedRow, 3).toString();
-            txt_MaNV.setText(ma);
+            txt_Ma.setText(ma);
             txt_NgayLap.setText(ngayLap);
             CB_KH.setSelectedItem(khachHang);
             txt_TongTien.setText(tongTien);
@@ -546,14 +548,14 @@ public class DonHang extends javax.swing.JPanel {
     
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
         // TODO add your handling code here:
-        String orderID = txt_MaNV.getText();
+        String orderID = txt_Ma.getText();
         String customerID = CB_KH.getSelectedItem().toString();
         Date orderDate;
         try {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
-            ObjectId idEmployee = new ObjectId("671288853ec5e6060ab93c2a");
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, idEmployee.toString());
+            ObjectId employeeID = new ObjectId("671288853ec5e6060ab93c2a");
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString());
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();
@@ -582,19 +584,19 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
         // TODO add your handling code here:
-        handleDonHang.deleteOrder(txt_MaNV.getText());
+        handleDonHang.deleteOrder(txt_Ma.getText());
     }//GEN-LAST:event_btn_XoaActionPerformed
 
     private void btn_LuuCTDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuCTDHActionPerformed
         // TODO add your handling code here:
-        String orderID = txt_MaNV.getText();
+        String orderID = txt_Ma.getText();
         String customerID = CB_KH.getSelectedItem().toString();
         Date orderDate;
         try {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
-            ObjectId idEmployee = new ObjectId("671288853ec5e6060ab93c2a");
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, idEmployee.toString());
+            ObjectId employeeID = new ObjectId("671288853ec5e6060ab93c2a");
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, employeeID.toString());
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();

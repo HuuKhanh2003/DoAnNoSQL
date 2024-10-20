@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -73,14 +74,15 @@ public class DonHangDao {
                     products.add(product);
                 }
             }
-            String idEmployee = doc.getObjectId("idEmployee").toString();
+            Object employeeObjectID = doc.getObjectId("employeeID");
+            String employeeID = (employeeObjectID != null) ? employeeObjectID.toString() : null;
             DonHang order = new DonHang(
                 doc.getString("_id"),
                 doc.getString("customerID"),
                 orderDate,
                 products,
                 totalAmount,
-                idEmployee
+                employeeID
             );
             orders.add(order);
         }
@@ -118,8 +120,9 @@ public class DonHangDao {
                     products.add(product);
                 }
             }
-            String idEmployee = doc.getObjectId("idEmployee").toString();
-            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"), idEmployee);
+            ObjectId employeeObjectId = doc.getObjectId("employeeID");
+            String employeeID = (employeeObjectId != null) ? employeeObjectId.toString() : null; 
+            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"), employeeID);
         }
 
         return null;
@@ -131,7 +134,8 @@ public class DonHangDao {
                 .append("customerID", order.getCustomerID())
                 .append("orderDate", order.getOrderDate())
                 .append("products", createProductDocuments(order.getProducts()))
-                .append("totalAmount", order.getTotalAmount());
+                .append("totalAmount", order.getTotalAmount())
+                .append("employeeID", new ObjectId("671288853ec5e6060ab93c2a"));
 
         collection.insertOne(orderDoc);
         System.out.println("Đơn hàng đã được thêm thành công!");
@@ -166,7 +170,8 @@ public class DonHangDao {
             Updates.set("customerID", order.getCustomerID()),
             Updates.set("orderDate", order.getOrderDate()),
             Updates.set("products", productDocuments), 
-            Updates.set("totalAmount", order.getTotalAmount())
+            Updates.set("totalAmount", order.getTotalAmount()),
+            Updates.set("employeeID", new ObjectId("671288853ec5e6060ab93c2a"))
         );
 
         // Bước 4: Thực hiện cập nhật đơn hàng trong MongoDB

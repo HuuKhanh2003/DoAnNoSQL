@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -213,6 +214,21 @@ public class KhachHangDao {
         } else {
             return null; // Nếu không tìm thấy khách hàng nào, trả về null
         }
+    }
+    public int getAvailableVouchers(String customerID) {
+        // Tạo truy vấn để lấy số lượng voucher còn lại của khách hàng
+        Document query = new Document("_id", customerID);
+        Document customerDoc = collection.find(query).first();
+        if (customerDoc != null) {
+            return customerDoc.getInteger("voucherQuantity", 0); 
+        }
+        return 0;
+    }
+    public void updateVoucher(String customerID, int change) {
+        Bson filter = Filters.eq("_id", customerID);
+        Bson update = Updates.inc("voucherQuantity", change);
+        collection.updateOne(filter, update);
+        System.out.println("Số lượng voucher đã được cập nhật!");
     }
 
 }

@@ -290,9 +290,9 @@ public class KhuyenMai extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (chk_DieuKien.isSelected()) {
-                    txt_LoaiKhachHang.setEnabled(true);
+                    tbl_LoaiKhachHang.setEnabled(true);
                 } else {
-                    txt_LoaiKhachHang.setEnabled(false);
+                    tbl_LoaiKhachHang.setEnabled(false);
                 }
             }
         });

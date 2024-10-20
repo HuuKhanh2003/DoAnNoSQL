@@ -44,6 +44,7 @@ public class KhuyenMai extends javax.swing.JPanel {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
     List<String> selectedprodIDs = new ArrayList<>();
+    List<String> initialProdIDs = new ArrayList<>();
     List<String> selectedprodTypeIDs = new ArrayList<>();
     String selectedCustomerType = null;
     Set<String> inPromtionProducts = new HashSet<>();
@@ -116,6 +117,9 @@ public class KhuyenMai extends javax.swing.JPanel {
                     if (!selectedprodIDs.contains(id)) {
                         selectedprodIDs.add(id);
                     }
+                }
+                else if(isChecked == false){
+                    selectedprodIDs.remove(id);
                 }
             }
         });
@@ -511,6 +515,7 @@ public class KhuyenMai extends javax.swing.JPanel {
             String startDate = tbl_KhuyenMai.getValueAt(selectedRow, 3).toString();
             String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
             String cusType = tbl_KhuyenMai.getValueAt(selectedRow, 7).toString();
+            initialProdIDs = (List<String>) tbl_KhuyenMai.getValueAt(selectedRow, 5);
             
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
@@ -546,7 +551,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         for(String item : inPromtionProducts){
-            if (selectedprodIDs.contains(item)){
+            if (selectedprodIDs.contains(item) && !initialProdIDs.contains(item)){
                 JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
                 return;
             }
@@ -624,7 +629,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         for(String item : inPromtionProducts){
-            if (selectedprodIDs.contains(item)){
+            if (selectedprodIDs.contains(item) && !initialProdIDs.contains(item)){
                 JOptionPane.showMessageDialog(null, "Sản phẩm " + item + " đã có chương trình khuyến mãi !");
                 return;
             }

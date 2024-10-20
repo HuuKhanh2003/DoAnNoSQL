@@ -31,8 +31,8 @@ public class Start extends javax.swing.JFrame {
     }
     public void image()
     {
-        String imagePath = "C:\\Users\\HUU KHANH\\Desktop\\anhdaidien.jpg";
-
+        String imagePath = "D:\\DoAnNoSQL\\src\\Anh\\khuyen-mai.png";
+        
         // Tạo ImageIcon từ hình ảnh
         ImageIcon originalIcon = new ImageIcon(imagePath);
 

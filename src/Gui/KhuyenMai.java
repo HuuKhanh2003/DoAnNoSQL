@@ -64,7 +64,6 @@ public class KhuyenMai extends javax.swing.JPanel {
         dtm.addColumn("Sản phẩm");
         dtm.addColumn("Loại sản phẩm");
         dtm.addColumn("Loại khách hàng");
-        dtm.addColumn("Giá trị nhỏ nhất");
         dtm.setNumRows(ds.size());
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for(int i=0;i<ds.size();i++)
@@ -80,7 +79,6 @@ public class KhuyenMai extends javax.swing.JPanel {
             inPromtionProducts.addAll(ls.getAppliedTo().getProducts());
             dtm.setValueAt(ls.getAppliedTo().getCategories(), i, 6);
             dtm.setValueAt(ls.getConditions().getCustomerTier(), i, 7);
-            dtm.setValueAt(ls.getConditions().getMinOrderValue(), i, 8);
         }
         tbl_KhuyenMai.setModel(dtm);
         List<Pojo.SanPham> ds1 = handleSanPham.getAllProducts();
@@ -296,9 +294,9 @@ public class KhuyenMai extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (chk_DieuKien.isSelected()) {
-                    txt_GiaTriNhoNhat.setEnabled(true);
+                    txt_LoaiKhachHang.setEnabled(true);
                 } else {
-                    txt_GiaTriNhoNhat.setEnabled(false);
+                    txt_LoaiKhachHang.setEnabled(false);
                 }
             }
         });
@@ -325,7 +323,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         txt_Ma = new javax.swing.JTextField();
         txt_Ten = new javax.swing.JTextField();
         txt_Giam = new javax.swing.JTextField();
-        txt_GiaTriNhoNhat = new javax.swing.JTextField();
+        txt_LoaiKhachHang = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txt_NgayBD = new javax.swing.JFormattedTextField();
         txt_NgayKT = new javax.swing.JFormattedTextField();
@@ -367,7 +365,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         });
         add(Chk_ApDung, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
 
-        jLabel9.setText("Trị giá HD nhỏ nhất:");
+        jLabel9.setText("Loaị khách hàng");
         add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, -1));
 
         chk_DieuKien.setText("Điều kiện:");
@@ -380,7 +378,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 81, 216, -1));
         add(txt_Ten, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 121, 139, -1));
         add(txt_Giam, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 161, 221, -1));
-        add(txt_GiaTriNhoNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 76, -1));
+        add(txt_LoaiKhachHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 76, -1));
 
         jLabel12.setText("Chương trình khuyến mãi");
         add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(325, 24, -1, -1));
@@ -516,7 +514,7 @@ public class KhuyenMai extends javax.swing.JPanel {
             String percent = tbl_KhuyenMai.getValueAt(selectedRow, 2).toString();
             String startDate = tbl_KhuyenMai.getValueAt(selectedRow, 3).toString();
             String endDate=tbl_KhuyenMai.getValueAt(selectedRow, 4).toString();
-            String minOrderValue = tbl_KhuyenMai.getValueAt(selectedRow, 8).toString();
+            String cusType = tbl_KhuyenMai.getValueAt(selectedRow, 7).toString();
             
             txt_Ma.setText(ma);
             txt_Ten.setText(ten);
@@ -535,12 +533,12 @@ public class KhuyenMai extends javax.swing.JPanel {
                 
                 if (promoDoc.containsKey("conditions")) {
                     chk_DieuKien.setSelected(true);
-                    txt_GiaTriNhoNhat.setEnabled(true);
-                    txt_GiaTriNhoNhat.setText(minOrderValue);
+                    txt_LoaiKhachHang.setEnabled(true);
+                    txt_LoaiKhachHang.setText(cusType);
                 } else {
                     chk_DieuKien.setSelected(false);
-                    txt_GiaTriNhoNhat.setText("");
-                    txt_GiaTriNhoNhat.setEnabled(false);
+                    txt_LoaiKhachHang.setText("");
+                    txt_LoaiKhachHang.setEnabled(false);
                 }
             } else {
                 Chk_ApDung.setSelected(false); // Bỏ tích nếu không tìm thấy khuyến mãi
@@ -565,15 +563,13 @@ public class KhuyenMai extends javax.swing.JPanel {
         
         String ngayBD = txt_NgayBD.getText().trim();
         String ngayKT = txt_NgayKT.getText().trim();
-        String gtnnString = txt_GiaTriNhoNhat.getText().trim();
-        int gtnn = Integer.parseInt(gtnnString);
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         
         AppliedTo apDung = new AppliedTo(selectedprodIDs,selectedprodTypeIDs);
         
-        Conditions dieuKien = new Conditions(gtnn,selectedCustomerType);
+        Conditions dieuKien = new Conditions(selectedCustomerType);
         
         Pojo.KhuyenMai km = new Pojo.KhuyenMai();
         km.setId(ma);
@@ -642,15 +638,13 @@ public class KhuyenMai extends javax.swing.JPanel {
         
         String ngayBD = txt_NgayBD.getText().trim();
         String ngayKT = txt_NgayKT.getText().trim();
-        String gtnnString = txt_GiaTriNhoNhat.getText().trim();
-        int gtnn = Integer.parseInt(gtnnString);
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         
         AppliedTo apDung = new AppliedTo(selectedprodIDs,selectedprodTypeIDs);
         
-        Conditions dieuKien = new Conditions(gtnn,selectedCustomerType);
+        Conditions dieuKien = new Conditions(selectedCustomerType);
         
         Pojo.KhuyenMai km = new Pojo.KhuyenMai();
         km.setId(ma);
@@ -697,7 +691,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         txt_NgayKT.setText("");
         Chk_ApDung.setSelected(false);
         chk_DieuKien.setSelected(false);
-        txt_GiaTriNhoNhat.setText("");
+        txt_LoaiKhachHang.setText("");
         hienThi();
     }//GEN-LAST:event_btn_LamMoiActionPerformed
 
@@ -724,8 +718,8 @@ public class KhuyenMai extends javax.swing.JPanel {
     private javax.swing.JTable tbl_LoaiKhachHang;
     private javax.swing.JTable tbl_LoaiSanPham;
     private javax.swing.JTable tbl_SanPham;
-    private javax.swing.JTextField txt_GiaTriNhoNhat;
     private javax.swing.JTextField txt_Giam;
+    private javax.swing.JTextField txt_LoaiKhachHang;
     private javax.swing.JTextField txt_Ma;
     private javax.swing.JFormattedTextField txt_NgayBD;
     private javax.swing.JFormattedTextField txt_NgayKT;

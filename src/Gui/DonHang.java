@@ -692,8 +692,7 @@ public class DonHang extends javax.swing.JPanel {
                     quantity,
                     price,
                     promotionID,
-                    discountedPrice,
-                    isCheckVoucher
+                    discountedPrice
                 );
                 donHang.getProducts().add(sanPham);
                 donHang.setTotalAmount(donHang.getTotalAmount() + discountedPrice * quantity);

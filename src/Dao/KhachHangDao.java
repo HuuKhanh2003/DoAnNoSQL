@@ -216,16 +216,6 @@ public class KhachHangDao {
         // Đóng kết nối nếu cần thiết
     }
     
-    public String getCustomerTiersByID(String customerID) {
-        // Truy vấn và lấy tên mức độ khách hàng duy nhất từ cơ sở dữ liệu
-        Document query = new Document("_id", customerID); // Điều kiện lọc theo customerID
-        Document customerDoc = collection.find(query).first(); // Lấy một tài liệu đầu tiên khớp với customerID
-
-        if (customerDoc != null) {
-            return customerDoc.getString("tier"); // Lấy giá trị của trường "tier"
-        } else {
-            return null; // Nếu không tìm thấy khách hàng nào, trả về null
-        }
-    }
+   
 
 }

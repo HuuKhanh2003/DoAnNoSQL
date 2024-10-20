@@ -508,7 +508,7 @@ public class DonHang extends javax.swing.JPanel {
         String maKhuyenMai = tbl_SanPham.getValueAt(selectedRow, 4).toString(); // Cột chứa mã khuyến mãi (nếu có)
 
         String customerId=CB_KH.getSelectedItem().toString();
-        String customerTier = handleKhachHang.getCustomerTiersByID(customerId);
+        //String customerTier = handleKhachHang.getCustomerTiersByID(customerId);
         // Mặc định số lượng = 1
         int soLuong = 1;
 
@@ -531,18 +531,8 @@ public class DonHang extends javax.swing.JPanel {
         System.out.println("Sản phẩm đã được thêm vào chi tiết đơn hàng.");
         
     }//GEN-LAST:event_btn_ThemSPActionPerformed
-
-    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_ThemActionPerformed
-
-    private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_XoaActionPerformed
-
-    private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_SuaActionPerforme
+    // TODO add your handling code here:                                      
+                                  
     private void refresh_CTDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh_CTDHActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tbl_ChiTietDonHang.getModel();

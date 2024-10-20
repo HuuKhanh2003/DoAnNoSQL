@@ -265,7 +265,7 @@ public class KhuyenMai extends javax.swing.JPanel {
         Chk_ApDung.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!Chk_ApDung.isSelected()) {
+                if (Chk_ApDung.isSelected()) {
                     tbl_SanPham.setEnabled(true);
                     tbl_SanPham.setFocusable(true);
                     tbl_SanPham.getTableHeader().setEnabled(true);

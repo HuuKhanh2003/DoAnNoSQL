@@ -20,6 +20,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author AD
@@ -171,7 +173,7 @@ public class DonHang extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txt_Ma = new javax.swing.JTextField();
+        txt_MaNV = new javax.swing.JTextField();
         txt_TongTien = new javax.swing.JTextField();
         txt_NgayLap = new javax.swing.JFormattedTextField();
         CB_KH = new javax.swing.JComboBox<>();
@@ -199,6 +201,8 @@ public class DonHang extends javax.swing.JPanel {
         chk_IsVoucher = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
         btn_LuuCTDH = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        txt_Ma = new javax.swing.JTextField();
 
         setMinimumSize(new java.awt.Dimension(1370, 700));
         setPreferredSize(new java.awt.Dimension(1370, 700));
@@ -274,14 +278,14 @@ public class DonHang extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 51, 204));
-        jLabel4.setText("Khách hàng:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+        jLabel4.setText("Mã nhân viên:");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 204));
         jLabel5.setText("Tổng tiền:");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 650, -1, -1));
-        add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 120, -1));
+        add(txt_MaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, 120, -1));
         add(txt_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 650, 120, -1));
         add(txt_NgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 120, -1));
 
@@ -430,11 +434,17 @@ public class DonHang extends javax.swing.JPanel {
             }
         });
         add(btn_LuuCTDH, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 130, -1, 30));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 51, 204));
+        jLabel14.setText("Khách hàng:");
+        add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, -1));
+        add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 120, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LamMoiActionPerformed
         // TODO add your handling code here:
-        txt_Ma.setText("");
+        txt_MaNV.setText("");
         txt_NgayLap.setText("");
         txt_TongTien.setText("");
     }//GEN-LAST:event_btn_LamMoiActionPerformed
@@ -448,7 +458,7 @@ public class DonHang extends javax.swing.JPanel {
             String ngayLap = tbl_DonHang.getValueAt(selectedRow, 2).toString();
             String khachHang=tbl_DonHang.getValueAt(selectedRow, 1).toString();
             String tongTien = tbl_DonHang.getValueAt(selectedRow, 3).toString();
-            txt_Ma.setText(ma);
+            txt_MaNV.setText(ma);
             txt_NgayLap.setText(ngayLap);
             CB_KH.setSelectedItem(khachHang);
             txt_TongTien.setText(tongTien);
@@ -536,13 +546,14 @@ public class DonHang extends javax.swing.JPanel {
     
     private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
         // TODO add your handling code here:
-        String orderID = txt_Ma.getText();
+        String orderID = txt_MaNV.getText();
         String customerID = CB_KH.getSelectedItem().toString();
         Date orderDate;
         try {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0);
+            ObjectId idEmployee = new ObjectId("671288853ec5e6060ab93c2a");
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, idEmployee.toString());
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();
@@ -571,18 +582,19 @@ public class DonHang extends javax.swing.JPanel {
 
     private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
         // TODO add your handling code here:
-        handleDonHang.deleteOrder(txt_Ma.getText());
+        handleDonHang.deleteOrder(txt_MaNV.getText());
     }//GEN-LAST:event_btn_XoaActionPerformed
 
     private void btn_LuuCTDHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuCTDHActionPerformed
         // TODO add your handling code here:
-        String orderID = txt_Ma.getText();
+        String orderID = txt_MaNV.getText();
         String customerID = CB_KH.getSelectedItem().toString();
         Date orderDate;
         try {
             orderDate = new SimpleDateFormat("yyyy-MM-dd").parse(txt_NgayLap.getText());
             double totalAmount = 0;
-            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0);
+            ObjectId idEmployee = new ObjectId("671288853ec5e6060ab93c2a");
+            Pojo.DonHang donHang = new Pojo.DonHang(orderID, customerID, orderDate, new ArrayList<>(), 0, idEmployee.toString());
             List<Object[]> ctdh = handleDonHang.getAllRowsFromTable(tbl_ChiTietDonHang);
             for (Object[] row : ctdh) {
                 String productID = row[0].toString();
@@ -626,6 +638,7 @@ public class DonHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -645,6 +658,7 @@ public class DonHang extends javax.swing.JPanel {
     private javax.swing.JTextField txt_GiaGiam;
     private javax.swing.JTextField txt_KhuyenMai;
     private javax.swing.JTextField txt_Ma;
+    private javax.swing.JTextField txt_MaNV;
     private javax.swing.JTextField txt_MaSP;
     private javax.swing.JFormattedTextField txt_NgayLap;
     private javax.swing.JTextField txt_SoLuong;

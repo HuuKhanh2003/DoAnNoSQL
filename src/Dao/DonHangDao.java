@@ -73,13 +73,14 @@ public class DonHangDao {
                     products.add(product);
                 }
             }
-
+            String idEmployee = doc.getObjectId("idEmployee").toString();
             DonHang order = new DonHang(
                 doc.getString("_id"),
                 doc.getString("customerID"),
                 orderDate,
                 products,
-                totalAmount
+                totalAmount,
+                idEmployee
             );
             orders.add(order);
         }
@@ -117,8 +118,8 @@ public class DonHangDao {
                     products.add(product);
                 }
             }
-
-            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"));
+            String idEmployee = doc.getObjectId("idEmployee").toString();
+            return new Pojo.DonHang(orderId, customerID, orderDate, products, doc.getDouble("totalAmount"), idEmployee);
         }
 
         return null;

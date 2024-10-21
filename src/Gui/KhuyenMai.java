@@ -375,7 +375,7 @@ public class KhuyenMai extends javax.swing.JPanel {
                 Chk_ApDungActionPerformed(evt);
             }
         });
-        add(Chk_ApDung, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, -1));
+        add(Chk_ApDung, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 51, 204));
@@ -390,7 +390,7 @@ public class KhuyenMai extends javax.swing.JPanel {
                 chk_DieuKienActionPerformed(evt);
             }
         });
-        add(chk_DieuKien, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, -1, -1));
+        add(chk_DieuKien, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, 30));
         add(txt_Ma, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 280, 30));
         add(txt_Ten, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 60, 280, 30));
         add(txt_Giam, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 110, 280, 30));
@@ -519,7 +519,7 @@ public class KhuyenMai extends javax.swing.JPanel {
                 btn_SuaActionPerformed(evt);
             }
         });
-        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 210, 60, -1));
+        add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 60, 30));
 
         btn_LamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Anh/reset_1.png"))); // NOI18N
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -527,7 +527,7 @@ public class KhuyenMai extends javax.swing.JPanel {
                 btn_LamMoiActionPerformed(evt);
             }
         });
-        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, -1, -1));
+        add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, 40, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void Chk_ApDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Chk_ApDungActionPerformed

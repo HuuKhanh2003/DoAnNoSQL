@@ -44,10 +44,10 @@ public class DangNhap extends javax.swing.JFrame {
         quenmatkhau = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txt_TaiKhoan = new javax.swing.JTextField();
-        txt_MatKhau = new javax.swing.JTextField();
         btn_DangNhap = new javax.swing.JButton();
         btn_formdangky = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        txt_MatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(865, 448));
@@ -108,7 +108,6 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel6.setText("LOGIN");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, -1, -1));
         getContentPane().add(txt_TaiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 182, 310, 30));
-        getContentPane().add(txt_MatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 310, 30));
 
         btn_DangNhap.setBackground(new java.awt.Color(0, 51, 204));
         btn_DangNhap.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -136,6 +135,7 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(0, 51, 204));
         jLabel12.setText("I don't have an account ?");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 164, -1));
+        getContentPane().add(txt_MatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 310, 30));
 
         pack();
         setLocationRelativeTo(null);
@@ -238,7 +238,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel quenmatkhau;
-    private javax.swing.JTextField txt_MatKhau;
+    private javax.swing.JPasswordField txt_MatKhau;
     private javax.swing.JTextField txt_TaiKhoan;
     // End of variables declaration//GEN-END:variables
 }

@@ -312,7 +312,7 @@ public class DonHang extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 51, 204));
         jLabel4.setText("Mã nhân viên:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 117, 100, 30));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 117, 120, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 204));

@@ -214,7 +214,7 @@ public class DangKy extends javax.swing.JFrame {
         if (pass.equals(repeatPass)) {
             boolean success = dangkyDao.registerAccount(email, username, pass);
             if (success) {
-                JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công.", "New Account Success", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Tạo tài khoản thành công.", "New Account Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Tạo tài khoản thất bại.", "New Account Failed", JOptionPane.ERROR_MESSAGE);
             }
